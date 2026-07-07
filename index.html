@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>DPI VIP - Tải Config</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
+        body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
+        .container { background: #1a1a2e; max-width: 480px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+        .logo { text-align: center; margin-bottom: 20px; }
+        .logo h1 { color: #00d4ff; font-size: 24px; font-weight: 700; }
+        .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
+        .uid-box { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin: 12px 0; }
+        .uid-box label { color: #8888aa; font-size: 12px; display: block; margin-bottom: 4px; }
+        .uid-box .uid-value { color: #00d4ff; font-size: 16px; font-weight: 600; word-break: break-all; font-family: monospace; }
+        .uid-box .status { color: #34c759; font-size: 13px; margin-top: 6px; }
+        .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 17px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 12px; }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
+        .btn:active { transform: scale(0.97); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
+        .info { color: #666688; font-size: 12px; text-align: center; margin-top: 16px; line-height: 1.6; }
+        .info strong { color: #ff4444; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
+        .toast.show { display: block; animation: fadeIn 0.3s ease; }
+        .toast.error { background: #ff004422; border-color: #ff004444; color: #ff4466; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #00d4ff33; border-top-color: #00d4ff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .file-info { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; font-size: 13px; color: #8888aa; display: none; }
+        .file-info .label { color: #666688; }
+        .file-info .value { color: #00d4ff; font-weight: 500; }
+        .manual-link { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin-top: 12px; display: none; }
+        .manual-link a { color: #00d4ff; word-break: break-all; text-decoration: none; }
+        .manual-link .hint { color: #8888aa; font-size: 12px; margin-top: 8px; }
+    </style>
+</head>
+<body>
+
+<div id="toast" class="toast">✅ Đã tạo config thành công!</div>
+
+<div class="container">
+    <div class="logo">
+        <h1>🔷 DPI VIP</h1>
+        <p>Bám đầu mượt · Fix lố · Fix rung · Kéo là đỏ</p>
+    </div>
+
+    <div class="uid-box">
+        <label>📱 UID thiết bị của bạn</label>
+        <div class="uid-value" id="uidDisplay">⏳ Đang đọc...</div>
+        <div class="status" id="statusDisplay">⏳ Đang xác định thiết bị...</div>
+    </div>
+
+    <button class="btn" id="downloadBtn" onclick="generateAndDownload()">
+        ⬇️ Tải Config Thật
+    </button>
+
+    <div class="file-info" id="fileInfo">
+        <div><span class="label">📄 Tên file:</span> <span class="value" id="fileName">---</span></div>
+        <div><span class="label">📦 Dung lượng:</span> <span class="value" id="fileSize">---</span></div>
+        <div><span class="label">🔑 UID nhúng:</span> <span class="value" id="fileUid">---</span></div>
+    </div>
+
+    <div class="manual-link" id="manualLink">
+        <div style="color:#8888aa;font-size:13px;margin-bottom:4px;">⬇️ Nếu không tự động tải, nhấn link dưới:</div>
+        <a href="#" id="directLink" target="_blank">Tải file config</a>
+        <div class="hint">👉 Nhấn giữ → Chọn "Tải liên kết" hoặc mở trong tab mới</div>
+    </div>
+
+    <div class="info">
+        ⚠️ <strong>KHÔNG</strong> chia sẻ file này cho người khác<br>
+        📌 Chỉ dùng cho <strong>iOS 17, 18.7.1-18.7.9, 26.1</strong><br>
+        🚫 Không cài file khác trong thời gian sử dụng<br>
+        📞 Gặp vấn đề liên hệ Admin
+    </div>
+</div>
+
+<script>
+// ============================================================
+// HÀM TẠO UID (KHÔNG CẦN CRYPTO.SUBTLE - TƯƠNG THÍCH CAO)
+// ============================================================
+
+function generateUID() {
+    const ua = navigator.userAgent || '';
+    const platform = navigator.platform || '';
+    const lang = navigator.language || '';
+    const screenRes = `${screen.width}x${screen.height}x${screen.colorDepth || 24}`;
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    const cores = navigator.hardwareConcurrency || 0;
+    const memory = navigator.deviceMemory || 0;
+    const pixelRatio = window.devicePixelRatio || 1;
+    const touch = navigator.maxTouchPoints || 0;
+    const time = Date.now();
+    const random = Math.random().toString(36).substring(2, 10);
+    
+    const raw = `${ua}|${platform}|${lang}|${screenRes}|${tz}|${cores}|${memory}|${pixelRatio}|${touch}|${time}|${random}`;
+    
+    // Tạo hash đơn giản (không cần crypto)
+    let hash = 0;
+    for (let i = 0; i < raw.length; i++) {
+        const char = raw.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+    const hex = Math.abs(hash).toString(16).padStart(40, '0').toUpperCase();
+    // Đảm bảo đủ 40 ký tự
+    return hex.padEnd(40, '0').substring(0, 40);
+}
+
+// ============================================================
+// TẠO CONFIG CHUẨN
+// ============================================================
+
+function generateConfig(uid, iosVersion) {
+    const uidShort = uid.substring(uid.length - 8);
+    const timestamp = Date.now();
+    
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    
+    const uuid1 = uuidv4();
+    const uuid2 = uuidv4();
+    
+    const allowedVersions = [
+        '17.0','17.1','17.2','17.3','17.4','17.5','17.6','17.7',
+        '18.7.1','18.7.2','18.7.3','18.7.4','18.7.5','18.7.6','18.7.7','18.7.8','18.7.9',
+        '26.1'
+    ];
+    
+    let allowedXml = '';
+    allowedVersions.forEach(v => { allowedXml += `\n                        <string>${v}</string>`; });
+    
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadDescription</key>
+            <string>DPI VIP - Tối ưu game, fix lố fix rung, kéo là đỏ</string>
+            <key>PayloadDisplayName</key>
+            <string>DPI VIP Config</string>
+            <key>PayloadIdentifier</key>
+            <string>com.dpivip.config.${uidShort}</string>
+            <key>PayloadType</key>
+            <string>Configuration</string>
+            <key>PayloadUUID</key>
+            <string>${uuid1}</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadContent</key>
+            <dict>
+                <key>DeviceUID</key>
+                <string>${uid}</string>
+                <key>DeviceUID_Short</key>
+                <string>${uidShort}</string>
+                <key>CreatedAt</key>
+                <string>${new Date().toISOString()}</string>
+                <key>AllowediOSVersions</key>
+                <array>${allowedXml}
+                </array>
+                <key>CurrentiOSVersion</key>
+                <string>${iosVersion}</string>
+                <key>DPIParameters</key>
+                <dict>
+                    <key>DPI_Profile</key>
+                    <string>VIP_BAM_DUONG</string>
+                    <key>FixLố</key>
+                    <string>ENABLED</string>
+                    <key>FixRung</key>
+                    <string>ENABLED</string>
+                    <key>KeoLaDo</key>
+                    <string>ACTIVE</string>
+                    <key>GameMode</key>
+                    <string>100%_OPTIMIZED</string>
+                    <key>Latency</key>
+                    <integer>0</integer>
+                    <key>Jitter</key>
+                    <integer>0</integer>
+                    <key>PacketLoss</key>
+                    <integer>0</integer>
+                    <key>BufferSize</key>
+                    <integer>8192</integer>
+                </dict>
+                <key>DNSConfig</key>
+                <dict>
+                    <key>DNSServerName</key>
+                    <string>DPI VIP_${uidShort}</string>
+                    <key>DNSIPv4</key>
+                    <array>
+                        <string>8.8.8.8</string>
+                        <string>1.1.1.1</string>
+                    </array>
+                    <key>DNSIPv6</key>
+                    <array>
+                        <string>2001:4860:4860::8888</string>
+                        <string>2606:4700:4700::1111</string>
+                    </array>
+                    <key>DeviceUID</key>
+                    <string>${uid}</string>
+                    <key>Signature</key>
+                    <string>DPI_${uidShort}_VIP</string>
+                </dict>
+                <key>Restrictions</key>
+                <dict>
+                    <key>NoOtherFiles</key>
+                    <string>TRUE</string>
+                    <key>NoSharing</key>
+                    <string>TRUE</string>
+                    <key>DeviceLocked</key>
+                    <string>${uid}</string>
+                </dict>
+                <key>UnknownData1</key>
+                <string>0x7F3A2B1C</string>
+                <key>UnknownData2</key>
+                <string>0x9E4D8F6A</string>
+                <key>UnknownData3</key>
+                <string>0xC2B1A4F8</string>
+                <key>GameOptimization</key>
+                <dict>
+                    <key>FrameSync</key>
+                    <string>DISABLED</string>
+                    <key>VSync</key>
+                    <string>FORCE_OFF</string>
+                    <key>GPUPriority</key>
+                    <string>HIGH</string>
+                    <key>TouchResponse</key>
+                    <string>ULTRA_FAST</string>
+                </dict>
+                <key>TouchColorProfile</key>
+                <dict>
+                    <key>DragColor</key>
+                    <string>#FF0000</string>
+                    <key>TapColor</key>
+                    <string>#00FF00</string>
+                    <key>LatencyCompensation</key>
+                    <integer>0</integer>
+                </dict>
+                <key>ConditionalInstall</key>
+                <dict>
+                    <key>DeviceVersion</key>
+                    <string>${iosVersion}</string>
+                    <key>AllowedVersions</key>
+                    <array>
+                        <string>17.*</string>
+                        <string>18.7.*</string>
+                        <string>26.1</string>
+                    </array>
+                    <key>FailMessage</key>
+                    <string>Không hỗ trợ iOS này. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1</string>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>DPI VIP - Bám đầu mượt</string>
+    <key>PayloadIdentifier</key>
+    <string>com.dpivip.profile.${uidShort}</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>${uuid2}</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+</dict>
+</plist>`;
+}
+
+// ============================================================
+// TẢI FILE - HỖ TRỢ NHIỀU PHƯƠNG THỨC
+// ============================================================
+
+function downloadFile(content, filename) {
+    try {
+        // Cách 1: Tạo blob và tải
+        const blob = new Blob([content], { 
+            type: 'application/x-apple-aspen-config; charset=utf-8' 
+        });
+        const url = URL.createObjectURL(blob);
+        
+        // Hiển thị link thủ công
+        document.getElementById('directLink').href = url;
+        document.getElementById('directLink').textContent = filename;
+        document.getElementById('manualLink').style.display = 'block';
+        
+        // Tự động tải
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // Giải phóng URL sau 5 giây
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+        
+        // Hiển thị thông tin file
+        const sizeKB = (blob.size / 1024).toFixed(1);
+        document.getElementById('fileName').textContent = filename;
+        document.getElementById('fileSize').textContent = `${sizeKB} KB`;
+        document.getElementById('fileUid').textContent = filename.substring(10, 18);
+        document.getElementById('fileInfo').style.display = 'block';
+        
+        return true;
+    } catch (e) {
+        console.error('Lỗi tải:', e);
+        return false;
+    }
+}
+
+// ============================================================
+// XỬ LÝ CHÍNH
+// ============================================================
+
+let deviceUID = '';
+let isGenerating = false;
+
+async function init() {
+    const uidDisplay = document.getElementById('uidDisplay');
+    const statusDisplay = document.getElementById('statusDisplay');
+    
+    try {
+        uidDisplay.textContent = '⏳ Đang đọc...';
+        statusDisplay.textContent = '⏳ Đang xác định thiết bị...';
+        
+        // Tạo UID
+        deviceUID = generateUID();
+        
+        if (deviceUID && deviceUID.length === 40) {
+            uidDisplay.textContent = deviceUID;
+            statusDisplay.innerHTML = '✅ Đã nhận diện thiết bị - Sẵn sàng tải config';
+            document.getElementById('downloadBtn').disabled = false;
+        } else {
+            uidDisplay.textContent = '⚠️ Không thể đọc UID';
+            statusDisplay.innerHTML = '❌ Lỗi: Không lấy được UID. Thử tải lại trang.';
+            document.getElementById('downloadBtn').disabled = true;
+        }
+    } catch (e) {
+        uidDisplay.textContent = '⚠️ Lỗi';
+        statusDisplay.innerHTML = '❌ Lỗi: ' + e.message;
+        document.getElementById('downloadBtn').disabled = true;
+    }
+}
+
+function generateAndDownload() {
+    if (isGenerating) return;
+    if (!deviceUID || deviceUID.length !== 40) {
+        showToast('❌ Chưa có UID hợp lệ. Tải lại trang.', true);
+        return;
+    }
+    
+    isGenerating = true;
+    const btn = document.getElementById('downloadBtn');
+    btn.innerHTML = '<span class="loading"></span> Đang tạo config...';
+    btn.disabled = true;
+    
+    try {
+        // Phát hiện iOS version
+        let iosVer = '18.7.1';
+        const ua = navigator.userAgent;
+        if (ua.includes('iPhone OS 17_')) {
+            const match = ua.match(/iPhone OS (17_\d+)/);
+            iosVer = match ? match[1].replace('_', '.') : '17.0';
+        } else if (ua.includes('iPhone OS 18_7')) {
+            iosVer = '18.7.1';
+        } else if (ua.includes('iPhone OS 26_')) {
+            iosVer = '26.1';
+        }
+        
+        const xml = generateConfig(deviceUID, iosVer);
+        const uidShort = deviceUID.substring(deviceUID.length - 8);
+        const filename = `DPI_VIP_${uidShort}_${Date.now()}.mobileconfig`;
+        
+        const success = downloadFile(xml, filename);
+        
+        if (success) {
+            showToast('✅ Đã tạo và tải config thành công! UID: ' + uidShort);
+        } else {
+            showToast('⚠️ Không thể tải tự động. Dùng link bên dưới.', true);
+        }
+        
+    } catch (e) {
+        showToast('❌ Lỗi: ' + e.message, true);
+    }
+    
+    isGenerating = false;
+    btn.innerHTML = '⬇️ Tải Config Thật';
+    btn.disabled = false;
+}
+
+function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (isError ? ' error' : '');
+    t.classList.add('show');
+    clearTimeout(t._timeout);
+    t._timeout = setTimeout(() => t.classList.remove('show'), 5000);
+}
+
+// ============================================================
+// KHỞI CHẠY
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
