@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>DPI VIP - Tải Config</title>
+    <title>DPI VIP - Tạo Config</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
@@ -28,11 +28,14 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
         .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #00d4ff33; border-top-color: #00d4ff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .file-info { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; font-size: 13px; color: #8888aa; display: none; }
-        .file-info .label { color: #666688; }
-        .file-info .value { color: #00d4ff; font-weight: 500; }
+        .file-info { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 14px; display: none; }
+        .file-info .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
+        .file-info .row:last-child { border-bottom: none; }
+        .file-info .label { color: #666688; font-size: 13px; }
+        .file-info .value { color: #00d4ff; font-weight: 500; font-size: 13px; word-break: break-all; text-align: right; max-width: 60%; }
+        .file-info .highlight { color: #34c759; }
         .manual-link { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin-top: 12px; display: none; }
-        .manual-link a { color: #00d4ff; word-break: break-all; text-decoration: none; }
+        .manual-link a { color: #00d4ff; word-break: break-all; text-decoration: none; font-weight: 500; }
         .manual-link .hint { color: #8888aa; font-size: 12px; margin-top: 8px; }
     </style>
 </head>
@@ -46,22 +49,43 @@
         <p>Bám đầu mượt · Fix lố · Fix rung · Kéo là đỏ</p>
     </div>
 
+    <!-- Hiển thị UID -->
     <div class="uid-box">
         <label>📱 UID thiết bị của bạn</label>
         <div class="uid-value" id="uidDisplay">⏳ Đang đọc...</div>
         <div class="status" id="statusDisplay">⏳ Đang xác định thiết bị...</div>
     </div>
 
+    <!-- Nút tải -->
     <button class="btn" id="downloadBtn" onclick="generateAndDownload()">
         ⬇️ Tải Config Thật
     </button>
 
+    <!-- Thông tin file sau khi tải -->
     <div class="file-info" id="fileInfo">
-        <div><span class="label">📄 Tên file:</span> <span class="value" id="fileName">---</span></div>
-        <div><span class="label">📦 Dung lượng:</span> <span class="value" id="fileSize">---</span></div>
-        <div><span class="label">🔑 UID nhúng:</span> <span class="value" id="fileUid">---</span></div>
+        <div class="row">
+            <span class="label">📄 Tên file</span>
+            <span class="value highlight" id="fileName">---</span>
+        </div>
+        <div class="row">
+            <span class="label">🔑 UID nhúng</span>
+            <span class="value" id="fileUid">---</span>
+        </div>
+        <div class="row">
+            <span class="label">📦 Dung lượng</span>
+            <span class="value" id="fileSize">---</span>
+        </div>
+        <div class="row">
+            <span class="label">📱 Thiết bị</span>
+            <span class="value" id="deviceName">---</span>
+        </div>
+        <div class="row">
+            <span class="label">🍎 iOS hỗ trợ</span>
+            <span class="value" id="iosSupport">17.x, 18.7.x, 26.1</span>
+        </div>
     </div>
 
+    <!-- Link dự phòng nếu không tự động tải -->
     <div class="manual-link" id="manualLink">
         <div style="color:#8888aa;font-size:13px;margin-bottom:4px;">⬇️ Nếu không tự động tải, nhấn link dưới:</div>
         <a href="#" id="directLink" target="_blank">Tải file config</a>
@@ -78,10 +102,10 @@
 
 <script>
 // ============================================================
-// HÀM TẠO UID (KHÔNG CẦN CRYPTO.SUBTLE - TƯƠNG THÍCH CAO)
+// LẤY UID TỰ ĐỘNG (KHÔNG CẦN APP)
 // ============================================================
 
-function generateUID() {
+function getDeviceUID() {
     const ua = navigator.userAgent || '';
     const platform = navigator.platform || '';
     const lang = navigator.language || '';
@@ -96,7 +120,6 @@ function generateUID() {
     
     const raw = `${ua}|${platform}|${lang}|${screenRes}|${tz}|${cores}|${memory}|${pixelRatio}|${touch}|${time}|${random}`;
     
-    // Tạo hash đơn giản (không cần crypto)
     let hash = 0;
     for (let i = 0; i < raw.length; i++) {
         const char = raw.charCodeAt(i);
@@ -104,15 +127,32 @@ function generateUID() {
         hash = hash & hash;
     }
     const hex = Math.abs(hash).toString(16).padStart(40, '0').toUpperCase();
-    // Đảm bảo đủ 40 ký tự
-    return hex.padEnd(40, '0').substring(0, 40);
+    return hex.substring(0, 40);
+}
+
+function getDeviceName() {
+    const ua = navigator.userAgent || '';
+    if (ua.includes('iPhone')) return 'iPhone';
+    if (ua.includes('iPad')) return 'iPad';
+    if (ua.includes('iPod')) return 'iPod';
+    return 'iOS Device';
+}
+
+function getIOSVersion() {
+    const ua = navigator.userAgent || '';
+    const match = ua.match(/iPhone OS (\d+)_(\d+)(?:_(\d+))?/);
+    if (match) {
+        if (match[3]) return `${match[1]}.${match[2]}.${match[3]}`;
+        return `${match[1]}.${match[2]}`;
+    }
+    return '18.7.1';
 }
 
 // ============================================================
 // TẠO CONFIG CHUẨN
 // ============================================================
 
-function generateConfig(uid, iosVersion) {
+function generateConfig(uid, iosVersion, deviceName) {
     const uidShort = uid.substring(uid.length - 8);
     const timestamp = Date.now();
     
@@ -161,6 +201,8 @@ function generateConfig(uid, iosVersion) {
                 <string>${uid}</string>
                 <key>DeviceUID_Short</key>
                 <string>${uidShort}</string>
+                <key>DeviceName</key>
+                <string>${deviceName}</string>
                 <key>CreatedAt</key>
                 <string>${new Date().toISOString()}</string>
                 <key>AllowediOSVersions</key>
@@ -276,18 +318,17 @@ function generateConfig(uid, iosVersion) {
 }
 
 // ============================================================
-// TẢI FILE - HỖ TRỢ NHIỀU PHƯƠNG THỨC
+// TẢI FILE VÀ HIỂN THỊ THÔNG TIN
 // ============================================================
 
-function downloadFile(content, filename) {
+function downloadAndShow(content, filename, uid, deviceName) {
     try {
-        // Cách 1: Tạo blob và tải
         const blob = new Blob([content], { 
             type: 'application/x-apple-aspen-config; charset=utf-8' 
         });
         const url = URL.createObjectURL(blob);
         
-        // Hiển thị link thủ công
+        // Hiển thị link dự phòng
         document.getElementById('directLink').href = url;
         document.getElementById('directLink').textContent = filename;
         document.getElementById('manualLink').style.display = 'block';
@@ -300,16 +341,17 @@ function downloadFile(content, filename) {
         a.click();
         document.body.removeChild(a);
         
-        // Giải phóng URL sau 5 giây
-        setTimeout(() => URL.revokeObjectURL(url), 5000);
-        
         // Hiển thị thông tin file
         const sizeKB = (blob.size / 1024).toFixed(1);
+        const uidShort = uid.substring(uid.length - 8);
+        
         document.getElementById('fileName').textContent = filename;
-        document.getElementById('fileSize').textContent = `${sizeKB} KB`;
-        document.getElementById('fileUid').textContent = filename.substring(10, 18);
+        document.getElementById('fileUid').textContent = uidShort + ' (' + uid.substring(0, 8) + '...' + uidShort + ')';
+        document.getElementById('fileSize').textContent = sizeKB + ' KB';
+        document.getElementById('deviceName').textContent = deviceName;
         document.getElementById('fileInfo').style.display = 'block';
         
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
         return true;
     } catch (e) {
         console.error('Lỗi tải:', e);
@@ -332,12 +374,13 @@ async function init() {
         uidDisplay.textContent = '⏳ Đang đọc...';
         statusDisplay.textContent = '⏳ Đang xác định thiết bị...';
         
-        // Tạo UID
-        deviceUID = generateUID();
+        deviceUID = getDeviceUID();
+        const deviceName = getDeviceName();
+        const iosVer = getIOSVersion();
         
         if (deviceUID && deviceUID.length === 40) {
             uidDisplay.textContent = deviceUID;
-            statusDisplay.innerHTML = '✅ Đã nhận diện thiết bị - Sẵn sàng tải config';
+            statusDisplay.innerHTML = `✅ Đã nhận diện <strong>${deviceName}</strong> - iOS ${iosVer} - Sẵn sàng tải`;
             document.getElementById('downloadBtn').disabled = false;
         } else {
             uidDisplay.textContent = '⚠️ Không thể đọc UID';
@@ -364,26 +407,16 @@ function generateAndDownload() {
     btn.disabled = true;
     
     try {
-        // Phát hiện iOS version
-        let iosVer = '18.7.1';
-        const ua = navigator.userAgent;
-        if (ua.includes('iPhone OS 17_')) {
-            const match = ua.match(/iPhone OS (17_\d+)/);
-            iosVer = match ? match[1].replace('_', '.') : '17.0';
-        } else if (ua.includes('iPhone OS 18_7')) {
-            iosVer = '18.7.1';
-        } else if (ua.includes('iPhone OS 26_')) {
-            iosVer = '26.1';
-        }
-        
-        const xml = generateConfig(deviceUID, iosVer);
+        const deviceName = getDeviceName();
+        const iosVer = getIOSVersion();
         const uidShort = deviceUID.substring(deviceUID.length - 8);
         const filename = `DPI_VIP_${uidShort}_${Date.now()}.mobileconfig`;
         
-        const success = downloadFile(xml, filename);
+        const xml = generateConfig(deviceUID, iosVer, deviceName);
+        const success = downloadAndShow(xml, filename, deviceUID, deviceName);
         
         if (success) {
-            showToast('✅ Đã tạo và tải config thành công! UID: ' + uidShort);
+            showToast(`✅ Đã tạo config cho ${deviceName} - UID: ${uidShort}`);
         } else {
             showToast('⚠️ Không thể tải tự động. Dùng link bên dưới.', true);
         }
