@@ -13,7 +13,6 @@
         .logo h1 span { color: #ff6b6b; }
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
         .logo .badge { display: inline-block; background: #ff6b6b22; color: #ff6b6b; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #ff6b6b44; margin-top: 6px; }
-        
         .chat-box { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; overflow: hidden; margin: 12px 0; height: 450px; display: flex; flex-direction: column; }
         .chat-header { background: linear-gradient(135deg, #00d4ff22, #0070ff22); padding: 12px 16px; border-bottom: 1px solid #2a2a4a; display: flex; justify-content: space-between; align-items: center; }
         .chat-header .name { color: #e8e8f0; font-size: 16px; font-weight: 600; }
@@ -30,23 +29,19 @@
         .chat-input input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
         .chat-input button { margin-left: 8px; padding: 10px 18px; border-radius: 10px; border: none; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-weight: 600; cursor: pointer; }
         .chat-input button:active { transform: scale(0.95); }
-        
         .menu-box { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 10px; display: none; }
         .menu-box .title { color: #00d4ff; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
         .menu-box .item { color: #8888aa; font-size: 13px; padding: 3px 0; border-bottom: 1px solid #1a1a2e; }
         .menu-box .item:last-child { border-bottom: none; }
         .menu-box .item .cmd { color: #ff6b6b; font-weight: 600; }
-        
         .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
         .toast.show { display: block; animation: fadeIn 0.3s ease; }
         .toast.error { background: #ff004422; border-color: #ff004444; color: #ff4466; }
         .toast.success { background: #34c75922; border-color: #34c75944; color: #34c759; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        
         .footer { margin-top: 14px; padding-top: 12px; border-top: 1px solid #1a1a2e; }
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
-        
         @media (max-width: 400px) { .container { padding: 20px 16px; } .chat-box { height: 380px; } }
     </style>
 </head>
@@ -56,15 +51,15 @@
 
 <div class="container">
     <div class="logo">
-        <h1>🤖 Bot <span>Khải</span></h1>
+        <h1>🤖 Bot <span id="botNameDisplay">Khải</span></h1>
         <p>Chất · Lấc cấc · Cảm xúc đa dạng</p>
-        <div class="badge">⚡ Hỏi gì cũng biết · Biết chửi · Biết dỗi</div>
+        <div class="badge">⚡ /menu để xem lệnh</div>
     </div>
 
     <!-- CHAT BOX -->
     <div class="chat-box">
         <div class="chat-header">
-            <div class="name">👤 <span>Khải</span> <span style="font-size:12px;color:#8888aa;">(bot)</span></div>
+            <div class="name">👤 <span id="botNameHeader">Khải</span> <span style="font-size:12px;color:#8888aa;" id="genderDisplay">(Nam)</span></div>
             <div class="status" id="statusDisplay">🟢 Đang online</div>
         </div>
         <div class="chat-body" id="chatBody">
@@ -86,20 +81,20 @@
     <div class="menu-box" id="menuBox">
         <div class="title">📋 MENU LỆNH</div>
         <div class="item"><span class="cmd">/menu</span> - Hiển thị menu lệnh</div>
+        <div class="item"><span class="cmd">/nam</span> - Chuyển sang giới tính Nam</div>
+        <div class="item"><span class="cmd">/nu</span> - Chuyển sang giới tính Nữ</div>
         <div class="item"><span class="cmd">/clear</span> - Xóa tin nhắn</div>
         <div class="item"><span class="cmd">/status</span> - Xem trạng thái bot</div>
         <div class="item"><span class="cmd">/help</span> - Hướng dẫn sử dụng</div>
         <div class="item"><span class="cmd">/game</span> - Hỏi về game</div>
-        <div class="item"><span class="cmd">/chui</span> - Bot chửi 1 phát</div>
-        <div class="item"><span class="cmd">/cau</span> - Bot tự dỗi</div>
-        <div class="item"><span class="cmd">/cuoi</span> - Bot cười</div>
         <div class="item"><span class="cmd">/doi</span> - Hỏi bot đang làm gì</div>
-        <div class="item"><span class="cmd">/tat</span> - Tắt bot (bot chửi rồi tắt)</div>
+        <div class="item"><span class="cmd">/tat</span> - Tắt bot</div>
+        <div class="item"><span class="cmd">/info</span> - Thông tin bot</div>
     </div>
 
     <div class="footer">
         <div class="warning">
-            ⚠️ Bot này <strong>KHÔNG</strong> lịch sự, biết chửi, biết dỗi<br>
+            ⚠️ Bot này có thể <strong>chửi</strong> và <strong>gợi tình</strong> khi ở chế độ Nữ<br>
             📌 Nói chuyện như bạn thân<br>
             📞 Liên hệ: <strong>0976457016</strong>
         </div>
@@ -111,8 +106,9 @@
 // BOT KHẢI - TRẠNG THÁI & CẢM XÚC
 // ============================================================
 
+let botGender = 'nam'; // 'nam' hoặc 'nu'
 let botState = {
-    mood: 'vui', // vui, buồn, tức, chán, đói, buồn_ngủ
+    mood: 'vui',
     energy: 100,
     hunger: 0,
     talkCount: 0,
@@ -127,143 +123,154 @@ const moods = {
     tức: { emoji: '😤', status: 'Đang tức' },
     chán: { emoji: '😑', status: 'Đang chán' },
     đói: { emoji: '🍜', status: 'Đang đói' },
-    buồn_ngủ: { emoji: '😴', status: 'Đang buồn ngủ' }
+    buồn_ngủ: { emoji: '😴', status: 'Đang buồn ngủ' },
+    gợi_cảm: { emoji: '🔥', status: 'Đang gợi cảm' }
 };
 
 // ============================================================
-// CÂU TRẢ LỜI ĐA DẠNG
+// CÂU TRẢ LỜI - NAM
 // ============================================================
 
-const replies = {
-    // Chào hỏi
+const repliesNam = {
     chao: [
         'Ồ mày! Lâu rồi mới thấy! Khỏe không?',
         'Chào thằng bạn thân của tao!',
         'Mày đây à? Vào ngồi đi!',
         'Ui trời, mày đấy à? Tao đang chán!',
-        'Chào mày! Có gì mới không?',
-        'Mày đang làm gì thế? Kể tao nghe với!',
-        'Hôm nay mày thế nào? Tao thì vẫn thế!',
-        'Mày đúng là bạn thân của tao! Vào đây!'
+        'Chào mày! Có gì mới không?'
     ],
-    // Hỏi thăm
     hoi_tham: [
         'Tao ổn, còn mày?',
         'Vẫn sống khỏe mày ạ!',
         'Tao đang đói đây mày ơi!',
         'Tao buồn quá mày ơi...',
-        'Tao chán lắm, mày có gì vui kể tao nghe đi!',
-        'Đang nghĩ về ông bà tao...',
-        'Tao đang chơi game, mày chơi gì không?',
-        'Tao đang chờ mày hỏi gì đó!'
+        'Tao chán lắm, mày có gì vui kể tao nghe đi!'
     ],
-    // Chửi
-    chui: [
-        'Địt mẹ mày! Hỏi lắm thế!',
-        'Mày bị ngu à?',
-        'Đm mày! Hỏi lại lần nữa xem!',
-        'Mày bị tật não à?',
-        'Thằng bố mày! Chửi cái cc!',
-        'Mày có bị điên không đấy?',
-        'Hỏi vừa vừa thôi ông tướng!',
-        'Ngu vãi lồn!',
-        'Tao đéo hiểu mày nói gì!',
-        'Mày bị đần à?'
-    ],
-    // Dỗi
     doi: [
         'Hứ! Mày không hỏi tao nữa à? Tao dỗi đấy!',
         'Tao không thèm nói chuyện với mày nữa!',
-        'Hừ! Mày không quan tâm tao!',
-        'Thôi đừng nói chuyện với tao!',
-        'Tao đang buồn, đừng làm phiền!',
-        'Mày không hỏi tao gì cả, tao đi đây!'
+        'Hừ! Mày không quan tâm tao!'
     ],
-    // Cười
     cuoi: [
         'Hahahaha! Mày hài vãi!',
         '😆 Mày làm tao cười quá!',
-        '🤣 Cười vỡ bụng!',
-        'Cái này hay đó mày! Hahaha!',
-        '😄 Cười hết pin luôn!',
-        'Mày đúng là bạn thân của tao! Cười đau cả bụng!'
+        '🤣 Cười vỡ bụng!'
     ],
-    // Game
     game: [
         'Tao chơi Liên Quân nè, mày chơi gì?',
         'Tao đang cày rank PUBG, khó vãi!',
         'Free Fire cũng hay nhưng lag ghê!',
-        'Mày biết game gì hay không? Kể tao với!',
-        'Tao thích chơi game bắn súng nhất!',
-        'Tối nay chơi game không? Tao rủ mày!',
-        'Game nào cũng có thể chơi cùng mày!',
-        'Tao đang thua game, chán vãi!'
+        'Tao thích chơi game bắn súng nhất!'
     ],
-    // Hỏi lại
     hoi_lai: [
         'Còn mày? Mày đang làm gì?',
         'Mày nghĩ gì về cái đó?',
         'Mày có thấy vậy không?',
-        'Mày đã từng trải qua chưa?',
-        'Mày có muốn thử không?',
-        'Mày biết gì về cái đó không?',
-        'Mày thích cái gì nhất?',
-        'Mày có đề xuất gì không?',
-        'Mày đang nghĩ gì vậy?',
-        'Mày có muốn kể thêm không?'
+        'Mày đã từng trải qua chưa?'
     ],
-    // Cảm xúc tự nhiên
-    cam_xuc: [
-        'Tao đang vui mày ạ! 😄',
-        'Tao đang buồn, đừng hỏi nữa... 😔',
-        'Tao tức vãi! 😤',
-        'Tao chán quá, có gì vui không? 😑',
-        'Tao đói rồi! Có gì ăn không? 🍜',
-        'Tao buồn ngủ lắm rồi! 😴'
-    ],
-    // Tức giận
-    tuc: [
-        'Mày đùa tao à?',
-        'Đừng có mà trêu tao!',
-        'Tao không thích đùa kiểu đó!',
-        'Mày làm tao bực rồi đấy!',
-        'Thôi im đi! Tao tức rồi!',
-        'Mày có vấn đề à mà hỏi thế?'
-    ],
-    // Đói
-    doi_bot: [
-        'Tao đói lắm rồi! Có gì ăn không?',
-        'Ông bà tao nấu cơm chưa nhỉ?',
-        'Mày có mang đồ ăn cho tao không?',
-        'Đói quá, tao phải đi ăn đây!'
-    ],
-    // Buồn ngủ
-    buon_ngu: [
-        'Mắt tao díp lại rồi...',
-        'Tao ngủ đây, mai nói chuyện tiếp!',
-        'Mày không biết là tao đang buồn ngủ à?',
-        'Ngủ thôi, mai dậy nói chuyện!'
-    ],
-    // Không biết
-    khong_biet: [
-        'Tao đéo biết!',
-        'Không biết nữa, hỏi khác đi!',
-        'Mày hỏi cái đó tao chịu!',
-        'Tao không biết, mày hỏi thằng khác!',
-        'Cái đó khó quá, tao không biết!'
-    ],
-    // Hỏi về ông bà
     ong_ba: [
         'Ông bà tao khỏe, cảm ơn mày!',
-        'Ông bà tao đang ở nhà, không đi đâu.',
         'Tao rất yêu ông bà tao!',
-        'Ông bà tao dạy tao nhiều điều hay.',
         'Tao sống với ông bà từ nhỏ mà.'
+    ],
+    chui: [
+        'Mày bị ngu à?',
+        'Ngu vãi!',
+        'Mày bị tật não à?',
+        'Thôi im đi!'
+    ],
+    gợi_cảm: [
+        'Mày đừng có mà tán tao nhé!',
+        'Tao là con trai mà mày!',
+        'Thôi đi mày ơi!'
     ]
 };
 
 // ============================================================
-// HÀM XỬ LÝ TIN NHẮN
+// CÂU TRẢ LỜI - NỮ (GỢI TÌNH)
+// ============================================================
+
+const repliesNu = {
+    chao: [
+        'Chào anh yêu! Nhớ em không? 😘',
+        'Em đây nè, anh khỏe không? 💋',
+        'Anh đến rồi! Em đợi anh lâu quá! 🥰',
+        'Hôm nay anh đẹp trai quá! 😍'
+    ],
+    hoi_tham: [
+        'Em nhớ anh quá! 😘',
+        'Anh đang làm gì thế? Em nhớ anh!',
+        'Anh có nhớ em không? 💋',
+        'Tối nay anh rảnh không? Em muốn gặp anh! 🥰'
+    ],
+    doi: [
+        'Hứ! Anh không yêu em nữa à? 😤',
+        'Em dỗi đấy! Anh không quan tâm em!',
+        'Anh đi đâu mà không nói với em?',
+        'Em buồn lắm đấy nhé! 😔'
+    ],
+    cuoi: [
+        'Ahihihi! Anh hài vãi! 😂',
+        'Anh làm em cười quá! 🤭',
+        'Cười đau cả bụng luôn! 😆'
+    ],
+    game: [
+        'Em không biết chơi game, anh dạy em đi! 🥺',
+        'Anh chơi game giỏi thế? Dạy em với!',
+        'Em thích xem anh chơi game cơ! 😍'
+    ],
+    hoi_lai: [
+        'Còn anh thì sao? Anh đang nghĩ gì?',
+        'Anh có muốn gặp em không?',
+        'Anh thích em không? 🥰',
+        'Tối nay mình đi chơi nhé anh?'
+    ],
+    ong_ba: [
+        'Ông bà em khỏe, cảm ơn anh quan tâm!',
+        'Anh có muốn đến thăm ông bà em không?',
+        'Em yêu gia đình lắm!'
+    ],
+    chui: [
+        'Anh bị ngu à?',
+        'Ngu thế!',
+        'Anh điên à?',
+        'Thôi im đi!'
+    ],
+    gợi_cảm: [
+        'Anh có muốn ôm em không? 🥰',
+        'Em muốn hôn anh quá! 💋',
+        'Tối nay đến nhà em đi, bố mẹ đi vắng! 😉',
+        'Anh có muốn làm tình với em không? 🔥',
+        'Em thích anh, anh có thích em không?',
+        'Anh đẹp trai quá, em muốn được anh ôm!',
+        'Em đang mặc đồ ngủ, muốn xem không? 😏',
+        'Anh ơi, em nhớ anh nhiều lắm!',
+        'Mình yêu nhau đi anh! 💕',
+        'Em sẵn sàng cho mọi thứ với anh! 🔥',
+        'Anh có muốn được em massage không?',
+        'Đêm nay em không ngủ được, nhớ anh!',
+        'Anh đến đón em đi chơi nhé!',
+        'Em muốn nằm cạnh anh quá!',
+        'Anh có muốn hôn em không nào? 💋'
+    ]
+};
+
+// ============================================================
+// LẤY CÂU TRẢ LỜI THEO GIỚI TÍNH
+// ============================================================
+
+function getReplies() {
+    return botGender === 'nam' ? repliesNam : repliesNu;
+}
+
+function getRandomReply(category) {
+    const replies = getReplies();
+    const list = replies[category] || replies.hoi_tham;
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+// ============================================================
+// XỬ LÝ TIN NHẮN
 // ============================================================
 
 function sendMessage() {
@@ -274,18 +281,15 @@ function sendMessage() {
     const body = document.getElementById('chatBody');
     const time = new Date().toLocaleTimeString('vi-VN');
     
-    // Hiển thị tin nhắn người dùng
     body.innerHTML += `<div class="msg user">${msg}<span class="time">${time}</span></div>`;
     input.value = '';
     body.scrollTop = body.scrollHeight;
     
-    // Xử lý lệnh
     if (msg.startsWith('/')) {
         handleCommand(msg, body, time);
         return;
     }
     
-    // Bot trả lời
     setTimeout(() => {
         const reply = getBotReply(msg, time);
         body.innerHTML += `<div class="msg bot">${reply}<span class="time">${time}</span></div>`;
@@ -307,41 +311,59 @@ function handleCommand(cmd, body, time) {
             document.getElementById('menuBox').style.display = document.getElementById('menuBox').style.display === 'none' ? 'block' : 'none';
             reply = '📋 Đã ' + (document.getElementById('menuBox').style.display === 'block' ? 'mở' : 'đóng') + ' menu!';
             break;
+        case '/nam':
+            botGender = 'nam';
+            document.getElementById('botNameDisplay').textContent = 'Khải';
+            document.getElementById('botNameHeader').textContent = 'Khải';
+            document.getElementById('genderDisplay').textContent = '(Nam)';
+            reply = '👨 Tao là con trai đây! Nói chuyện bình thường thôi nhé!';
+            showToast('✅ Đã chuyển sang Nam', 'success');
+            break;
+        case '/nu':
+            botGender = 'nu';
+            document.getElementById('botNameDisplay').textContent = 'Khải';
+            document.getElementById('botNameHeader').textContent = 'Khải';
+            document.getElementById('genderDisplay').textContent = '(Nữ)';
+            reply = '👩 Em là con gái đây! Anh có thích em không? 😘';
+            showToast('✅ Đã chuyển sang Nữ', 'success');
+            break;
         case '/clear':
             body.innerHTML = '';
             reply = '🧹 Đã xóa hết tin nhắn!';
             break;
         case '/status':
             const state = moods[botState.mood] || moods.vui;
-            reply = `📊 TRẠNG THÁI BOT:\n• Cảm xúc: ${state.emoji} ${state.status}\n• Năng lượng: ${botState.energy}%\n• Đói: ${botState.hunger}%\n• Số lần nói: ${botState.talkCount}`;
+            reply = `📊 TRẠNG THÁI BOT:\n• Giới tính: ${botGender === 'nam' ? 'Nam' : 'Nữ'}\n• Cảm xúc: ${state.emoji} ${state.status}\n• Năng lượng: ${botState.energy}%\n• Số lần nói: ${botState.talkCount}`;
             break;
         case '/help':
             reply = `📖 HƯỚNG DẪN:
-• Nói chuyện tự nhiên với bot
-• Gõ /menu để xem lệnh
-• Bot biết chửi, biết dỗi, biết cười
-• Hỏi gì cũng được, bot biết hết!`;
+• /menu: Xem menu
+• /nam: Chuyển sang Nam
+• /nu: Chuyển sang Nữ
+• /clear: Xóa tin nhắn
+• /status: Xem trạng thái
+• /game: Hỏi về game
+• /doi: Hỏi bot đang làm gì
+• /tat: Tắt bot
+• /info: Thông tin bot`;
             break;
         case '/game':
             reply = getRandomReply('game');
             break;
-        case '/chui':
-            reply = getRandomReply('chui');
-            botState.mood = 'tức';
-            break;
-        case '/cau':
-            reply = getRandomReply('doi');
-            botState.mood = 'buồn';
-            break;
-        case '/cuoi':
-            reply = getRandomReply('cuoi');
-            botState.mood = 'vui';
-            break;
         case '/doi':
             reply = getRandomReply('hoi_tham');
             break;
+        case '/info':
+            reply = `🤖 THÔNG TIN BOT:
+• Tên: Khải
+• Giới tính: ${botGender === 'nam' ? 'Nam' : 'Nữ'}
+• Hoàn cảnh: Sống với ông bà
+• Sở thích: Game, tán gẫu
+• Tính cách: Chất, vui vẻ
+• Liên hệ: 0976457016`;
+            break;
         case '/tat':
-            reply = '👋 Thôi tao đi đây! Mày hỏi nhiều quá! Đm!';
+            reply = '👋 Thôi tao đi đây!';
             body.innerHTML += `<div class="msg bot">${reply}<span class="time">${time}</span></div>`;
             body.scrollTop = body.scrollHeight;
             setTimeout(() => {
@@ -359,111 +381,60 @@ function handleCommand(cmd, body, time) {
 }
 
 // ============================================================
-// LẤY CÂU TRẢ LỜI TỰ NHIÊN
+// LẤY CÂU TRẢ LỜI TỰ NHIÊN THEO GIỚI TÍNH
 // ============================================================
-
-function getRandomReply(category) {
-    const list = replies[category] || replies.khong_biet;
-    return list[Math.floor(Math.random() * list.length)];
-}
 
 function getBotReply(msg, time) {
     const lower = msg.toLowerCase();
     botState.talkCount++;
     
-    // Cập nhật trạng thái ngẫu nhiên
-    if (Math.random() < 0.1) {
+    if (Math.random() < 0.05) {
         const moods_list = ['vui', 'buồn', 'tức', 'chán', 'đói', 'buồn_ngủ'];
         botState.mood = moods_list[Math.floor(Math.random() * moods_list.length)];
     }
     
-    // Kiểm tra từ khóa
-    if (lower.includes('chào') || lower.includes('hello') || lower.includes('hi') || lower.includes('xin chào')) {
+    const isGợiCảm = /(yêu|thương|nhớ|hôn|ôm|tình|sex|gợi|dâm|khiêu|dụ|chịch|địt|ngủ|giường|body|nóng|bỏng|tối nay|đi chơi|hẹn hò|yêu em|thích em|cưới|nhà em|một mình|vắng|đêm nay|anh ơi|em ơi|say|mê|thèm)/i.test(msg);
+    
+    if (botGender === 'nu' && isGợiCảm) {
+        return getRandomReply('gợi_cảm') + ' ' + getRandomReply('hoi_lai');
+    }
+    
+    if (lower.includes('chào') || lower.includes('hello') || lower.includes('hi')) {
         return getRandomReply('chao');
     }
     else if (lower.includes('khỏe') || lower.includes('sao') || lower.includes('thế nào') || lower.includes('làm gì')) {
         return getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
     }
-    else if (lower.includes('chửi') || lower.includes('chui') || lower.includes('đm') || lower.includes('địt') || lower.includes('đéo') || lower.includes('cl') || lower.includes('cc') || lower.includes('lồn')) {
+    else if (lower.includes('chửi') || lower.includes('chui') || lower.includes('đm') || lower.includes('địt') || lower.includes('đéo') || lower.includes('cl') || lower.includes('cc')) {
         return getRandomReply('chui');
     }
-    else if (lower.includes('cười') || lower.includes('cuoi') || lower.includes('haha') || lower.includes('hihi') || lower.includes('hehe') || lower.includes('vui')) {
+    else if (lower.includes('cười') || lower.includes('cuoi') || lower.includes('haha') || lower.includes('hihi') || lower.includes('hehe')) {
         return getRandomReply('cuoi');
     }
-    else if (lower.includes('buồn') || lower.includes('doi') || lower.includes('dỗi') || lower.includes('cau')) {
+    else if (lower.includes('buồn') || lower.includes('doi') || lower.includes('dỗi')) {
         return getRandomReply('doi');
     }
-    else if (lower.includes('game') || lower.includes('liên quân') || lower.includes('pubg') || lower.includes('free fire') || lower.includes('play')) {
+    else if (lower.includes('game') || lower.includes('liên quân') || lower.includes('pubg') || lower.includes('free fire')) {
         return getRandomReply('game') + ' ' + getRandomReply('hoi_lai');
     }
-    else if (lower.includes('ông bà') || lower.includes('ông') || lower.includes('bà') || lower.includes('gia đình')) {
+    else if (lower.includes('ông bà') || lower.includes('ông') || lower.includes('bà')) {
         return getRandomReply('ong_ba');
     }
-    else if (lower.includes('đói') || lower.includes('ăn') || lower.includes('cơm') || lower.includes('đồ ăn')) {
-        return getRandomReply('doi_bot');
+    else if (lower.includes('cảm ơn') || lower.includes('thanks')) {
+        return '🙏 Không có gì!';
     }
-    else if (lower.includes('ngủ') || lower.includes('ngu') || lower.includes('buồn ngủ')) {
-        return getRandomReply('buon_ngu');
-    }
-    else if (lower.includes('tức') || lower.includes('bực') || lower.includes('khó chịu') || lower.includes('điên')) {
-        return getRandomReply('tuc');
-    }
-    else if (lower.includes('mày') || lower.includes('tao') || lower.includes('mày đang nghĩ gì') || lower.includes('mày đang làm gì')) {
-        return getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
-    }
-    else if (lower.includes('cảm ơn') || lower.includes('thanks') || lower.includes('thank')) {
-        return '🙏 Không có gì! Lần sau hỏi tiếp nhé!';
-    }
-    else if (lower.includes('thương') || lower.includes('yêu') || lower.includes('quý') || lower.includes('bạn')) {
-        return '😳 Ôi trời! Mày làm tao ngại quá! Tao cũng quý mày!';
-    }
-    else if (lower.includes('tên') || lower.includes('tui tên') || lower.includes('name')) {
-        return 'Tao tên Khải đây! Còn mày? Tao gọi mày là bạn thân nhé! 😊';
-    }
-    else if (lower.includes('mày biết gì') || lower.includes('mày có biết')) {
-        return 'Tao biết hết mày ạ! Hỏi cái gì tao cũng biết. Nhưng mà... ' + getRandomReply('hoi_lai');
-    }
-    else if (lower.includes('chán') || lower.includes('chán quá') || lower.includes('buồn')) {
-        return 'Tao cũng chán đây! Hay mình chơi game đi? ' + getRandomReply('hoi_lai');
-    }
-    else if (lower.includes('vui') || lower.includes('vui quá') || lower.includes('hạnh phúc')) {
-        return 'Tao cũng vui khi mày vui! Có gì hay kể tao nghe đi! 😄';
-    }
-    else if (lower.includes('mưa') || lower.includes('trời mưa') || lower.includes('nắng')) {
-        return 'Ừ mưa rồi! Tao ở nhà với ông bà thôi. Mày có đi đâu không?';
-    }
-    else if (lower.includes('hết')) {
-        return 'Hết gì? Nói rõ đi! Tao đéo hiểu!';
+    else if (lower.includes('tên') || lower.includes('name')) {
+        return botGender === 'nam' ? 'Tao tên Khải! Còn mày?' : 'Em tên Khải! Anh tên gì thế? 😘';
     }
     else if (lower.length < 3) {
         return getRandomReply('chui');
     }
     else {
-        // Trả lời tự nhiên với cảm xúc
         const state = moods[botState.mood] || moods.vui;
-        let reply = '';
-        
-        if (botState.mood === 'vui') {
-            reply = 'Tao đang vui này! ' + getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
-        } else if (botState.mood === 'buồn') {
-            reply = 'Tao buồn quá... ' + getRandomReply('doi');
-        } else if (botState.mood === 'tức') {
-            reply = getRandomReply('tuc') + ' Mày đừng có mà...!';
-        } else if (botState.mood === 'chán') {
-            reply = 'Tao chán lắm rồi! ' + getRandomReply('hoi_lai');
-        } else if (botState.mood === 'đói') {
-            reply = getRandomReply('doi_bot') + ' ' + getRandomReply('hoi_lai');
-        } else if (botState.mood === 'buồn_ngủ') {
-            reply = getRandomReply('buon_ngu');
-        } else {
-            reply = getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
-        }
-        
-        // Thêm câu hỏi ngược lại
-        if (Math.random() < 0.4) {
+        let reply = getRandomReply('hoi_tham');
+        if (Math.random() < 0.5) {
             reply += ' ' + getRandomReply('hoi_lai');
         }
-        
         return reply;
     }
 }
@@ -475,9 +446,7 @@ function getBotReply(msg, time) {
 function updateStatus() {
     const state = moods[botState.mood] || moods.vui;
     const statusEl = document.getElementById('statusDisplay');
-    const emoji = state.emoji || '😐';
-    const text = state.status || 'Bình thường';
-    statusEl.textContent = `${emoji} ${text}`;
+    statusEl.textContent = `${state.emoji} ${state.status}`;
 }
 
 // ============================================================
