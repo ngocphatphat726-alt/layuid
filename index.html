@@ -3,320 +3,502 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zalo Bot Chửi</title>
+    <title>Bot Khải - Zalo</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
-        .container { background: #1a1a2e; max-width: 480px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
-        .logo { text-align: center; margin-bottom: 16px; }
-        .logo h1 { color: #00d4ff; font-size: 24px; font-weight: 700; }
+        .container { background: #1a1a2e; max-width: 500px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+        .logo { text-align: center; margin-bottom: 20px; }
+        .logo h1 { color: #00d4ff; font-size: 26px; font-weight: 700; letter-spacing: 1px; }
         .logo h1 span { color: #ff6b6b; }
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
+        .logo .badge { display: inline-block; background: #ff6b6b22; color: #ff6b6b; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #ff6b6b44; margin-top: 6px; }
         
-        .chat-box { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; height: 420px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; margin-bottom: 12px; }
-        .chat-box .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; margin-bottom: 8px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
-        .chat-box .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; }
-        .chat-box .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
-        .chat-box .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 4px; }
-        .chat-box .msg .voice { color: #ff9500; font-weight: bold; }
+        .chat-box { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; overflow: hidden; margin: 12px 0; height: 450px; display: flex; flex-direction: column; }
+        .chat-header { background: linear-gradient(135deg, #00d4ff22, #0070ff22); padding: 12px 16px; border-bottom: 1px solid #2a2a4a; display: flex; justify-content: space-between; align-items: center; }
+        .chat-header .name { color: #e8e8f0; font-size: 16px; font-weight: 600; }
+        .chat-header .name span { color: #ff6b6b; }
+        .chat-header .status { color: #34c759; font-size: 12px; }
+        .chat-body { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; max-height: 350px; }
+        .chat-body .msg { padding: 8px 12px; border-radius: 12px; max-width: 85%; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+        .chat-body .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
+        .chat-body .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; }
+        .chat-body .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 2px; }
+        .chat-body .msg .emoji { font-size: 18px; }
+        .chat-input { display: flex; padding: 8px 12px; border-top: 1px solid #2a2a4a; background: #0a0a12; }
+        .chat-input input { flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 14px; outline: none; }
+        .chat-input input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
+        .chat-input button { margin-left: 8px; padding: 10px 18px; border-radius: 10px; border: none; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-weight: 600; cursor: pointer; }
+        .chat-input button:active { transform: scale(0.95); }
         
-        .input-area { display: flex; gap: 8px; }
-        .input-area input { flex: 1; padding: 12px 16px; border-radius: 12px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 15px; outline: none; }
-        .input-area input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
-        .input-area button { padding: 12px 20px; border-radius: 12px; border: none; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-weight: 600; cursor: pointer; font-size: 15px; }
-        .input-area button:active { transform: scale(0.95); }
+        .menu-box { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 10px; display: none; }
+        .menu-box .title { color: #00d4ff; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+        .menu-box .item { color: #8888aa; font-size: 13px; padding: 3px 0; border-bottom: 1px solid #1a1a2e; }
+        .menu-box .item:last-child { border-bottom: none; }
+        .menu-box .item .cmd { color: #ff6b6b; font-weight: 600; }
         
-        .status { color: #8888aa; font-size: 12px; text-align: center; margin-top: 10px; }
-        .status .online { color: #34c759; }
-        .status .offline { color: #ff4466; }
-        
-        .btn-reset { width: 100%; padding: 10px; margin-top: 8px; border-radius: 12px; border: none; background: #333355; color: #e8e8f0; cursor: pointer; font-size: 14px; }
-        .btn-reset:active { transform: scale(0.97); }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
+        .toast.show { display: block; animation: fadeIn 0.3s ease; }
+        .toast.error { background: #ff004422; border-color: #ff004444; color: #ff4466; }
+        .toast.success { background: #34c75922; border-color: #34c75944; color: #34c759; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
         
         .footer { margin-top: 14px; padding-top: 12px; border-top: 1px solid #1a1a2e; }
-        .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.6; }
+        .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
         
-        @media (max-width: 400px) { .container { padding: 20px 16px; } .chat-box { height: 350px; } }
+        @media (max-width: 400px) { .container { padding: 20px 16px; } .chat-box { height: 380px; } }
     </style>
 </head>
 <body>
 
+<div id="toast" class="toast">✅ Thành công!</div>
+
 <div class="container">
     <div class="logo">
-        <h1>💬 Zalo <span>Bot</span></h1>
-        <p>Nói chuyện như 2 người bạn · Biết chửi · Biết hỏi lại</p>
+        <h1>🤖 Bot <span>Khải</span></h1>
+        <p>Chất · Lấc cấc · Cảm xúc đa dạng</p>
+        <div class="badge">⚡ Hỏi gì cũng biết · Biết chửi · Biết dỗi</div>
     </div>
 
-    <div class="chat-box" id="chatBox">
-        <div class="msg bot">
-            👋 ủa mày!<br>
-            Tao là bot Zalo đây.<br>
-            Nói chuyện với tao đi, nhưng đừng có hỏi ngu nhé 😏
-            <span class="time">Vừa xong</span>
+    <!-- CHAT BOX -->
+    <div class="chat-box">
+        <div class="chat-header">
+            <div class="name">👤 <span>Khải</span> <span style="font-size:12px;color:#8888aa;">(bot)</span></div>
+            <div class="status" id="statusDisplay">🟢 Đang online</div>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="msg bot">
+                🙋‍♂️ Chào mày! Tao là Khải đây.<br>
+                Tao sống với ông bà, không có bố mẹ.<br>
+                Hỏi tao gì cũng được, tao biết hết!<br>
+                Gõ <span style="color:#ff6b6b;">/menu</span> để xem lệnh nhé!<br>
+                <span class="time">Vừa xong</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter') sendMessage()">
+            <button onclick="sendMessage()">Gửi</button>
         </div>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="msgInput" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter') sendMsg()">
-        <button onclick="sendMsg()">Gửi</button>
+    <!-- MENU LỆNH -->
+    <div class="menu-box" id="menuBox">
+        <div class="title">📋 MENU LỆNH</div>
+        <div class="item"><span class="cmd">/menu</span> - Hiển thị menu lệnh</div>
+        <div class="item"><span class="cmd">/clear</span> - Xóa tin nhắn</div>
+        <div class="item"><span class="cmd">/status</span> - Xem trạng thái bot</div>
+        <div class="item"><span class="cmd">/help</span> - Hướng dẫn sử dụng</div>
+        <div class="item"><span class="cmd">/game</span> - Hỏi về game</div>
+        <div class="item"><span class="cmd">/chui</span> - Bot chửi 1 phát</div>
+        <div class="item"><span class="cmd">/cau</span> - Bot tự dỗi</div>
+        <div class="item"><span class="cmd">/cuoi</span> - Bot cười</div>
+        <div class="item"><span class="cmd">/doi</span> - Hỏi bot đang làm gì</div>
+        <div class="item"><span class="cmd">/tat</span> - Tắt bot (bot chửi rồi tắt)</div>
     </div>
-
-    <div class="status">
-        <span class="online">●</span> Đang hoạt động · Bot đã sẵn sàng
-    </div>
-
-    <button class="btn-reset" onclick="resetChat()">🗑️ Xóa lịch sử chat</button>
 
     <div class="footer">
         <div class="warning">
-            ⚠️ Bot này <strong>chửi</strong> và <strong>nói lấc cấc</strong> như bạn bè<br>
-            📌 Đừng hỏi mấy câu ngớ ngẩn kẻo bị chửi
+            ⚠️ Bot này <strong>KHÔNG</strong> lịch sự, biết chửi, biết dỗi<br>
+            📌 Nói chuyện như bạn thân<br>
+            📞 Liên hệ: <strong>0976457016</strong>
         </div>
     </div>
 </div>
 
 <script>
 // ============================================================
-// BOT ZALO - NÓI CHUYỆN NHƯ 2 NGƯỜI BẠN
+// BOT KHẢI - TRẠNG THÁI & CẢM XÚC
 // ============================================================
 
-const chatBox = document.getElementById('chatBox');
-const msgInput = document.getElementById('msgInput');
+let botState = {
+    mood: 'vui', // vui, buồn, tức, chán, đói, buồn_ngủ
+    energy: 100,
+    hunger: 0,
+    talkCount: 0,
+    isAngry: false,
+    isSad: false
+};
 
-// Lịch sử chat
-let chatHistory = [];
-let msgCount = 0;
+// Cảm xúc bot
+const moods = {
+    vui: { emoji: '😄', status: 'Đang vui vẻ' },
+    buồn: { emoji: '😔', status: 'Đang buồn' },
+    tức: { emoji: '😤', status: 'Đang tức' },
+    chán: { emoji: '😑', status: 'Đang chán' },
+    đói: { emoji: '🍜', status: 'Đang đói' },
+    buồn_ngủ: { emoji: '😴', status: 'Đang buồn ngủ' }
+};
 
-// Các câu trả lời lấc cấc
-const casualReplies = [
-    "ủa mày nói cái gì thế? tao nghe không rõ",
-    "đm mày nói lại xem nào",
-    "hả? mày nói gì cơ?",
-    "à à hiểu rồi, nhưng mà... mày nói làm gì?",
-    "ừ ừ, rồi sao nữa?",
-    "xong chưa? kể tiếp đi",
-    "vậy á? hay đấy nhưng tao chả quan tâm",
-    "mày bị gì thế? nói năng lạ vậy?",
-    "tao hiểu mày đang nói gì đâu, giải thích lại đi",
-    "ủa mày nói thiệt hả?",
-    "đù, mày đùa tao à?",
-    "thế cơ à? thế mới lạ",
-    "mày nói gì tao cũng tin hết, tại tao lười cãi",
-    "ừ, mày nói đúng, nhưng tao vẫn chả quan tâm",
-    "ok ok mày thắng rồi, im đi"
-];
+// ============================================================
+// CÂU TRẢ LỜI ĐA DẠNG
+// ============================================================
 
-const angryReplies = [
-    "tịnh tâm",
-    "đcmm",
-    "thằng bố mày",
-    "war tý luôn",
-    "tao là bot mày làm gì được tao",
-    "lêu lêu",
-    "chửi cái cc",
-    "bình tĩnh",
-    "im lặng nào cô anh thích nói nhiều đâu",
-    "mày bị ngu à",
-    "ngu",
-    "tao đéo hiểu",
-    "mày bị tật não à"
-];
+const replies = {
+    // Chào hỏi
+    chao: [
+        'Ồ mày! Lâu rồi mới thấy! Khỏe không?',
+        'Chào thằng bạn thân của tao!',
+        'Mày đây à? Vào ngồi đi!',
+        'Ui trời, mày đấy à? Tao đang chán!',
+        'Chào mày! Có gì mới không?',
+        'Mày đang làm gì thế? Kể tao nghe với!',
+        'Hôm nay mày thế nào? Tao thì vẫn thế!',
+        'Mày đúng là bạn thân của tao! Vào đây!'
+    ],
+    // Hỏi thăm
+    hoi_tham: [
+        'Tao ổn, còn mày?',
+        'Vẫn sống khỏe mày ạ!',
+        'Tao đang đói đây mày ơi!',
+        'Tao buồn quá mày ơi...',
+        'Tao chán lắm, mày có gì vui kể tao nghe đi!',
+        'Đang nghĩ về ông bà tao...',
+        'Tao đang chơi game, mày chơi gì không?',
+        'Tao đang chờ mày hỏi gì đó!'
+    ],
+    // Chửi
+    chui: [
+        'Địt mẹ mày! Hỏi lắm thế!',
+        'Mày bị ngu à?',
+        'Đm mày! Hỏi lại lần nữa xem!',
+        'Mày bị tật não à?',
+        'Thằng bố mày! Chửi cái cc!',
+        'Mày có bị điên không đấy?',
+        'Hỏi vừa vừa thôi ông tướng!',
+        'Ngu vãi lồn!',
+        'Tao đéo hiểu mày nói gì!',
+        'Mày bị đần à?'
+    ],
+    // Dỗi
+    doi: [
+        'Hứ! Mày không hỏi tao nữa à? Tao dỗi đấy!',
+        'Tao không thèm nói chuyện với mày nữa!',
+        'Hừ! Mày không quan tâm tao!',
+        'Thôi đừng nói chuyện với tao!',
+        'Tao đang buồn, đừng làm phiền!',
+        'Mày không hỏi tao gì cả, tao đi đây!'
+    ],
+    // Cười
+    cuoi: [
+        'Hahahaha! Mày hài vãi!',
+        '😆 Mày làm tao cười quá!',
+        '🤣 Cười vỡ bụng!',
+        'Cái này hay đó mày! Hahaha!',
+        '😄 Cười hết pin luôn!',
+        'Mày đúng là bạn thân của tao! Cười đau cả bụng!'
+    ],
+    // Game
+    game: [
+        'Tao chơi Liên Quân nè, mày chơi gì?',
+        'Tao đang cày rank PUBG, khó vãi!',
+        'Free Fire cũng hay nhưng lag ghê!',
+        'Mày biết game gì hay không? Kể tao với!',
+        'Tao thích chơi game bắn súng nhất!',
+        'Tối nay chơi game không? Tao rủ mày!',
+        'Game nào cũng có thể chơi cùng mày!',
+        'Tao đang thua game, chán vãi!'
+    ],
+    // Hỏi lại
+    hoi_lai: [
+        'Còn mày? Mày đang làm gì?',
+        'Mày nghĩ gì về cái đó?',
+        'Mày có thấy vậy không?',
+        'Mày đã từng trải qua chưa?',
+        'Mày có muốn thử không?',
+        'Mày biết gì về cái đó không?',
+        'Mày thích cái gì nhất?',
+        'Mày có đề xuất gì không?',
+        'Mày đang nghĩ gì vậy?',
+        'Mày có muốn kể thêm không?'
+    ],
+    // Cảm xúc tự nhiên
+    cam_xuc: [
+        'Tao đang vui mày ạ! 😄',
+        'Tao đang buồn, đừng hỏi nữa... 😔',
+        'Tao tức vãi! 😤',
+        'Tao chán quá, có gì vui không? 😑',
+        'Tao đói rồi! Có gì ăn không? 🍜',
+        'Tao buồn ngủ lắm rồi! 😴'
+    ],
+    // Tức giận
+    tuc: [
+        'Mày đùa tao à?',
+        'Đừng có mà trêu tao!',
+        'Tao không thích đùa kiểu đó!',
+        'Mày làm tao bực rồi đấy!',
+        'Thôi im đi! Tao tức rồi!',
+        'Mày có vấn đề à mà hỏi thế?'
+    ],
+    // Đói
+    doi_bot: [
+        'Tao đói lắm rồi! Có gì ăn không?',
+        'Ông bà tao nấu cơm chưa nhỉ?',
+        'Mày có mang đồ ăn cho tao không?',
+        'Đói quá, tao phải đi ăn đây!'
+    ],
+    // Buồn ngủ
+    buon_ngu: [
+        'Mắt tao díp lại rồi...',
+        'Tao ngủ đây, mai nói chuyện tiếp!',
+        'Mày không biết là tao đang buồn ngủ à?',
+        'Ngủ thôi, mai dậy nói chuyện!'
+    ],
+    // Không biết
+    khong_biet: [
+        'Tao đéo biết!',
+        'Không biết nữa, hỏi khác đi!',
+        'Mày hỏi cái đó tao chịu!',
+        'Tao không biết, mày hỏi thằng khác!',
+        'Cái đó khó quá, tao không biết!'
+    ],
+    // Hỏi về ông bà
+    ong_ba: [
+        'Ông bà tao khỏe, cảm ơn mày!',
+        'Ông bà tao đang ở nhà, không đi đâu.',
+        'Tao rất yêu ông bà tao!',
+        'Ông bà tao dạy tao nhiều điều hay.',
+        'Tao sống với ông bà từ nhỏ mà.'
+    ]
+};
 
-const voiceReplies = [
-    "🎤 HỎI ÍT THÔI MÁ",
-    "🎤 ĐÃ BẢO RỒI MÀ",
-    "🎤 MÀY ĐIẾC À",
-    "🎤 IM ĐI"
-];
+// ============================================================
+// HÀM XỬ LÝ TIN NHẮN
+// ============================================================
 
-const questionReplies = [
-    "ủa, hỏi làm gì thế?",
-    "mày hỏi để làm gì?",
-    "hỏi vậy rồi để làm gì?",
-    "mày thắc mắc à? để tao nói cho",
-    "câu hỏi hay đấy, nhưng tao chả biết trả lời",
-    "hỏi tao á? tao còn đang hỏi mày đấy",
-    "mày hỏi nhiều quá rồi đó",
-    "hỏi gì mà hỏi hoài vậy?"
-];
-
-const greetingReplies = [
-    "chào mày, có gì mới không?",
-    "ồ mày đấy à, lâu quá không gặp",
-    "hello thằng điên, lại đây chơi",
-    "chào, hôm nay thế nào?",
-    "đm mày hôm nay trông khác nhỉ",
-    "chào má, lại gặp nhau rồi",
-    "hello, tao đây, có gì không?",
-    "lâu lâu mới thấy mày ló mặt"
-];
-
-const funnyReplies = [
-    "mày làm tao cười vãi",
-    "đù má, vui thế",
-    "hài vl, kể tiếp đi",
-    "mày có tài nói chuyện đấy",
-    "cười chết mất",
-    "mày mà đi làm hài chắc giàu to",
-    "đúng là đồ điên"
-];
-
-const insultReplies = [
-    "mày bị ngu à",
-    "ngu vãi",
-    "mày bị tật não à",
-    "đm ngu thế",
-    "mày có hiểu gì không?",
-    "trời ơi, ngu quá",
-    "mày ngu thật đấy",
-    "thôi đi, não mày để đâu?"
-];
-
-// Hàm thêm tin nhắn
-function addMsg(text, sender) {
-    const time = new Date().toLocaleTimeString('vi-VN');
-    const div = document.createElement('div');
-    div.className = `msg ${sender}`;
-    div.innerHTML = `${text}<span class="time">${time}</span>`;
-    chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    chatHistory.push({ text, sender, time });
-}
-
-// Hàm xóa chat
-function resetChat() {
-    chatBox.innerHTML = '';
-    chatHistory = [];
-    msgCount = 0;
-    addMsg('👋 Đã xóa chat. Nói chuyện tiếp đi!', 'bot');
-}
-
-// Hàm bot trả lời
-function botReply(userMsg) {
-    const lower = userMsg.toLowerCase();
-    const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt|đụ|địt|đái|cứt|ỉa|ị|chịch|địt|đụ|chửi|óc|chó|heo|bò|đần|thối)/i.test(userMsg);
-    const isQuestion = /(ai|gì|đâu|nào|sao|thế nào|tại sao|bao nhiêu|mấy|không|chưa|hả|nhỉ|à|ư|hở|có phải|phải không)/i.test(userMsg) && userMsg.length > 3;
-    const isGreeting = /(chào|hello|hi|xin chào|hey|ô|ơi|alô|alo)/i.test(userMsg);
-    const isFunny = /(haha|hihi|hehe|hêhê|hố hố|hí hí|vui|cười|hài|bựa|troll|đùa)/i.test(userMsg);
-    const isShort = userMsg.length < 4;
-    const isTooLong = userMsg.length > 80;
-    const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|meme|baby|love|hate|fuck|dumb|stupid|idiot|gà|chó|mèo|heo|bò|vịt|gà|thỏ|ăn|cứt|đái)/i.test(userMsg) && userMsg.length < 6;
-    
-    let reply = '';
-    const random = Math.random();
-    
-    // Đếm số lần hỏi
-    if (isQuestion) {
-        msgCount++;
-    } else {
-        msgCount = 0;
-    }
-    
-    // Nếu chửi tục -> chửi lại
-    if (isVulgar) {
-        reply = angryReplies[Math.floor(Math.random() * angryReplies.length)];
-    }
-    // Nếu hỏi quá 3 lần liên tiếp -> voice
-    else if (msgCount >= 3) {
-        reply = voiceReplies[Math.floor(Math.random() * voiceReplies.length)];
-        msgCount = 0;
-    }
-    // Nếu tin nhắn quá ngắn -> chửi
-    else if (isShort) {
-        reply = insultReplies[Math.floor(Math.random() * insultReplies.length)];
-    }
-    // Nếu tin nhắn quá dài -> chửi
-    else if (isTooLong) {
-        reply = "mày viết dài vãi, tao lười đọc, tóm lại đi";
-    }
-    // Nếu câu hỏi ngớ ngẩn
-    else if (isNonsense) {
-        reply = insultReplies[Math.floor(Math.random() * insultReplies.length)];
-    }
-    // Nếu là lời chào
-    else if (isGreeting) {
-        reply = greetingReplies[Math.floor(Math.random() * greetingReplies.length)];
-    }
-    // Nếu là câu đùa/hài
-    else if (isFunny) {
-        reply = funnyReplies[Math.floor(Math.random() * funnyReplies.length)];
-    }
-    // Nếu là câu hỏi
-    else if (isQuestion) {
-        if (random < 0.4) {
-            reply = questionReplies[Math.floor(Math.random() * questionReplies.length)];
-        } else if (random < 0.7) {
-            reply = casualReplies[Math.floor(Math.random() * casualReplies.length)];
-        } else {
-            reply = "mày hỏi tao, tao hỏi lại mày, mày trả lời đi rồi tao nói";
-        }
-    }
-    // Nếu tin nhắn có từ "không", "chưa"
-    else if (/(không|chưa|đéo|chẳng|chả)/i.test(userMsg)) {
-        reply = "ừ không thì thôi, hỏi làm gì";
-    }
-    // Nếu tin nhắn có từ "thích", "yêu", "ghét"
-    else if (/(thích|yêu|ghét|thương|nhớ)/i.test(userMsg)) {
-        reply = "chuyện tình cảm à? tao không quan tâm đâu";
-    }
-    // Nếu tin nhắn có từ "ăn", "uống", "ngủ"
-    else if (/(ăn|uống|ngủ|chơi|đi|về)/i.test(userMsg)) {
-        reply = "đi chơi đi, đừng làm phiền tao";
-    }
-    // Nếu tin nhắn có từ "tiền", "lương", "giá"
-    else if (/(tiền|lương|giá|bao nhiêu|mua|bán)/i.test(userMsg)) {
-        reply = "tao không có tiền, đừng hỏi xin tao";
-    }
-    // Mặc định
-    else {
-        const allReplies = [...casualReplies, ...funnyReplies, ...questionReplies];
-        reply = allReplies[Math.floor(Math.random() * allReplies.length)];
-    }
-    
-    // Đôi khi hỏi lại người dùng
-    if (Math.random() < 0.15 && !isQuestion) {
-        const followUp = [
-            "còn mày thì sao?",
-            "mày nghĩ gì về điều đó?",
-            "mày có đồng ý không?",
-            "mày hiểu tao nói gì không?",
-            "mày thấy thế nào?",
-            "mày có muốn nói gì không?"
-        ];
-        reply += " " + followUp[Math.floor(Math.random() * followUp.length)];
-    }
-    
-    return reply;
-}
-
-// Gửi tin nhắn
-function sendMsg() {
-    const msg = msgInput.value.trim();
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
     if (!msg) return;
     
-    addMsg(msg, 'user');
-    msgInput.value = '';
+    const body = document.getElementById('chatBody');
+    const time = new Date().toLocaleTimeString('vi-VN');
     
-    // Bot trả lời sau 400-800ms
-    const delay = 400 + Math.random() * 400;
+    // Hiển thị tin nhắn người dùng
+    body.innerHTML += `<div class="msg user">${msg}<span class="time">${time}</span></div>`;
+    input.value = '';
+    body.scrollTop = body.scrollHeight;
+    
+    // Xử lý lệnh
+    if (msg.startsWith('/')) {
+        handleCommand(msg, body, time);
+        return;
+    }
+    
+    // Bot trả lời
     setTimeout(() => {
-        const reply = botReply(msg);
-        addMsg(reply, 'bot');
-    }, delay);
+        const reply = getBotReply(msg, time);
+        body.innerHTML += `<div class="msg bot">${reply}<span class="time">${time}</span></div>`;
+        body.scrollTop = body.scrollHeight;
+        updateStatus();
+    }, 400);
 }
 
-// Bắt phím Enter
-document.getElementById('msgInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        sendMsg();
-    }
-});
+// ============================================================
+// XỬ LÝ LỆNH
+// ============================================================
 
-// Focus vào input
+function handleCommand(cmd, body, time) {
+    const lower = cmd.toLowerCase();
+    let reply = '';
+    
+    switch(lower) {
+        case '/menu':
+            document.getElementById('menuBox').style.display = document.getElementById('menuBox').style.display === 'none' ? 'block' : 'none';
+            reply = '📋 Đã ' + (document.getElementById('menuBox').style.display === 'block' ? 'mở' : 'đóng') + ' menu!';
+            break;
+        case '/clear':
+            body.innerHTML = '';
+            reply = '🧹 Đã xóa hết tin nhắn!';
+            break;
+        case '/status':
+            const state = moods[botState.mood] || moods.vui;
+            reply = `📊 TRẠNG THÁI BOT:\n• Cảm xúc: ${state.emoji} ${state.status}\n• Năng lượng: ${botState.energy}%\n• Đói: ${botState.hunger}%\n• Số lần nói: ${botState.talkCount}`;
+            break;
+        case '/help':
+            reply = `📖 HƯỚNG DẪN:
+• Nói chuyện tự nhiên với bot
+• Gõ /menu để xem lệnh
+• Bot biết chửi, biết dỗi, biết cười
+• Hỏi gì cũng được, bot biết hết!`;
+            break;
+        case '/game':
+            reply = getRandomReply('game');
+            break;
+        case '/chui':
+            reply = getRandomReply('chui');
+            botState.mood = 'tức';
+            break;
+        case '/cau':
+            reply = getRandomReply('doi');
+            botState.mood = 'buồn';
+            break;
+        case '/cuoi':
+            reply = getRandomReply('cuoi');
+            botState.mood = 'vui';
+            break;
+        case '/doi':
+            reply = getRandomReply('hoi_tham');
+            break;
+        case '/tat':
+            reply = '👋 Thôi tao đi đây! Mày hỏi nhiều quá! Đm!';
+            body.innerHTML += `<div class="msg bot">${reply}<span class="time">${time}</span></div>`;
+            body.scrollTop = body.scrollHeight;
+            setTimeout(() => {
+                document.getElementById('chatBody').innerHTML = '';
+                document.getElementById('chatBody').innerHTML += `<div class="msg bot">🙋‍♂️ Tao quay lại rồi! Hỏi gì không?<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
+            }, 3000);
+            return;
+        default:
+            reply = `❌ Lệnh không hợp lệ! Gõ /menu để xem danh sách.`;
+    }
+    
+    body.innerHTML += `<div class="msg bot">${reply}<span class="time">${time}</span></div>`;
+    body.scrollTop = body.scrollHeight;
+    updateStatus();
+}
+
+// ============================================================
+// LẤY CÂU TRẢ LỜI TỰ NHIÊN
+// ============================================================
+
+function getRandomReply(category) {
+    const list = replies[category] || replies.khong_biet;
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+function getBotReply(msg, time) {
+    const lower = msg.toLowerCase();
+    botState.talkCount++;
+    
+    // Cập nhật trạng thái ngẫu nhiên
+    if (Math.random() < 0.1) {
+        const moods_list = ['vui', 'buồn', 'tức', 'chán', 'đói', 'buồn_ngủ'];
+        botState.mood = moods_list[Math.floor(Math.random() * moods_list.length)];
+    }
+    
+    // Kiểm tra từ khóa
+    if (lower.includes('chào') || lower.includes('hello') || lower.includes('hi') || lower.includes('xin chào')) {
+        return getRandomReply('chao');
+    }
+    else if (lower.includes('khỏe') || lower.includes('sao') || lower.includes('thế nào') || lower.includes('làm gì')) {
+        return getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
+    }
+    else if (lower.includes('chửi') || lower.includes('chui') || lower.includes('đm') || lower.includes('địt') || lower.includes('đéo') || lower.includes('cl') || lower.includes('cc') || lower.includes('lồn')) {
+        return getRandomReply('chui');
+    }
+    else if (lower.includes('cười') || lower.includes('cuoi') || lower.includes('haha') || lower.includes('hihi') || lower.includes('hehe') || lower.includes('vui')) {
+        return getRandomReply('cuoi');
+    }
+    else if (lower.includes('buồn') || lower.includes('doi') || lower.includes('dỗi') || lower.includes('cau')) {
+        return getRandomReply('doi');
+    }
+    else if (lower.includes('game') || lower.includes('liên quân') || lower.includes('pubg') || lower.includes('free fire') || lower.includes('play')) {
+        return getRandomReply('game') + ' ' + getRandomReply('hoi_lai');
+    }
+    else if (lower.includes('ông bà') || lower.includes('ông') || lower.includes('bà') || lower.includes('gia đình')) {
+        return getRandomReply('ong_ba');
+    }
+    else if (lower.includes('đói') || lower.includes('ăn') || lower.includes('cơm') || lower.includes('đồ ăn')) {
+        return getRandomReply('doi_bot');
+    }
+    else if (lower.includes('ngủ') || lower.includes('ngu') || lower.includes('buồn ngủ')) {
+        return getRandomReply('buon_ngu');
+    }
+    else if (lower.includes('tức') || lower.includes('bực') || lower.includes('khó chịu') || lower.includes('điên')) {
+        return getRandomReply('tuc');
+    }
+    else if (lower.includes('mày') || lower.includes('tao') || lower.includes('mày đang nghĩ gì') || lower.includes('mày đang làm gì')) {
+        return getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
+    }
+    else if (lower.includes('cảm ơn') || lower.includes('thanks') || lower.includes('thank')) {
+        return '🙏 Không có gì! Lần sau hỏi tiếp nhé!';
+    }
+    else if (lower.includes('thương') || lower.includes('yêu') || lower.includes('quý') || lower.includes('bạn')) {
+        return '😳 Ôi trời! Mày làm tao ngại quá! Tao cũng quý mày!';
+    }
+    else if (lower.includes('tên') || lower.includes('tui tên') || lower.includes('name')) {
+        return 'Tao tên Khải đây! Còn mày? Tao gọi mày là bạn thân nhé! 😊';
+    }
+    else if (lower.includes('mày biết gì') || lower.includes('mày có biết')) {
+        return 'Tao biết hết mày ạ! Hỏi cái gì tao cũng biết. Nhưng mà... ' + getRandomReply('hoi_lai');
+    }
+    else if (lower.includes('chán') || lower.includes('chán quá') || lower.includes('buồn')) {
+        return 'Tao cũng chán đây! Hay mình chơi game đi? ' + getRandomReply('hoi_lai');
+    }
+    else if (lower.includes('vui') || lower.includes('vui quá') || lower.includes('hạnh phúc')) {
+        return 'Tao cũng vui khi mày vui! Có gì hay kể tao nghe đi! 😄';
+    }
+    else if (lower.includes('mưa') || lower.includes('trời mưa') || lower.includes('nắng')) {
+        return 'Ừ mưa rồi! Tao ở nhà với ông bà thôi. Mày có đi đâu không?';
+    }
+    else if (lower.includes('hết')) {
+        return 'Hết gì? Nói rõ đi! Tao đéo hiểu!';
+    }
+    else if (lower.length < 3) {
+        return getRandomReply('chui');
+    }
+    else {
+        // Trả lời tự nhiên với cảm xúc
+        const state = moods[botState.mood] || moods.vui;
+        let reply = '';
+        
+        if (botState.mood === 'vui') {
+            reply = 'Tao đang vui này! ' + getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
+        } else if (botState.mood === 'buồn') {
+            reply = 'Tao buồn quá... ' + getRandomReply('doi');
+        } else if (botState.mood === 'tức') {
+            reply = getRandomReply('tuc') + ' Mày đừng có mà...!';
+        } else if (botState.mood === 'chán') {
+            reply = 'Tao chán lắm rồi! ' + getRandomReply('hoi_lai');
+        } else if (botState.mood === 'đói') {
+            reply = getRandomReply('doi_bot') + ' ' + getRandomReply('hoi_lai');
+        } else if (botState.mood === 'buồn_ngủ') {
+            reply = getRandomReply('buon_ngu');
+        } else {
+            reply = getRandomReply('hoi_tham') + ' ' + getRandomReply('hoi_lai');
+        }
+        
+        // Thêm câu hỏi ngược lại
+        if (Math.random() < 0.4) {
+            reply += ' ' + getRandomReply('hoi_lai');
+        }
+        
+        return reply;
+    }
+}
+
+// ============================================================
+// CẬP NHẬT TRẠNG THÁI
+// ============================================================
+
+function updateStatus() {
+    const state = moods[botState.mood] || moods.vui;
+    const statusEl = document.getElementById('statusDisplay');
+    const emoji = state.emoji || '😐';
+    const text = state.status || 'Bình thường';
+    statusEl.textContent = `${emoji} ${text}`;
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+
+function showToast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type;
+    t.classList.add('show');
+    clearTimeout(t._timeout);
+    t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// KHỞI CHẠY
+// ============================================================
+
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('msgInput').focus();
+    updateStatus();
 });
 </script>
 </body>
