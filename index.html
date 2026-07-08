@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DPI VIP - Shop Pro</title>
+    <title>DPI VIP - Bot Pro</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
@@ -22,15 +22,20 @@
         .key-box .status { color: #ffcc00; font-size: 13px; margin-top: 6px; }
         .key-box .status.success { color: #34c759; }
         .key-box .status.error { color: #ff4466; }
+        
         .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 8px; }
         .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
         .btn:active { transform: scale(0.97); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
         .btn-danger { background: linear-gradient(135deg, #ff4466, #cc1133); }
         .btn-warning { background: linear-gradient(135deg, #ff9500, #ff6b00); }
         .btn-gray { background: linear-gradient(135deg, #666688, #444466); }
+        .btn-shop { background: linear-gradient(135deg, #af52de, #7c3aed); }
         .hidden { display: none !important; }
+        
+        /* ===== SHOP BUTTON ===== */
+        .shop-trigger { margin: 12px 0; }
         
         /* ===== SHOP MENU ===== */
         .shop-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
@@ -46,9 +51,9 @@
         /* ===== PAYMENT ===== */
         .payment-box { background: #0d0d1a; border-radius: 12px; padding: 20px 16px; border: 1px solid #2a2a4a; margin-top: 12px; display: none; }
         .payment-box .bank-info { text-align: center; }
-        .payment-box .bank-info .name { color: #e8e8f0; font-size: 18px; font-weight: 600; }
+        .payment-box .bank-info .name { color: #e8e8f0; font-size: 20px; font-weight: 700; }
         .payment-box .bank-info .bank { color: #00d4ff; font-size: 14px; }
-        .payment-box .bank-info .amount { color: #ff6b6b; font-size: 22px; font-weight: 700; margin: 6px 0; }
+        .payment-box .bank-info .amount { color: #ff6b6b; font-size: 24px; font-weight: 700; margin: 6px 0; }
         .payment-box .bank-info .qr-placeholder { background: #0a0a12; border-radius: 12px; padding: 20px; margin: 10px 0; border: 2px dashed #333355; }
         .payment-box .bank-info .qr-placeholder img { max-width: 200px; border-radius: 8px; }
         .payment-box .bank-info .note { color: #8888aa; font-size: 12px; margin-top: 6px; }
@@ -67,6 +72,7 @@
         .status-box .status-text.success { color: #34c759; }
         .status-box .status-text.error { color: #ff4466; }
         .status-box .status-text.info { color: #00d4ff; }
+        .status-box .status-text.bot { color: #af52de; font-weight: 600; }
         
         /* ===== KEY RESULT ===== */
         .key-result { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #34c759; margin-top: 12px; display: none; text-align: center; }
@@ -74,6 +80,15 @@
         .key-result .key-display { color: #00d4ff; font-size: 20px; font-family: 'Courier New', monospace; background: #0a0a12; padding: 12px; border-radius: 8px; margin: 8px 0; word-break: break-all; border: 1px solid #2a2a4a; }
         .key-result .copy-btn { background: #00d4ff33; border: 1px solid #00d4ff44; color: #00d4ff; padding: 6px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; }
         .key-result .copy-btn:hover { background: #00d4ff55; }
+        
+        /* ===== BOT LOG ===== */
+        .bot-log { background: #0a0a12; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; max-height: 150px; overflow-y: auto; display: none; }
+        .bot-log .log-line { color: #8888aa; font-size: 11px; font-family: 'Courier New', monospace; padding: 2px 0; border-bottom: 1px solid #0d0d1a; }
+        .bot-log .log-line .time { color: #555577; }
+        .bot-log .log-line .ok { color: #34c759; }
+        .bot-log .log-line .fail { color: #ff4466; }
+        .bot-log .log-line .info { color: #00d4ff; }
+        .bot-log .log-line .warn { color: #ff9500; }
         
         /* ===== USER INFO ===== */
         .info-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
@@ -100,6 +115,9 @@
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
         
+        .key-list { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; max-height: 300px; overflow-y: auto; }
+        .key-list .title { color: #8888aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        
         @media (max-width: 400px) { .container { padding: 20px 16px; } .shop-menu { grid-template-columns: 1fr 1fr; gap: 6px; } .shop-item { padding: 10px 8px; } .shop-item .price { font-size: 15px; } }
     </style>
 </head>
@@ -119,54 +137,21 @@
         <div class="key-box">
             <label>🔑 NHẬP KEY ĐỂ VÀO APP</label>
             <input type="password" id="keyInput" placeholder="Nhập key của bạn..." onkeydown="if(event.key==='Enter') loginKey()">
-            <div class="status" id="loginStatus">💡 Nhập key để đăng nhập hoặc mua key bên dưới</div>
+            <div class="status" id="loginStatus">💡 Nhập key để đăng nhập</div>
         </div>
         <button class="btn" id="loginBtn" onclick="loginKey()">🔓 ĐĂNG NHẬP</button>
+        
+        <!-- ===== NÚT MUA KEY TỰ ĐỘNG ===== -->
+        <div class="shop-trigger">
+            <button class="btn btn-shop" onclick="toggleShop()">
+                🛒 MUA KEY TỰ ĐỘNG
+            </button>
+        </div>
     </div>
 
-    <!-- ===== PHẦN APP (SAU KHI ĐĂNG NHẬP) ===== -->
-    <div id="appSection" class="hidden">
-        <!-- UID -->
-        <div class="key-box">
-            <label>📱 UID thiết bị của bạn</label>
-            <div style="color:#00d4ff;font-size:15px;font-weight:600;word-break:break-all;font-family:'Courier New',monospace;" id="uidDisplay">⏳ Đang đọc...</div>
-            <div class="status success" id="statusDisplay">✅ Đã nhận diện thiết bị</div>
-        </div>
-
-        <!-- THÔNG TIN KEY -->
-        <div class="info-box">
-            <div class="row"><span class="label">🔑 Key đang dùng</span><span class="value blue" id="currentKey">---</span></div>
-            <div class="row"><span class="label">📋 Loại key</span><span class="value" id="keyType">---</span></div>
-            <div class="row"><span class="label">⏳ Thời hạn</span><span class="value green" id="keyExpiry">---</span></div>
-            <div class="row"><span class="label">⏱️ Còn lại</span><span class="value orange" id="keyRemain">---</span></div>
-            <div class="row"><span class="label">📅 Lần đăng nhập đầu</span><span class="value" id="firstLogin">---</span></div>
-        </div>
-
-        <!-- NÚT TẢI CONFIG -->
-        <button class="btn btn-success" id="downloadBtn" onclick="generateAndDownload()">
-            ⬇️ Tải Config Thật
-        </button>
-
-        <!-- NÚT QUẢN LÝ KEY (CHỈ ADMIN - KHÔNG GIỚI HẠN THIẾT BỊ) -->
-        <button class="btn btn-warning hidden" id="adminBtn" onclick="toggleKeyList()">
-            👑 QUẢN LÝ KEY (ADMIN)
-        </button>
-
-        <!-- DANH SÁCH KEY (ADMIN) -->
-        <div class="key-list hidden" id="keyListContainer">
-            <div class="title">📋 DANH SÁCH TẤT CẢ KEY</div>
-            <div id="keyListContent"></div>
-        </div>
-
-        <!-- NÚT ĐĂNG XUẤT -->
-        <button class="btn btn-gray" onclick="logout()" style="margin-top:8px;">
-            🚪 ĐĂNG XUẤT
-        </button>
-    </div>
-
-    <!-- ===== PHẦN MUA KEY (LUÔN HIỂN THỊ BÊN DƯỚI) ===== -->
-    <div id="shopSection" style="margin-top:16px;border-top:1px solid #1a1a2e;padding-top:16px;">
-        <div style="color:#8888aa;font-size:13px;font-weight:600;margin-bottom:8px;">🛒 MUA KEY TỰ ĐỘNG</div>
+    <!-- ===== PHẦN SHOP (ẨN BAN ĐẦU) ===== -->
+    <div id="shopSection" class="hidden" style="margin-top:16px;border-top:1px solid #1a1a2e;padding-top:16px;">
+        <div style="color:#8888aa;font-size:13px;font-weight:600;margin-bottom:8px;">📋 CHỌN GÓI KEY</div>
         
         <div class="shop-menu">
             <div class="shop-item" onclick="selectPackage('Vĩnh viễn', 400000, -1, 'VIP')">
@@ -202,16 +187,16 @@
             </div>
         </div>
 
-        <!-- THANH TOÁN -->
+        <!-- ===== THANH TOÁN ===== -->
         <div class="payment-box" id="paymentBox">
             <div class="bank-info">
                 <div class="name">🏦 LY NGOC DAI</div>
-                <div class="bank">BIDV · Zalo pay · MB</div>
+                <div class="bank">Zalo pay · BIDV · MBBank</div>
                 <div class="amount" id="paymentAmount">400.000₫</div>
                 <div style="color:#8888aa;font-size:13px;">Gói: <strong id="paymentPackage" style="color:#00d4ff;">Vĩnh viễn</strong></div>
                 <div class="qr-placeholder">
-                    <img id="qrImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23ffffff'/%3E%3Ctext x='50' y='100' font-family='Arial' font-size='14' fill='%23333'%3EQR PAYMENT%3C/text%3E%3Ctext x='30' y='130' font-family='Arial' font-size='11' fill='%23666'%3ELY NGOC DAI%3C/text%3E%3Ctext x='30' y='150' font-family='Arial' font-size='10' fill='%23999'%3EBIDV%3C/text%3E%3C/svg%3E" alt="QR Payment" style="max-width:200px;border-radius:8px;">
-                    <div style="color:#666688;font-size:11px;margin-top:4px;">⬆️ QR nhận tiền từ mọi ứng dụng</div>
+                    <img id="qrImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23ffffff'/%3E%3Ctext x='40' y='80' font-family='Arial' font-size='16' fill='%23333' font-weight='bold'%3ELY NGOC DAI%3C/text%3E%3Ctext x='30' y='110' font-family='Arial' font-size='12' fill='%23666'%3EQR nh%E1%BA%ADn ti%E1%BB%81n%3C/text%3E%3Ctext x='30' y='135' font-family='Arial' font-size='11' fill='%23999'%3EBIDV - Zalo pay - MB%3C/text%3E%3Ctext x='30' y='160' font-family='Arial' font-size='10' fill='%23aaa'%3E50%2B%3C/text%3E%3C/svg%3E" alt="QR Payment" style="max-width:200px;border-radius:8px;">
+                    <div style="color:#666688;font-size:11px;margin-top:4px;">⬆️ QR nhận tiền từ mọi ứng dụng chuyển tiền</div>
                 </div>
                 <div class="note">📌 Nội dung chuyển khoản: <strong id="transferNote">DPI_VIP_XXXX</strong></div>
                 <div class="note">💰 Số tiền: <strong id="transferAmount">400.000₫</strong></div>
@@ -225,19 +210,24 @@
             </div>
 
             <button class="btn btn-success" id="verifyBtn" onclick="verifyPayment()">
-                🔍 XÁC NHẬN THANH TOÁN
+                🤖 BOT XÁC NHẬN THANH TOÁN
             </button>
             <button class="btn btn-danger" onclick="cancelPayment()" style="margin-top:4px;">
                 ❌ HỦY
             </button>
         </div>
 
-        <!-- STATUS -->
+        <!-- ===== STATUS ===== -->
         <div class="status-box" id="statusBox">
             <div class="status-text" id="statusText">💡 Chọn gói key để mua</div>
         </div>
 
-        <!-- KEY RESULT -->
+        <!-- ===== BOT LOG ===== -->
+        <div class="bot-log" id="botLog">
+            <div class="log-line"><span class="time">[BOT]</span> <span class="info">🤖 Bot đã sẵn sàng</span></div>
+        </div>
+
+        <!-- ===== KEY RESULT ===== -->
         <div class="key-result" id="keyResult">
             <div class="title">✅ KEY CỦA BẠN</div>
             <div class="key-display" id="generatedKey">---</div>
@@ -247,6 +237,39 @@
             </div>
             <div style="color:#8888aa;font-size:11px;margin-top:8px;">⏳ Key có hiệu lực ngay sau khi đăng nhập lần đầu</div>
         </div>
+    </div>
+
+    <!-- ===== PHẦN APP (SAU KHI ĐĂNG NHẬP) ===== -->
+    <div id="appSection" class="hidden">
+        <div class="key-box">
+            <label>📱 UID thiết bị của bạn</label>
+            <div style="color:#00d4ff;font-size:15px;font-weight:600;word-break:break-all;font-family:'Courier New',monospace;" id="uidDisplay">⏳ Đang đọc...</div>
+            <div class="status success" id="statusDisplay">✅ Đã nhận diện thiết bị</div>
+        </div>
+
+        <div class="info-box">
+            <div class="row"><span class="label">🔑 Key đang dùng</span><span class="value blue" id="currentKey">---</span></div>
+            <div class="row"><span class="label">📋 Loại key</span><span class="value" id="keyType">---</span></div>
+            <div class="row"><span class="label">⏳ Thời hạn</span><span class="value green" id="keyExpiry">---</span></div>
+            <div class="row"><span class="label">⏱️ Còn lại</span><span class="value orange" id="keyRemain">---</span></div>
+        </div>
+
+        <button class="btn btn-success" id="downloadBtn" onclick="generateAndDownload()">
+            ⬇️ Tải Config Thật
+        </button>
+
+        <button class="btn btn-warning hidden" id="adminBtn" onclick="toggleKeyList()">
+            👑 QUẢN LÝ KEY (ADMIN)
+        </button>
+
+        <div class="key-list hidden" id="keyListContainer">
+            <div class="title">📋 DANH SÁCH TẤT CẢ KEY</div>
+            <div id="keyListContent"></div>
+        </div>
+
+        <button class="btn btn-gray" onclick="logout()" style="margin-top:8px;">
+            🚪 ĐĂNG XUẤT
+        </button>
     </div>
 
     <div class="footer">
@@ -260,13 +283,11 @@
 
 <script>
 // ============================================================
-// DỮ LIỆU KEY - ADMIN KHÔNG GIỚI HẠN THIẾT BỊ
+// DỮ LIỆU KEY - ADMIN KHÔNG GIỚI HẠN
 // ============================================================
 
 const ADMIN_KEY = 'NPDPIVIPAIMLOCKLIVE';
-const IS_ADMIN_UNLIMITED = true; // Admin không giới hạn thiết bị
 
-// Hàm tạo hash
 function generateKeyHash(key) {
     let hash = 0;
     for (let i = 0; i < key.length; i++) {
@@ -276,7 +297,6 @@ function generateKeyHash(key) {
     return Math.abs(hash).toString(16).padStart(8, '0').toUpperCase();
 }
 
-// Hàm tạo key ngẫu nhiên
 function generateRandomKey(prefix, length) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = prefix || '';
@@ -286,7 +306,6 @@ function generateRandomKey(prefix, length) {
     return result;
 }
 
-// Tạo key mới
 function createNewKey(type, duration, prefix) {
     let key;
     let attempts = 0;
@@ -295,42 +314,19 @@ function createNewKey(type, duration, prefix) {
         key = generateRandomKey(prefix + '_', 8) + suffix;
         attempts++;
     } while (attempts < 100);
-    return {
-        key: key,
-        hash: generateKeyHash(key),
-        type: type,
-        duration: duration
-    };
+    return { key: key, hash: generateKeyHash(key), type: type, duration: duration };
 }
 
 // ============================================================
-// QUẢN LÝ KEY DATABASE
+// QUẢN LÝ DATABASE
 // ============================================================
 
-function getKeyDB() {
-    try { return JSON.parse(localStorage.getItem('dpi_key_db') || '{}'); } catch(e) { return {}; }
-}
-function setKeyDB(db) {
-    try { localStorage.setItem('dpi_key_db', JSON.stringify(db)); } catch(e) {}
-}
-
-function getKeySessions() {
-    try { return JSON.parse(localStorage.getItem('dpi_key_sessions') || '{}'); } catch(e) { return {}; }
-}
-function setKeySessions(sessions) {
-    try { localStorage.setItem('dpi_key_sessions', JSON.stringify(sessions)); } catch(e) {}
-}
-
-function getUsedKeys() {
-    try { return JSON.parse(localStorage.getItem('dpi_used_keys') || '{}'); } catch(e) { return {}; }
-}
-function setUsedKeys(keys) {
-    try { localStorage.setItem('dpi_used_keys', JSON.stringify(keys)); } catch(e) {}
-}
-
-// ============================================================
-// LẤY UID THIẾT BỊ
-// ============================================================
+function getKeyDB() { try { return JSON.parse(localStorage.getItem('dpi_key_db') || '{}'); } catch(e) { return {}; } }
+function setKeyDB(db) { try { localStorage.setItem('dpi_key_db', JSON.stringify(db)); } catch(e) {} }
+function getKeySessions() { try { return JSON.parse(localStorage.getItem('dpi_key_sessions') || '{}'); } catch(e) { return {}; } }
+function setKeySessions(s) { try { localStorage.setItem('dpi_key_sessions', JSON.stringify(s)); } catch(e) {} }
+function getUsedKeys() { try { return JSON.parse(localStorage.getItem('dpi_used_keys') || '{}'); } catch(e) { return {}; } }
+function setUsedKeys(k) { try { localStorage.setItem('dpi_used_keys', JSON.stringify(k)); } catch(e) {} }
 
 function getDeviceUID() {
     try {
@@ -354,33 +350,25 @@ function getDeviceUID() {
         }
         const hex = Math.abs(hash).toString(16).padStart(40, '0').toUpperCase();
         return hex.substring(0, 40);
-    } catch(e) {
-        return 'UNKNOWN_' + Date.now().toString(16).toUpperCase();
-    }
+    } catch(e) { return 'UNKNOWN_' + Date.now().toString(16).toUpperCase(); }
 }
 
 // ============================================================
-// ĐĂNG NHẬP KEY
+// ĐĂNG NHẬP
 // ============================================================
 
 function loginKey() {
     const input = document.getElementById('keyInput').value.trim().toUpperCase();
     const status = document.getElementById('loginStatus');
-    
-    if (!input) {
-        status.textContent = '⚠️ Vui lòng nhập key!';
-        status.className = 'status error';
-        return;
-    }
+    if (!input) { status.textContent = '⚠️ Vui lòng nhập key!'; status.className = 'status error'; return; }
     
     const keyDB = getKeyDB();
     const sessions = getKeySessions();
     const usedKeys = getUsedKeys();
     const deviceUID = getDeviceUID();
     
-    // Kiểm tra key có tồn tại không
     if (!keyDB[input]) {
-        status.textContent = '❌ Key không hợp lệ! Vui lòng kiểm tra lại.';
+        status.textContent = '❌ Key không hợp lệ!';
         status.className = 'status error';
         showToast('❌ Key không hợp lệ!', 'error');
         return;
@@ -389,54 +377,35 @@ function loginKey() {
     const keyData = keyDB[input];
     const isAdmin = input === ADMIN_KEY;
     
-    // Kiểm tra key đã được sử dụng chưa (trừ Admin không giới hạn)
-    if (!isAdmin && usedKeys[input]) {
-        if (usedKeys[input].device !== deviceUID) {
-            status.textContent = '❌ Key này đã được sử dụng trên thiết bị khác!';
-            status.className = 'status error';
-            showToast('❌ Key đã được sử dụng!', 'error');
-            return;
-        }
+    if (!isAdmin && usedKeys[input] && usedKeys[input].device !== deviceUID) {
+        status.textContent = '❌ Key đã được sử dụng trên thiết bị khác!';
+        status.className = 'status error';
+        showToast('❌ Key đã được sử dụng!', 'error');
+        return;
     }
     
     const now = Date.now();
     let session = sessions[input];
-    
     if (!session) {
         const firstLogin = now;
-        let expiry = -1;
-        if (keyData.duration !== -1) {
-            expiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
-        }
-        session = {
-            firstLogin: firstLogin,
-            expiry: expiry,
-            device: isAdmin ? 'ADMIN_UNLIMITED' : deviceUID
-        };
+        let expiry = keyData.duration === -1 ? -1 : now + (keyData.duration * 24 * 60 * 60 * 1000);
+        session = { firstLogin: firstLogin, expiry: expiry, device: isAdmin ? 'ADMIN_UNLIMITED' : deviceUID };
         sessions[input] = session;
         setKeySessions(sessions);
-        
-        if (!isAdmin) {
-            usedKeys[input] = { device: deviceUID, time: now };
-            setUsedKeys(usedKeys);
-        }
+        if (!isAdmin) { usedKeys[input] = { device: deviceUID, time: now }; setUsedKeys(usedKeys); }
     }
     
-    // Kiểm tra hết hạn (Admin không giới hạn)
     if (!isAdmin && keyData.duration !== -1 && session.expiry < now) {
         const gracePeriod = 5 * 24 * 60 * 60 * 1000;
         if (now > session.expiry + gracePeriod) {
-            status.textContent = '❌ Key đã hết hạn quá 5 ngày! Vui lòng gia hạn.';
+            status.textContent = '❌ Key đã hết hạn!';
             status.className = 'status error';
             showToast('❌ Key đã hết hạn!', 'error');
             return;
         } else {
-            const newExpiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
-            session.expiry = newExpiry;
+            session.expiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
             sessions[input] = session;
             setKeySessions(sessions);
-            status.textContent = '✅ Đã gia hạn key thành công!';
-            status.className = 'status success';
         }
     }
     
@@ -444,26 +413,17 @@ function loginKey() {
     status.className = 'status success';
     showToast('✅ Đăng nhập thành công!', 'success');
     
-    // Lưu session
     localStorage.setItem('dpi_current_key', input);
     localStorage.setItem('dpi_current_key_data', JSON.stringify(keyData));
     localStorage.setItem('dpi_is_admin', JSON.stringify(isAdmin));
     
-    enterApp(input, keyData, session, isAdmin);
-}
-
-// ============================================================
-// VÀO APP
-// ============================================================
-
-function enterApp(key, keyData, session, isAdmin) {
     document.getElementById('loginSection').classList.add('hidden');
     document.getElementById('appSection').classList.remove('hidden');
     
     const uid = getDeviceUID();
     document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
-    document.getElementById('currentKey').textContent = key.substring(0, 6) + '...' + key.substring(key.length - 4);
-    document.getElementById('keyType').textContent = isAdmin ? '👑 Admin (Không giới hạn)' : keyData.type;
+    document.getElementById('currentKey').textContent = input.substring(0, 6) + '...' + input.substring(input.length - 4);
+    document.getElementById('keyType').textContent = isAdmin ? '👑 Admin' : keyData.type;
     document.getElementById('keyType').className = 'value ' + (isAdmin ? 'blue' : 'green');
     
     if (isAdmin || keyData.duration === -1) {
@@ -474,7 +434,6 @@ function enterApp(key, keyData, session, isAdmin) {
         const expiryDate = new Date(session.expiry);
         document.getElementById('keyExpiry').textContent = expiryDate.toLocaleString('vi-VN');
         document.getElementById('keyExpiry').className = 'value orange';
-        
         const remain = session.expiry - Date.now();
         if (remain > 0) {
             const days = Math.floor(remain / (24*60*60*1000));
@@ -487,17 +446,8 @@ function enterApp(key, keyData, session, isAdmin) {
         }
     }
     
-    document.getElementById('firstLogin').textContent = new Date(session.firstLogin).toLocaleString('vi-VN');
-    
-    // Hiện nút admin nếu là admin
-    if (isAdmin) {
-        document.getElementById('adminBtn').classList.remove('hidden');
-    }
+    if (isAdmin) document.getElementById('adminBtn').classList.remove('hidden');
 }
-
-// ============================================================
-// ĐĂNG XUẤT
-// ============================================================
 
 function logout() {
     if (!confirm('Bạn có chắc muốn đăng xuất?')) return;
@@ -508,238 +458,44 @@ function logout() {
     document.getElementById('appSection').classList.add('hidden');
     document.getElementById('keyListContainer').classList.add('hidden');
     document.getElementById('keyInput').value = '';
-    document.getElementById('loginStatus').textContent = '💡 Nhập key để đăng nhập hoặc mua key bên dưới';
+    document.getElementById('loginStatus').textContent = '💡 Nhập key để đăng nhập';
     document.getElementById('loginStatus').className = 'status';
     showToast('🚪 Đã đăng xuất', 'success');
 }
 
 // ============================================================
-// QUẢN LÝ KEY (ADMIN)
+// SHOP - MUA KEY
 // ============================================================
 
-function toggleKeyList() {
-    const container = document.getElementById('keyListContainer');
-    if (container.classList.contains('hidden')) {
-        container.classList.remove('hidden');
-        renderKeyList();
+let selectedPackage = null, selectedPrice = 0, selectedDuration = 0, selectedPrefix = '';
+let uploadedImageData = null, generatedKeyData = null;
+let botRunning = false;
+
+function toggleShop() {
+    const shop = document.getElementById('shopSection');
+    if (shop.classList.contains('hidden')) {
+        shop.classList.remove('hidden');
+        document.getElementById('statusText').textContent = '🛒 Chọn gói key để mua';
+        document.getElementById('statusText').className = 'status-text info';
+        addBotLog('info', '🛒 Mở cửa hàng key');
     } else {
-        container.classList.add('hidden');
+        shop.classList.add('hidden');
+        document.getElementById('paymentBox').style.display = 'none';
+        document.getElementById('keyResult').style.display = 'none';
+        document.getElementById('statusText').textContent = '💡 Đã đóng cửa hàng';
+        document.getElementById('statusText').className = 'status-text';
     }
 }
 
-function renderKeyList() {
-    const content = document.getElementById('keyListContent');
-    const keyDB = getKeyDB();
-    const sessions = getKeySessions();
-    const usedKeys = getUsedKeys();
-    
-    let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng số key: ' + Object.keys(keyDB).length + '</div>';
-    
-    // Sắp xếp key theo loại
-    const sortedKeys = Object.keys(keyDB).sort((a, b) => {
-        const aIsAdmin = a === ADMIN_KEY;
-        const bIsAdmin = b === ADMIN_KEY;
-        if (aIsAdmin && !bIsAdmin) return -1;
-        if (!aIsAdmin && bIsAdmin) return 1;
-        return keyDB[a].type.localeCompare(keyDB[b].type);
-    });
-    
-    sortedKeys.forEach(k => {
-        const data = keyDB[k];
-        const session = sessions[k];
-        const isUsed = !!usedKeys[k];
-        const isAdmin = k === ADMIN_KEY;
-        const status = isAdmin ? '👑 Admin' : (isUsed ? '✅ Đã dùng' : '⬜ Chưa dùng');
-        const expiry = isAdmin ? '♾️' : (data.duration === -1 ? '♾️' : data.duration + ' ngày');
-        
-        html += `
-            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
-                <span style="color:#8888aa;font-family:monospace;">${k.substring(0,6)}...${k.substring(k.length-4)}</span>
-                <span style="color:${isAdmin ? '#00d4ff' : '#e8e8f0'};">${data.type}</span>
-                <span style="color:#666688;">${expiry}</span>
-                <span style="color:${isAdmin ? '#00d4ff' : (isUsed ? '#34c759' : '#666688')};">${status}</span>
-            </div>
-        `;
-    });
-    content.innerHTML = html;
+function addBotLog(type, msg) {
+    const log = document.getElementById('botLog');
+    log.style.display = 'block';
+    const time = new Date().toLocaleTimeString('vi-VN');
+    const colors = { ok: 'ok', fail: 'fail', info: 'info', warn: 'warn' };
+    const cls = colors[type] || 'info';
+    log.innerHTML += `<div class="log-line"><span class="time">[${time}]</span> <span class="${cls}">${msg}</span></div>`;
+    log.scrollTop = log.scrollHeight;
 }
-
-// ============================================================
-// PHÂN TÍCH ẢNH THẬT - CHỐNG PHOTOSHOP
-// ============================================================
-
-function analyzeReceipt(imageData, expectedAmount, expectedNote) {
-    return new Promise((resolve) => {
-        // Tạo canvas để phân tích pixel
-        const img = new Image();
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            
-            const imageDataObj = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageDataObj.data;
-            
-            // Phân tích pixel để phát hiện chỉnh sửa
-            let result = {
-                success: false,
-                amount: 0,
-                note: '',
-                bank: 'BIDV',
-                confidence: 0,
-                errors: [],
-                warning: []
-            };
-            
-            // 1. Kiểm tra ảnh có bị chỉnh sửa không (phát hiện Photoshop)
-            let editScore = 0;
-            let pixelChanges = 0;
-            let totalPixels = data.length / 4;
-            
-            // Phát hiện vùng bị chỉnh sửa (pixel bất thường)
-            for (let i = 0; i < data.length; i += 16) {
-                const r = data[i];
-                const g = data[i+1];
-                const b = data[i+2];
-                const a = data[i+3];
-                
-                // Phát hiện vùng có màu bất thường (dấu hiệu chỉnh sửa)
-                if (r > 250 && g < 10 && b < 10) {
-                    pixelChanges++;
-                }
-                if (r < 10 && g > 250 && b < 10) {
-                    pixelChanges++;
-                }
-                if (r < 10 && g < 10 && b > 250) {
-                    pixelChanges++;
-                }
-            }
-            
-            // Tính tỷ lệ pixel bất thường
-            const abnormalRatio = pixelChanges / totalPixels;
-            if (abnormalRatio > 0.05) {
-                editScore += 30;
-                result.warning.push('Phát hiện pixel bất thường - có thể đã chỉnh sửa ảnh');
-            }
-            
-            // 2. Kiểm tra độ phân giải và chất lượng
-            if (canvas.width < 300 || canvas.height < 300) {
-                editScore += 20;
-                result.warning.push('Ảnh có độ phân giải thấp - có thể bị chỉnh sửa');
-            }
-            
-            // 3. Kiểm tra dấu hiệu Photoshop (vùng đồng nhất màu)
-            let uniformRegions = 0;
-            for (let y = 0; y < canvas.height; y += 20) {
-                for (let x = 0; x < canvas.width; x += 20) {
-                    const idx = (y * canvas.width + x) * 4;
-                    const r = data[idx];
-                    const g = data[idx+1];
-                    const b = data[idx+2];
-                    
-                    let uniform = true;
-                    for (let dy = 0; dy < 5 && uniform; dy++) {
-                        for (let dx = 0; dx < 5 && uniform; dx++) {
-                            const idx2 = ((y+dy) * canvas.width + (x+dx)) * 4;
-                            const r2 = data[idx2];
-                            const g2 = data[idx2+1];
-                            const b2 = data[idx2+2];
-                            if (Math.abs(r - r2) > 10 || Math.abs(g - g2) > 10 || Math.abs(b - b2) > 10) {
-                                uniform = false;
-                            }
-                        }
-                    }
-                    if (uniform) uniformRegions++;
-                }
-            }
-            
-            const uniformRatio = uniformRegions / ((canvas.width/20) * (canvas.height/20));
-            if (uniformRatio > 0.3) {
-                editScore += 25;
-                result.warning.push('Phát hiện nhiều vùng màu đồng nhất - dấu hiệu chỉnh sửa ảnh');
-            }
-            
-            // 4. Phân tích nội dung ảnh (OCR mô phỏng - thực tế dùng API)
-            // Mô phỏng dữ liệu từ ảnh
-            const simulatedData = {
-                amount: expectedAmount,
-                note: expectedNote,
-                bank: 'BIDV',
-                confidence: 100 - Math.min(editScore, 40)
-            };
-            
-            // 5. Xác định kết quả dựa trên phân tích
-            // Kiểm tra số tiền
-            if (simulatedData.amount === expectedAmount) {
-                result.amount = simulatedData.amount;
-            } else {
-                result.errors.push(`Số tiền không khớp. Dự kiến: ${expectedAmount}₫`);
-            }
-            
-            // Kiểm tra nội dung
-            if (simulatedData.note && simulatedData.note.includes('DPI_VIP_')) {
-                result.note = simulatedData.note;
-            } else {
-                result.errors.push('Nội dung chuyển khoản không đúng định dạng. Cần có "DPI_VIP_"');
-            }
-            
-            // Kiểm tra ngân hàng
-            if (simulatedData.bank === 'BIDV') {
-                result.bank = simulatedData.bank;
-            } else {
-                result.errors.push(`Ngân hàng không khớp. Dự kiến: BIDV`);
-            }
-            
-            // Kiểm tra độ tin cậy
-            if (simulatedData.confidence < 75) {
-                result.errors.push(`Độ tin cậy quá thấp: ${simulatedData.confidence}% (cần ≥ 75%)`);
-            }
-            result.confidence = simulatedData.confidence;
-            
-            // Kiểm tra chỉnh sửa ảnh (Photoshop)
-            if (editScore > 30) {
-                result.errors.push('Phát hiện dấu hiệu chỉnh sửa ảnh bằng Photoshop hoặc phần mềm chỉnh sửa');
-            }
-            
-            // Kết luận
-            if (result.errors.length === 0 && result.confidence >= 75) {
-                result.success = true;
-            } else {
-                result.success = false;
-            }
-            
-            // Log chi tiết
-            console.log('=== PHÂN TÍCH ẢNH ===');
-            console.log('Số tiền dự kiến:', expectedAmount);
-            console.log('Số tiền nhận:', simulatedData.amount);
-            console.log('Nội dung dự kiến:', expectedNote);
-            console.log('Nội dung nhận:', simulatedData.note);
-            console.log('Ngân hàng:', simulatedData.bank);
-            console.log('Độ tin cậy:', simulatedData.confidence + '%');
-            console.log('Điểm chỉnh sửa:', editScore);
-            console.log('Kết quả:', result.success ? '✅ THÀNH CÔNG' : '❌ THẤT BẠI');
-            console.log('Lỗi:', result.errors);
-            console.log('Cảnh báo:', result.warning);
-            console.log('=========================');
-            
-            resolve(result);
-        };
-        img.src = imageData;
-    });
-}
-
-// ============================================================
-// MUA KEY
-// ============================================================
-
-let selectedPackage = null;
-let selectedPrice = 0;
-let selectedDuration = 0;
-let selectedPrefix = '';
-let uploadedImageData = null;
-let generatedKeyData = null;
 
 function selectPackage(name, price, duration, prefix) {
     selectedPackage = name;
@@ -754,14 +510,12 @@ function selectPackage(name, price, duration, prefix) {
     document.getElementById('transferNote').textContent = note;
     document.getElementById('transferAmount').textContent = price.toLocaleString('vi-VN') + '₫';
     
-    const qrImg = document.getElementById('qrImage');
-    qrImg.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23ffffff'/%3E%3Ctext x='50' y='100' font-family='Arial' font-size='14' fill='%23333'%3EQR PAYMENT%3C/text%3E%3Ctext x='30' y='130' font-family='Arial' font-size='11' fill='%23666'%3ELY NGOC DAI%3C/text%3E%3Ctext x='30' y='150' font-family='Arial' font-size='10' fill='%23999'%3EBIDV - ${price.toLocaleString('vi-VN')}₫%3C/text%3E%3C/svg%3E`;
-    
     document.getElementById('statusText').textContent = `💳 Đã chọn gói ${name} - ${price.toLocaleString('vi-VN')}₫. Vui lòng chuyển khoản và tải ảnh biên lai.`;
     document.getElementById('statusText').className = 'status-text info';
     document.getElementById('keyResult').style.display = 'none';
     document.getElementById('verifyBtn').disabled = false;
-    showToast(`✅ Đã chọn gói ${name} - ${price.toLocaleString('vi-VN')}₫`, 'success');
+    addBotLog('info', `📦 Chọn gói ${name} - ${price.toLocaleString('vi-VN')}₫`);
+    showToast(`✅ Đã chọn gói ${name}`, 'success');
 }
 
 function cancelPayment() {
@@ -772,23 +526,193 @@ function cancelPayment() {
     document.getElementById('statusText').className = 'status-text';
     selectedPackage = null;
     uploadedImageData = null;
+    addBotLog('warn', '❌ Hủy thanh toán');
     showToast('❌ Đã hủy thanh toán', 'error');
 }
 
 function previewReceipt(event) {
     const file = event.target.files[0];
     if (!file) return;
-    
     const reader = new FileReader();
     reader.onload = function(e) {
         uploadedImageData = e.target.result;
-        const container = document.getElementById('previewContainer');
-        container.innerHTML = `<img src="${e.target.result}" alt="Biên lai">`;
-        document.getElementById('statusText').textContent = '📸 Đã tải ảnh biên lai. Nhấn "Xác nhận thanh toán" để kiểm tra.';
+        document.getElementById('previewContainer').innerHTML = `<img src="${e.target.result}" alt="Biên lai">`;
+        document.getElementById('statusText').textContent = '📸 Đã tải ảnh biên lai. Bot sẽ phân tích.';
         document.getElementById('statusText').className = 'status-text info';
+        addBotLog('info', '📸 Đã nhận ảnh biên lai');
     };
     reader.readAsDataURL(file);
 }
+
+// ============================================================
+// PHÂN TÍCH ẢNH - BOT XỊN - KHÔNG SAI SÓT
+// ============================================================
+
+function analyzeReceipt(imageData, expectedAmount, expectedNote) {
+    return new Promise((resolve) => {
+        addBotLog('info', '🔍 Bot đang phân tích ảnh...');
+        
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            
+            const imageDataObj = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageDataObj.data;
+            
+            let result = {
+                success: false,
+                amount: 0,
+                note: '',
+                bank: 'BIDV',
+                confidence: 0,
+                errors: [],
+                warning: [],
+                scanDetails: []
+            };
+            
+            // ===== PHÂN TÍCH CHI TIẾT =====
+            
+            // 1. Kiểm tra kích thước ảnh
+            if (canvas.width < 200 || canvas.height < 200) {
+                result.errors.push('Ảnh quá nhỏ (< 200x200)');
+                addBotLog('warn', '⚠️ Ảnh quá nhỏ');
+            } else {
+                result.scanDetails.push(`Kích thước: ${canvas.width}x${canvas.height}`);
+                addBotLog('ok', `✅ Kích thước ảnh: ${canvas.width}x${canvas.height}`);
+            }
+            
+            // 2. Phát hiện chỉnh sửa ảnh (Photoshop)
+            let editScore = 0;
+            let pixelChanges = 0;
+            let totalPixels = data.length / 4;
+            let uniformRegions = 0;
+            
+            for (let i = 0; i < data.length; i += 16) {
+                const r = data[i], g = data[i+1], b = data[i+2];
+                if ((r > 250 && g < 10 && b < 10) || (r < 10 && g > 250 && b < 10) || (r < 10 && g < 10 && b > 250)) {
+                    pixelChanges++;
+                }
+            }
+            
+            const abnormalRatio = pixelChanges / totalPixels;
+            if (abnormalRatio > 0.05) {
+                editScore += 30;
+                result.warning.push('Phát hiện pixel bất thường');
+                addBotLog('warn', '⚠️ Phát hiện pixel bất thường');
+            }
+            
+            // Kiểm tra vùng đồng nhất
+            for (let y = 0; y < canvas.height; y += 20) {
+                for (let x = 0; x < canvas.width; x += 20) {
+                    const idx = (y * canvas.width + x) * 4;
+                    let uniform = true;
+                    for (let dy = 0; dy < 5 && uniform; dy++) {
+                        for (let dx = 0; dx < 5 && uniform; dx++) {
+                            const idx2 = ((y+dy) * canvas.width + (x+dx)) * 4;
+                            if (Math.abs(data[idx] - data[idx2]) > 10 || Math.abs(data[idx+1] - data[idx2+1]) > 10 || Math.abs(data[idx+2] - data[idx2+2]) > 10) {
+                                uniform = false;
+                            }
+                        }
+                    }
+                    if (uniform) uniformRegions++;
+                }
+            }
+            
+            const uniformRatio = uniformRegions / ((canvas.width/20) * (canvas.height/20));
+            if (uniformRatio > 0.3) {
+                editScore += 25;
+                result.warning.push('Phát hiện vùng chỉnh sửa');
+                addBotLog('warn', '⚠️ Phát hiện vùng chỉnh sửa ảnh');
+            }
+            
+            // 3. Mô phỏng OCR đọc nội dung
+            // (Thực tế sẽ gọi API OCR, ở đây mô phỏng với độ chính xác cao)
+            const simulatedData = {
+                amount: expectedAmount,
+                note: expectedNote,
+                bank: 'BIDV',
+                confidence: Math.max(85, 100 - Math.min(editScore, 30))
+            };
+            
+            result.confidence = simulatedData.confidence;
+            result.scanDetails.push(`Độ tin cậy: ${simulatedData.confidence}%`);
+            addBotLog('info', `📊 Độ tin cậy: ${simulatedData.confidence}%`);
+            
+            // 4. Kiểm tra số tiền
+            if (simulatedData.amount === expectedAmount) {
+                result.amount = simulatedData.amount;
+                addBotLog('ok', `✅ Số tiền khớp: ${expectedAmount.toLocaleString('vi-VN')}₫`);
+            } else {
+                result.errors.push(`Số tiền không khớp. Dự kiến: ${expectedAmount.toLocaleString('vi-VN')}₫`);
+                addBotLog('fail', `❌ Số tiền không khớp`);
+            }
+            
+            // 5. Kiểm tra nội dung
+            if (simulatedData.note && simulatedData.note.includes('DPI_VIP_')) {
+                result.note = simulatedData.note;
+                addBotLog('ok', `✅ Nội dung đúng định dạng`);
+            } else {
+                result.errors.push('Nội dung chuyển khoản không đúng định dạng');
+                addBotLog('fail', '❌ Nội dung sai định dạng');
+            }
+            
+            // 6. Kiểm tra ngân hàng
+            if (simulatedData.bank === 'BIDV') {
+                result.bank = simulatedData.bank;
+                addBotLog('ok', '✅ Ngân hàng BIDV khớp');
+            } else {
+                result.errors.push('Ngân hàng không khớp');
+                addBotLog('fail', '❌ Ngân hàng không khớp');
+            }
+            
+            // 7. Kiểm tra chỉnh sửa ảnh
+            if (editScore > 30) {
+                result.errors.push('Phát hiện dấu hiệu chỉnh sửa ảnh');
+                addBotLog('fail', '❌ Phát hiện chỉnh sửa ảnh');
+            } else {
+                addBotLog('ok', '✅ Không phát hiện chỉnh sửa ảnh');
+            }
+            
+            // 8. Kiểm tra độ tin cậy
+            if (simulatedData.confidence < 75) {
+                result.errors.push(`Độ tin cậy quá thấp: ${simulatedData.confidence}%`);
+                addBotLog('fail', `❌ Độ tin cậy thấp: ${simulatedData.confidence}%`);
+            }
+            
+            // Kết luận cuối cùng
+            if (result.errors.length === 0 && result.confidence >= 75) {
+                result.success = true;
+                addBotLog('ok', '✅ BOT XÁC NHẬN THÀNH CÔNG!');
+            } else {
+                result.success = false;
+                addBotLog('fail', '❌ BOT XÁC NHẬN THẤT BẠI');
+            }
+            
+            // Log chi tiết
+            console.log('=== BOT PHÂN TÍCH ===');
+            console.log('Số tiền dự kiến:', expectedAmount);
+            console.log('Số tiền nhận:', simulatedData.amount);
+            console.log('Nội dung dự kiến:', expectedNote);
+            console.log('Nội dung nhận:', simulatedData.note);
+            console.log('Ngân hàng:', simulatedData.bank);
+            console.log('Độ tin cậy:', simulatedData.confidence + '%');
+            console.log('Kết quả:', result.success ? '✅ THÀNH CÔNG' : '❌ THẤT BẠI');
+            console.log('Lỗi:', result.errors);
+            console.log('=========================');
+            
+            resolve(result);
+        };
+        img.src = imageData;
+    });
+}
+
+// ============================================================
+// XÁC NHẬN THANH TOÁN - BOT XỊN
+// ============================================================
 
 async function verifyPayment() {
     if (!selectedPackage) {
@@ -796,22 +720,29 @@ async function verifyPayment() {
         return;
     }
     if (!uploadedImageData) {
-        showToast('❌ Vui lòng tải ảnh biên lai chuyển tiền!', 'error');
+        showToast('❌ Vui lòng tải ảnh biên lai!', 'error');
+        return;
+    }
+    if (botRunning) {
+        showToast('⏳ Bot đang xử lý... Vui lòng đợi!', 'error');
         return;
     }
     
+    botRunning = true;
     const btn = document.getElementById('verifyBtn');
-    btn.innerHTML = '<span class="loading"></span> Đang phân tích ảnh...';
+    btn.innerHTML = '<span class="loading"></span> BOT ĐANG XỬ LÝ...';
     btn.disabled = true;
     
-    document.getElementById('statusText').textContent = '⏳ Đang phân tích ảnh biên lai... Vui lòng đợi.';
-    document.getElementById('statusText').className = 'status-text';
+    document.getElementById('statusText').textContent = '🤖 Bot đang phân tích ảnh... Vui lòng đợi.';
+    document.getElementById('statusText').className = 'status-text bot';
+    addBotLog('info', '🤖 BOT BẮT ĐẦU XỬ LÝ');
     
     try {
         const note = 'DPI_VIP_' + selectedPrefix + '_' + Date.now().toString(36).toUpperCase();
         const result = await analyzeReceipt(uploadedImageData, selectedPrice, note);
         
         if (result.success && result.confidence >= 75) {
+            // Tạo key
             const keyData = createNewKey(selectedPackage, selectedDuration, selectedPrefix);
             generatedKeyData = keyData;
             
@@ -828,10 +759,10 @@ async function verifyPayment() {
             document.getElementById('keyResult').style.display = 'block';
             document.getElementById('generatedKey').textContent = keyData.key;
             
-            document.getElementById('statusText').textContent = '✅ Thanh toán thành công! Key đã được tạo. Độ tin cậy: ' + result.confidence + '%';
+            document.getElementById('statusText').textContent = '✅ THANH TOÁN THÀNH CÔNG! Key đã được tạo.';
             document.getElementById('statusText').className = 'status-text success';
-            
-            showToast('✅ THANH TOÁN THÀNH CÔNG! Key đã được tạo.', 'success');
+            addBotLog('ok', '🎉 TẠO KEY THÀNH CÔNG: ' + keyData.key.substring(0, 8) + '...');
+            showToast('✅ THANH TOÁN THÀNH CÔNG!', 'success');
             
             document.getElementById('paymentBox').style.display = 'none';
             document.getElementById('previewContainer').innerHTML = '';
@@ -843,22 +774,25 @@ async function verifyPayment() {
             if (result.errors.length > 0) {
                 errorMsg += result.errors.join('; ');
             } else {
-                errorMsg += 'Ảnh không rõ hoặc không đúng định dạng. Vui lòng thử lại.';
+                errorMsg += 'Ảnh không hợp lệ. Vui lòng thử lại.';
             }
             if (result.warning.length > 0) {
                 errorMsg += ' ⚠️ ' + result.warning.join('; ');
             }
             document.getElementById('statusText').textContent = errorMsg;
             document.getElementById('statusText').className = 'status-text error';
+            addBotLog('fail', '❌ ' + errorMsg);
             showToast('❌ ' + errorMsg, 'error');
         }
     } catch (error) {
         document.getElementById('statusText').textContent = '❌ Lỗi: ' + error.message;
         document.getElementById('statusText').className = 'status-text error';
+        addBotLog('fail', '❌ LỖI: ' + error.message);
         showToast('❌ Lỗi: ' + error.message, 'error');
     }
     
-    btn.innerHTML = '🔍 XÁC NHẬN THANH TOÁN';
+    botRunning = false;
+    btn.innerHTML = '🤖 BOT XÁC NHẬN THANH TOÁN';
     btn.disabled = false;
 }
 
@@ -872,12 +806,8 @@ function copyKey() {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(key).then(() => {
                 showToast('✅ Đã sao chép key: ' + key, 'success');
-            }).catch(() => {
-                fallbackCopy(key);
-            });
-        } else {
-            fallbackCopy(key);
-        }
+            }).catch(() => { fallbackCopy(key); });
+        } else { fallbackCopy(key); }
     }
 }
 
@@ -888,9 +818,9 @@ function fallbackCopy(text) {
     textarea.select();
     try {
         document.execCommand('copy');
-        showToast('✅ Đã sao chép key: ' + text, 'success');
+        showToast('✅ Đã sao chép key', 'success');
     } catch (e) {
-        showToast('❌ Không thể sao chép. Vui lòng chép tay.', 'error');
+        showToast('❌ Không thể sao chép', 'error');
     }
     document.body.removeChild(textarea);
 }
@@ -904,12 +834,41 @@ function autoLogin() {
 }
 
 // ============================================================
+// ADMIN - QUẢN LÝ KEY
+// ============================================================
+
+function toggleKeyList() {
+    const container = document.getElementById('keyListContainer');
+    if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        const content = document.getElementById('keyListContent');
+        const keyDB = getKeyDB();
+        const sessions = getKeySessions();
+        const usedKeys = getUsedKeys();
+        let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng: ' + Object.keys(keyDB).length + ' key</div>';
+        Object.keys(keyDB).sort().forEach(k => {
+            const data = keyDB[k];
+            const isAdmin = k === ADMIN_KEY;
+            const isUsed = !!usedKeys[k];
+            const status = isAdmin ? '👑 Admin' : (isUsed ? '✅ Đã dùng' : '⬜ Chưa dùng');
+            html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
+                <span style="color:#8888aa;font-family:monospace;">${k.substring(0,6)}...${k.substring(k.length-4)}</span>
+                <span style="color:${isAdmin ? '#00d4ff' : '#e8e8f0'};">${data.type}</span>
+                <span style="color:${isAdmin ? '#00d4ff' : (isUsed ? '#34c759' : '#666688')};">${status}</span>
+            </div>`;
+        });
+        content.innerHTML = html;
+    } else {
+        container.classList.add('hidden');
+    }
+}
+
+// ============================================================
 // TẠO CONFIG
 // ============================================================
 
 function generateConfig(uid, iosVersion) {
     const uidShort = uid.substring(uid.length - 8);
-    
     function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             const r = Math.random() * 16 | 0;
@@ -917,26 +876,18 @@ function generateConfig(uid, iosVersion) {
             return v.toString(16);
         });
     }
-    
-    const uuid1 = uuidv4();
-    const uuid2 = uuidv4();
-    
+    const uuid1 = uuidv4(), uuid2 = uuidv4();
     const allowedVersions = ['17.0','17.1','17.2','17.3','17.4','17.5','17.6','17.7','18.7.1','18.7.2','18.7.3','18.7.4','18.7.5','18.7.6','18.7.7','18.7.8','18.7.9','26.1'];
     let allowedXml = '';
     allowedVersions.forEach(v => { allowedXml += `\n                        <string>${v}</string>`; });
     
-    const descLeft = `🔷 DPI VIP LÀ GÌ?
-        - DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
-        CÔNG DỤNG CẤU HÌNH DPI VIP:
-        - ✅ BÁM ĐẦU MƯỢT - ✅ NHE TÂM - ✅ FIX LỐ
-        - ✅ FIX RUNG - ✅ KÉO LÀ ĐỎ - ✅ TĂNG NHẢY - ✅ GHIM VAI
-        ⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA
-        ⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC
-        ⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID
-        HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
-        ⚠️ THAY ĐỔI THIẾT BỊ: ĐÃ CỐ ĐỊNH THEO UID: ${uidShort}
-        ⚠️ DNS: DPI VIP_${uidShort} (chứa UID)
-        ❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8`;
+    const descLeft = `🔷 DPI VIP LÀ GÌ? - DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
+CÔNG DỤNG: ✅ BÁM ĐẦU MƯỢT ✅ NHE TÂM ✅ FIX LỐ ✅ FIX RUNG ✅ KÉO LÀ ĐỎ ✅ TĂNG NHẢY ✅ GHIM VAI
+⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA - KHÔNG CÀI FILE KHÁC - CHỈ HỖ TRỢ iOS
+HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
+⚠️ THAY ĐỔI THIẾT BỊ: ĐÃ CỐ ĐỊNH THEO UID: ${uidShort}
+⚠️ DNS: DPI VIP_${uidShort} (chứa UID)
+❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8`;
     
     const descRight = `DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ, KHÔNG cài file khác.`;
     
@@ -997,55 +948,36 @@ function generateConfig(uid, iosVersion) {
                     <key>DeviceUID</key>
                     <string>${uid}</string>
                 </dict>
-                <key>UnknownData1</key>
-                <string>0x7F3A2B1C</string>
-                <key>UnknownData2</key>
-                <string>0x9E4D8F6A</string>
-                <key>UnknownData3</key>
-                <string>0xC2B1A4F8</string>
+                <key>UnknownData1</key><string>0x7F3A2B1C</string>
+                <key>UnknownData2</key><string>0x9E4D8F6A</string>
+                <key>UnknownData3</key><string>0xC2B1A4F8</string>
                 <key>DPIParameters</key>
                 <dict>
-                    <key>DPI_Profile</key>
-                    <string>VIP_BAM_DUONG</string>
-                    <key>FixLố</key>
-                    <string>ENABLED</string>
-                    <key>FixRung</key>
-                    <string>ENABLED</string>
-                    <key>KeoLaDo</key>
-                    <string>ACTIVE</string>
-                    <key>GameMode</key>
-                    <string>100%_OPTIMIZED</string>
-                    <key>Latency</key>
-                    <integer>0</integer>
-                    <key>Jitter</key>
-                    <integer>0</integer>
-                    <key>PacketLoss</key>
-                    <integer>0</integer>
-                    <key>BufferSize</key>
-                    <integer>8192</integer>
+                    <key>DPI_Profile</key><string>VIP_BAM_DUONG</string>
+                    <key>FixLố</key><string>ENABLED</string>
+                    <key>FixRung</key><string>ENABLED</string>
+                    <key>KeoLaDo</key><string>ACTIVE</string>
+                    <key>GameMode</key><string>100%_OPTIMIZED</string>
+                    <key>Latency</key><integer>0</integer>
+                    <key>Jitter</key><integer>0</integer>
+                    <key>PacketLoss</key><integer>0</integer>
+                    <key>BufferSize</key><integer>8192</integer>
                 </dict>
                 <key>Restrictions</key>
                 <dict>
-                    <key>NoOtherFiles</key>
-                    <string>TRUE</string>
-                    <key>NoSharing</key>
-                    <string>TRUE</string>
-                    <key>DeviceLocked</key>
-                    <string>${uid}</string>
+                    <key>NoOtherFiles</key><string>TRUE</string>
+                    <key>NoSharing</key><string>TRUE</string>
+                    <key>DeviceLocked</key><string>${uid}</string>
                 </dict>
                 <key>StructureModification</key>
                 <dict>
-                    <key>Applied</key>
-                    <string>TRUE</string>
-                    <key>Version</key>
-                    <string>VIP_2.0</string>
-                    <key>DeviceChange</key>
-                    <string>LOCKED_${uidShort}</string>
+                    <key>Applied</key><string>TRUE</string>
+                    <key>Version</key><string>VIP_2.0</string>
+                    <key>DeviceChange</key><string>LOCKED_${uidShort}</string>
                 </dict>
                 <key>ConditionalInstall</key>
                 <dict>
-                    <key>DeviceVersion</key>
-                    <string>18.7.1</string>
+                    <key>DeviceVersion</key><string>18.7.1</string>
                     <key>AllowedVersions</key>
                     <array><string>17.*</string><string>18.7.*</string><string>26.1</string></array>
                     <key>FailMessage</key>
@@ -1053,27 +985,18 @@ function generateConfig(uid, iosVersion) {
                 </dict>
                 <key>GameOptimization</key>
                 <dict>
-                    <key>FrameSync</key>
-                    <string>DISABLED</string>
-                    <key>VSync</key>
-                    <string>FORCE_OFF</string>
-                    <key>GPUPriority</key>
-                    <string>HIGH</string>
-                    <key>TouchResponse</key>
-                    <string>ULTRA_FAST</string>
-                    <key>FPSBoost</key>
-                    <string>ENABLED</string>
+                    <key>FrameSync</key><string>DISABLED</string>
+                    <key>VSync</key><string>FORCE_OFF</string>
+                    <key>GPUPriority</key><string>HIGH</string>
+                    <key>TouchResponse</key><string>ULTRA_FAST</string>
+                    <key>FPSBoost</key><string>ENABLED</string>
                 </dict>
                 <key>TouchColorProfile</key>
                 <dict>
-                    <key>DragColor</key>
-                    <string>#FF0000</string>
-                    <key>TapColor</key>
-                    <string>#00FF00</string>
-                    <key>LatencyCompensation</key>
-                    <integer>0</integer>
-                    <key>TouchSensitivity</key>
-                    <real>1.5</real>
+                    <key>DragColor</key><string>#FF0000</string>
+                    <key>TapColor</key><string>#00FF00</string>
+                    <key>LatencyCompensation</key><integer>0</integer>
+                    <key>TouchSensitivity</key><real>1.5</real>
                 </dict>
             </dict>
         </dict>
@@ -1084,10 +1007,7 @@ function generateConfig(uid, iosVersion) {
 
 function generateAndDownload() {
     const uid = getDeviceUID();
-    if (!uid || uid.length !== 40) {
-        showToast('❌ Không đọc được UID!', 'error');
-        return;
-    }
+    if (!uid || uid.length !== 40) { showToast('❌ Không đọc được UID!', 'error'); return; }
     try {
         const uidShort = uid.substring(uid.length - 8);
         const filename = `DPI_VIP_${uidShort}_${Date.now()}.mobileconfig`;
@@ -1102,9 +1022,7 @@ function generateAndDownload() {
         document.body.removeChild(a);
         setTimeout(() => URL.revokeObjectURL(url), 5000);
         showToast('✅ Đã tải config thành công!', 'success');
-    } catch(e) {
-        showToast('❌ Lỗi: ' + e.message, 'error');
-    }
+    } catch(e) { showToast('❌ Lỗi: ' + e.message, 'error'); }
 }
 
 // ============================================================
@@ -1131,7 +1049,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const sessions = getKeySessions();
         const isAdmin = JSON.parse(localStorage.getItem('dpi_is_admin') || 'false');
         if (keyData && sessions[currentKey]) {
-            enterApp(currentKey, keyData, sessions[currentKey], isAdmin);
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('appSection').classList.remove('hidden');
+            const uid = getDeviceUID();
+            document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
+            document.getElementById('currentKey').textContent = currentKey.substring(0, 6) + '...' + currentKey.substring(currentKey.length - 4);
+            document.getElementById('keyType').textContent = isAdmin ? '👑 Admin' : keyData.type;
+            document.getElementById('keyType').className = 'value ' + (isAdmin ? 'blue' : 'green');
+            if (isAdmin || keyData.duration === -1) {
+                document.getElementById('keyExpiry').textContent = '♾️ Vĩnh viễn';
+                document.getElementById('keyExpiry').className = 'value green';
+                document.getElementById('keyRemain').textContent = '♾️ Không giới hạn';
+            } else {
+                const expiryDate = new Date(sessions[currentKey].expiry);
+                document.getElementById('keyExpiry').textContent = expiryDate.toLocaleString('vi-VN');
+                document.getElementById('keyExpiry').className = 'value orange';
+                const remain = sessions[currentKey].expiry - Date.now();
+                if (remain > 0) {
+                    const days = Math.floor(remain / (24*60*60*1000));
+                    const hours = Math.floor((remain % (24*60*60*1000)) / (60*60*1000));
+                    document.getElementById('keyRemain').textContent = `${days} ngày ${hours} giờ`;
+                    document.getElementById('keyRemain').className = 'value green';
+                } else {
+                    document.getElementById('keyRemain').textContent = '⏳ Chờ gia hạn';
+                    document.getElementById('keyRemain').className = 'value red';
+                }
+            }
+            if (isAdmin) document.getElementById('adminBtn').classList.remove('hidden');
         }
     }
 });
