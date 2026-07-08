@@ -8,54 +8,86 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
         .container { background: #1a1a2e; max-width: 480px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+        
+        /* LOGO */
         .logo { text-align: center; margin-bottom: 20px; }
         .logo h1 { color: #00d4ff; font-size: 26px; font-weight: 700; letter-spacing: 1px; }
         .logo h1 span { color: #ff6b6b; }
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
-        .logo .badge { display: inline-block; background: #00d4ff22; color: #00d4ff; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #00d4ff44; margin-top: 6px; }
+        .logo .badge { display: inline-block; background: #ff6b6b22; color: #ff6b6b; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #ff6b6b44; margin-top: 6px; }
+        
+        /* UID BOX */
         .uid-box { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin: 12px 0; }
         .uid-box label { color: #8888aa; font-size: 12px; display: block; margin-bottom: 4px; }
         .uid-box .uid-value { color: #00d4ff; font-size: 15px; font-weight: 600; word-break: break-all; font-family: 'Courier New', monospace; }
         .uid-box .status { color: #34c759; font-size: 13px; margin-top: 6px; }
         .uid-box .status.error { color: #ff4466; }
         .uid-box .status.loading { color: #ffcc00; }
+        
+        /* DEVICE INFO */
         .device-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
         .device-info .item { background: #0d0d1a; border-radius: 10px; padding: 10px 12px; border: 1px solid #2a2a4a; text-align: center; }
         .device-info .item .label { color: #666688; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
         .device-info .item .value { color: #e8e8f0; font-size: 14px; font-weight: 500; margin-top: 2px; }
+        
+        /* NÚT */
         .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 17px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 12px; }
         .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
         .btn:active { transform: scale(0.97); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
         .btn .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #ffffff33; border-top-color: #ffffff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .file-info { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 14px; display: none; }
-        .file-info .row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #1a1a2e; }
-        .file-info .row:last-child { border-bottom: none; }
-        .file-info .label { color: #666688; font-size: 13px; }
-        .file-info .value { color: #00d4ff; font-weight: 500; font-size: 13px; word-break: break-all; text-align: right; max-width: 60%; }
-        .file-info .value.highlight { color: #34c759; }
-        .file-info .value.uid { color: #ff6b6b; font-family: 'Courier New', monospace; font-size: 12px; }
-        .dpi-info { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
-        .dpi-info .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 13px; }
-        .dpi-info .label { color: #666688; }
-        .dpi-info .value { color: #e8e8f0; }
-        .dpi-info .value.green { color: #34c759; }
-        .dpi-info .value.red { color: #ff6b6b; }
-        .dpi-info .value.blue { color: #00d4ff; }
+        
+        /* ===== GIAO DIỆN GIỐNG CÀI HỒ SƠ ===== */
+        .profile-card { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; margin-top: 14px; overflow: hidden; }
+        .profile-header { background: linear-gradient(135deg, #00d4ff22, #0070ff22); padding: 16px 18px; border-bottom: 1px solid #2a2a4a; }
+        .profile-header .title { color: #ffffff; font-size: 18px; font-weight: 600; }
+        .profile-header .sub { color: #8888aa; font-size: 12px; margin-top: 2px; }
+        .profile-body { padding: 16px 18px; }
+        .profile-body .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #1a1a2e; }
+        .profile-body .row:last-child { border-bottom: none; }
+        .profile-body .label { color: #666688; font-size: 13px; }
+        .profile-body .value { color: #e8e8f0; font-size: 13px; text-align: right; max-width: 60%; }
+        .profile-body .value.green { color: #34c759; }
+        .profile-body .value.red { color: #ff6b6b; }
+        .profile-body .value.blue { color: #00d4ff; }
+        .profile-body .value.orange { color: #ff9500; }
+        .profile-body .value.uid { color: #ff6b6b; font-family: 'Courier New', monospace; font-size: 12px; }
+        
+        .profile-warning { background: #ff6b6b11; border-top: 1px solid #ff6b6b33; padding: 12px 18px; }
+        .profile-warning .warn-item { color: #ff6b6b; font-size: 12px; padding: 2px 0; }
+        .profile-warning .warn-item::before { content: "⚠️ "; }
+        
+        .profile-footer { background: #0a0a12; padding: 12px 18px; border-top: 1px solid #1a1a2e; }
+        .profile-footer .footer-text { color: #666688; font-size: 11px; text-align: center; }
+        .profile-footer .footer-text strong { color: #ff6b6b; }
+        
+        /* MÔ TẢ */
+        .desc-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
+        .desc-box .title { color: #8888aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .desc-box .content { color: #c8c8e0; font-size: 12px; line-height: 1.8; white-space: pre-wrap; }
+        .desc-box .content .highlight { color: #00d4ff; }
+        .desc-box .content .warn { color: #ff6b6b; }
+        
+        /* LINK DỰ PHÒNG */
         .manual-link { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #333355; margin-top: 12px; display: none; }
         .manual-link .title { color: #8888aa; font-size: 13px; margin-bottom: 4px; }
         .manual-link a { color: #00d4ff; word-break: break-all; text-decoration: none; font-weight: 500; font-size: 14px; }
         .manual-link a:hover { text-decoration: underline; }
         .manual-link .hint { color: #555577; font-size: 12px; margin-top: 6px; }
+        
+        /* FOOTER */
         .footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid #1a1a2e; }
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
+        
+        /* TOAST */
         .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
         .toast.show { display: block; animation: fadeIn 0.3s ease; }
         .toast.error { background: #ff004422; border-color: #ff004444; color: #ff4466; }
         .toast.success { background: #34c75922; border-color: #34c75944; color: #34c759; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        
         @media (max-width: 400px) {
             .container { padding: 20px 16px; }
             .device-info { grid-template-columns: 1fr 1fr; gap: 6px; }
@@ -69,10 +101,11 @@
 <div id="toast" class="toast">✅ Thành công!</div>
 
 <div class="container">
+    <!-- LOGO -->
     <div class="logo">
         <h1>🔷 DPI <span>VIP</span></h1>
         <p>Bám đầu mượt · Fix lố · Fix rung · Kéo là đỏ</p>
-        <div class="badge">⚡ 100% tác dụng với game</div>
+        <div class="badge">VUI LÒNG LÀM THEO CÁC HƯỚNG DẪN</div>
     </div>
 
     <!-- UID BOX -->
@@ -96,74 +129,72 @@
 
     <!-- NÚT TẢI -->
     <button class="btn" id="downloadBtn" onclick="generateAndDownload()">
-        ⬇️ Tải Config Thật
+        ⬇️ Tải Config
     </button>
 
-    <!-- FILE INFO -->
-    <div class="file-info" id="fileInfo">
-        <div class="row">
-            <span class="label">📄 Tên file</span>
-            <span class="value highlight" id="fileName">---</span>
+    <!-- ========================================================= -->
+    <!--     GIAO DIỆN GIỐNG CÀI ĐẶT HỒ SƠ (SAU KHI TẢI)         -->
+    <!-- ========================================================= -->
+    <div class="profile-card" id="profileCard" style="display:none;">
+        <div class="profile-header">
+            <div class="title">Cài đặt hồ sơ</div>
+            <div class="sub">DPI VIP - Bám đầu mượt</div>
         </div>
-        <div class="row">
-            <span class="label">🔑 UID nhúng</span>
-            <span class="value uid" id="fileUid">---</span>
+        <div class="profile-body">
+            <div class="row">
+                <span class="label">Tên</span>
+                <span class="value blue" id="profileName">DPI VIP</span>
+            </div>
+            <div class="row">
+                <span class="label">Xác nhận bởi</span>
+                <span class="value" id="profileSign">cylight.click</span>
+            </div>
+            <div class="row">
+                <span class="label">Trạng thái</span>
+                <span class="value red" id="profileStatus">Chưa xác minh</span>
+            </div>
+            <div class="row">
+                <span class="label">UID thiết bị</span>
+                <span class="value uid" id="profileUid">---</span>
+            </div>
+            <div class="row">
+                <span class="label">iOS hỗ trợ</span>
+                <span class="value green" id="profileIos">17.x, 18.7.x, 26.1</span>
+            </div>
         </div>
-        <div class="row">
-            <span class="label">📦 Dung lượng</span>
-            <span class="value" id="fileSize">---</span>
+        <div class="profile-warning">
+            <div class="warn-item">KHÔNG chia sẻ file này cho người khác</div>
+            <div class="warn-item">KHÔNG cài file khác trong thời gian sử dụng</div>
+            <div class="warn-item">Chỉ hỗ trợ iOS 17, 18.7.1-18.7.9, 26.1</div>
         </div>
-        <div class="row">
-            <span class="label">📱 Thiết bị</span>
-            <span class="value" id="fileDevice">---</span>
-        </div>
-        <div class="row">
-            <span class="label">🍎 iOS hỗ trợ</span>
-            <span class="value" id="iosSupport">17.x, 18.7.x, 26.1</span>
+        <div class="profile-footer">
+            <div class="footer-text">📞 Gặp vấn đề liên hệ <strong>Admin</strong></div>
         </div>
     </div>
 
-    <!-- DPI INFO -->
-    <div class="dpi-info">
-        <div class="row">
-            <span class="label">🌐 DNS</span>
-            <span class="value blue" id="dnsName">DPI VIP_UID</span>
-        </div>
-        <div class="row">
-            <span class="label">🔧 Fix Lố</span>
-            <span class="value green">✔ ENABLED</span>
-        </div>
-        <div class="row">
-            <span class="label">🔧 Fix Rung</span>
-            <span class="value green">✔ ENABLED</span>
-        </div>
-        <div class="row">
-            <span class="label">🔴 Kéo là đỏ</span>
-            <span class="value red">✔ ACTIVE</span>
-        </div>
-        <div class="row">
-            <span class="label">🎮 Game Mode</span>
-            <span class="value green">100% OPTIMIZED</span>
-        </div>
-        <div class="row">
-            <span class="label">❓ Dữ liệu 1</span>
-            <span class="value">0x7F3A2B1C</span>
-        </div>
-        <div class="row">
-            <span class="label">❓ Dữ liệu 2</span>
-            <span class="value">0x9E4D8F6A</span>
-        </div>
-        <div class="row">
-            <span class="label">❓ Dữ liệu 3</span>
-            <span class="value">0xC2B1A4F8</span>
-        </div>
-        <div class="row">
-            <span class="label">🔒 Cố định thiết bị</span>
-            <span class="value green">✔ LOCKED</span>
-        </div>
-        <div class="row">
-            <span class="label">📛 Thay đổi kết cấu</span>
-            <span class="value green">✔ APPLIED</span>
+    <!-- MÔ TẢ CHI TIẾT -->
+    <div class="desc-box" id="descBox" style="display:none;">
+        <div class="title">📋 MÔ TẢ</div>
+        <div class="content" id="descContent">
+🔷 <span class="highlight">DPI VIP LÀ GÌ?</span>
+- DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
+
+<span class="highlight">CÔNG DỤNG CẤU HÌNH DPI VIP:</span>
+- ✅ BÁM ĐẦU MƯỢT
+- ✅ NHE TÂM
+- ✅ FIX LỐ
+- ✅ FIX RUNG
+- ✅ KÉO LÀ ĐỎ
+- ✅ TĂNG NHẢY
+- ✅ GHIM VAI
+
+<span class="warn">⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA</span>
+<span class="warn">⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC</span>
+<span class="warn">⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID</span>
+
+<span class="highlight">HỖ TRỢ iOS:</span> 17.x, 18.7.1 → 18.7.9, 26.1
+
+<span class="highlight">🔒 THAY ĐỔI THIẾT BỊ:</span> ĐÃ CỐ ĐỊNH THEO UID
         </div>
     </div>
 
@@ -234,7 +265,7 @@ function getIOSVersion() {
 }
 
 // ============================================================
-// TẠO CONFIG ĐẦY ĐỦ THEO YÊU CẦU
+// TẠO CONFIG ĐẦY ĐỦ
 // ============================================================
 
 function generateConfig(uid, iosVersion, deviceName) {
@@ -264,24 +295,64 @@ function generateConfig(uid, iosVersion, deviceName) {
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- ========================================================= -->
+    <!--                    TIÊU ĐỀ HIỂN THỊ                       -->
+    <!-- ========================================================= -->
+    <key>PayloadDisplayName</key>
+    <string>DPI VIP</string>
+    
+    <key>PayloadDescription</key>
+    <string>DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ, KHÔNG cài file khác.</string>
+    
+    <key>PayloadIdentifier</key>
+    <string>com.dpivip.profile.${uidShort}</string>
+    
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    
+    <key>PayloadUUID</key>
+    <string>${uuid2}</string>
+    
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    
     <key>PayloadContent</key>
     <array>
         <dict>
+            <!-- ===================================================== -->
+            <!--              MÔ TẢ CHI TIẾT                          -->
+            <!-- ===================================================== -->
             <key>PayloadDescription</key>
-            <string>DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ</string>
+            <string>🔷 DPI VIP - Tối ưu game chuyên sâu
+        📌 Hỗ trợ: iOS 17, 18.7.1-18.7.9, 26.1
+        🔒 Cố định thiết bị theo UID: ${uidShort}
+        🚫 KHÔNG chia sẻ - KHÔNG cài file khác
+        ⚡ Hiệu lực 100% với game
+        🌐 DNS: DPI VIP_${uidShort} (chứa UID)
+        ❓ 3 dữ liệu không xác định: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8
+        📛 THAY ĐỔI THIẾT BỊ: ĐÃ CỐ ĐỊNH</string>
+            
             <key>PayloadDisplayName</key>
-            <string>DPI VIP</string>
+            <string>DPI VIP Config</string>
+            
             <key>PayloadIdentifier</key>
             <string>com.dpivip.config.${uidShort}</string>
+            
             <key>PayloadType</key>
             <string>Configuration</string>
+            
             <key>PayloadUUID</key>
             <string>${uuid1}</string>
+            
             <key>PayloadVersion</key>
             <integer>1</integer>
+            
             <key>PayloadContent</key>
             <dict>
-                <!-- ===== UID THIẾT BỊ ===== -->
+                <!-- UID THIẾT BỊ -->
                 <key>DeviceUID</key>
                 <string>${uid}</string>
                 <key>DeviceUID_Short</key>
@@ -291,12 +362,12 @@ function generateConfig(uid, iosVersion, deviceName) {
                 <key>CreatedAt</key>
                 <string>${new Date().toISOString()}</string>
                 
-                <!-- ===== DANH SÁCH IOS HỖ TRỢ ===== -->
+                <!-- DANH SÁCH IOS HỖ TRỢ -->
                 <key>AllowediOSVersions</key>
                 <array>${allowedXml}
                 </array>
                 
-                <!-- ===== DNS TÊN DPI VIP CHỨA UID ===== -->
+                <!-- DNS TÊN "DPI VIP" CHỨA UID -->
                 <key>DNSConfig</key>
                 <dict>
                     <key>DNSServerName</key>
@@ -315,7 +386,7 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <string>${uid}</string>
                 </dict>
                 
-                <!-- ===== 3 DỮ LIỆU KHÔNG XÁC ĐỊNH ===== -->
+                <!-- 3 DỮ LIỆU KHÔNG XÁC ĐỊNH -->
                 <key>UnknownData1</key>
                 <string>0x7F3A2B1C</string>
                 <key>UnknownData2</key>
@@ -323,7 +394,7 @@ function generateConfig(uid, iosVersion, deviceName) {
                 <key>UnknownData3</key>
                 <string>0xC2B1A4F8</string>
                 
-                <!-- ===== THAM SỐ DPI VIP ===== -->
+                <!-- THAM SỐ DPI VIP -->
                 <key>DPIParameters</key>
                 <dict>
                     <key>DPI_Profile</key>
@@ -346,7 +417,7 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <integer>8192</integer>
                 </dict>
                 
-                <!-- ===== CỐ ĐỊNH THIẾT BỊ ===== -->
+                <!-- CỐ ĐỊNH THIẾT BỊ -->
                 <key>Restrictions</key>
                 <dict>
                     <key>NoOtherFiles</key>
@@ -361,7 +432,7 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <string>SINGLE_DEVICE_ONLY</string>
                 </dict>
                 
-                <!-- ===== THAY ĐỔI KẾT CẤU ===== -->
+                <!-- THAY ĐỔI THIẾT BỊ -->
                 <key>StructureModification</key>
                 <dict>
                     <key>Applied</key>
@@ -370,9 +441,11 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <string>VIP_2.0</string>
                     <key>CustomPayload</key>
                     <string>DPI_ENHANCED_${uidShort}</string>
+                    <key>DeviceChange</key>
+                    <string>LOCKED_${uidShort}</string>
                 </dict>
                 
-                <!-- ===== KIỂM TRA IOS ===== -->
+                <!-- KIỂM TRA IOS -->
                 <key>ConditionalInstall</key>
                 <dict>
                     <key>DeviceVersion</key>
@@ -387,7 +460,7 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <string>Không hỗ trợ iOS này. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1</string>
                 </dict>
                 
-                <!-- ===== TỐI ƯU GAME ===== -->
+                <!-- TỐI ƯU GAME -->
                 <key>GameOptimization</key>
                 <dict>
                     <key>FrameSync</key>
@@ -406,7 +479,7 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <string>ENABLED</string>
                 </dict>
                 
-                <!-- ===== MÀU KÉO LÀ ĐỎ ===== -->
+                <!-- MÀU KÉO LÀ ĐỎ -->
                 <key>TouchColorProfile</key>
                 <dict>
                     <key>DragColor</key>
@@ -421,24 +494,12 @@ function generateConfig(uid, iosVersion, deviceName) {
             </dict>
         </dict>
     </array>
-    <key>PayloadDisplayName</key>
-    <string>DPI VIP - Bám đầu mượt</string>
-    <key>PayloadIdentifier</key>
-    <string>com.dpivip.profile.${uidShort}</string>
-    <key>PayloadType</key>
-    <string>Configuration</string>
-    <key>PayloadUUID</key>
-    <string>${uuid2}</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-    <key>PayloadRemovalDisallowed</key>
-    <false/>
 </dict>
 </plist>`;
 }
 
 // ============================================================
-// TẢI FILE VÀ HIỂN THỊ THÔNG TIN
+// TẢI FILE VÀ HIỂN THỊ GIAO DIỆN
 // ============================================================
 
 function downloadAndShow(content, filename, uid, deviceName) {
@@ -459,15 +520,47 @@ function downloadAndShow(content, filename, uid, deviceName) {
         a.click();
         document.body.removeChild(a);
         
-        const sizeKB = (blob.size / 1024).toFixed(1);
         const uidShort = uid.substring(uid.length - 8);
         
-        document.getElementById('fileName').textContent = filename;
-        document.getElementById('fileUid').textContent = uidShort + ' (' + uid.substring(0, 8) + '...' + uidShort + ')';
-        document.getElementById('fileSize').textContent = sizeKB + ' KB';
-        document.getElementById('fileDevice').textContent = deviceName;
-        document.getElementById('fileInfo').style.display = 'block';
-        document.getElementById('dnsName').textContent = 'DPI VIP_' + uidShort;
+        // HIỂN THỊ GIAO DIỆN CÀI HỒ SƠ
+        document.getElementById('profileCard').style.display = 'block';
+        document.getElementById('profileName').textContent = 'DPI VIP';
+        document.getElementById('profileSign').textContent = 'cylight.click';
+        document.getElementById('profileStatus').textContent = 'Chưa xác minh';
+        document.getElementById('profileUid').textContent = uidShort + ' (' + uid.substring(0, 8) + '...' + uidShort + ')';
+        document.getElementById('profileIos').textContent = '17.x, 18.7.x, 26.1';
+        
+        // HIỂN THỊ MÔ TẢ
+        document.getElementById('descBox').style.display = 'block';
+        document.getElementById('descContent').innerHTML = `
+🔷 <span class="highlight">DPI VIP LÀ GÌ?</span>
+- DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
+
+<span class="highlight">CÔNG DỤNG CẤU HÌNH DPI VIP:</span>
+- ✅ BÁM ĐẦU MƯỢT
+- ✅ NHE TÂM
+- ✅ FIX LỐ
+- ✅ FIX RUNG
+- ✅ KÉO LÀ ĐỎ
+- ✅ TĂNG NHẢY
+- ✅ GHIM VAI
+
+<span class="warn">⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA</span>
+<span class="warn">⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC</span>
+<span class="warn">⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID</span>
+
+<span class="highlight">HỖ TRỢ iOS:</span> 17.x, 18.7.1 → 18.7.9, 26.1
+
+<span class="highlight">🔒 THAY ĐỔI THIẾT BỊ:</span> ĐÃ CỐ ĐỊNH THEO UID: ${uidShort}
+
+<span class="highlight">🌐 DNS:</span> DPI VIP_${uidShort} (chứa UID)
+
+<span class="highlight">❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH:</span> 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8
+        `;
+        
+        // Cập nhật UID trong footer warning
+        document.querySelector('.profile-warning .warn-item:first-child').textContent = 
+            '⚠️ KHÔNG chia sẻ file này cho người khác (UID: ' + uidShort + ')';
         
         setTimeout(() => URL.revokeObjectURL(url), 5000);
         return true;
