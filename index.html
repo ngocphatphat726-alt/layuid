@@ -30,10 +30,10 @@
         .btn-danger { background: linear-gradient(135deg, #ff4466, #cc1133); }
         .btn-warning { background: linear-gradient(135deg, #ff9500, #ff6b00); }
         .btn-gray { background: linear-gradient(135deg, #666688, #444466); }
-        .btn-shop { background: linear-gradient(135deg, #af52de, #7c3aed); }
+        .btn-shop { background: linear-gradient(135deg, #af52de, #7c3aed); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 #af52de44;}50%{box-shadow:0 0 20px 5px #af52de22;} }
         .hidden { display: none !important; }
         
-        /* SHOP */
         .shop-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
         .shop-item { background: #0d0d1a; border-radius: 12px; padding: 14px 12px; border: 1px solid #2a2a4a; text-align: center; cursor: pointer; transition: 0.3s; }
         .shop-item:hover { border-color: #00d4ff; transform: scale(1.02); }
@@ -43,7 +43,6 @@
         .shop-item .duration { color: #8888aa; font-size: 11px; }
         .shop-item .tag { display: inline-block; background: #00d4ff22; color: #00d4ff; padding: 2px 10px; border-radius: 10px; font-size: 10px; margin-top: 4px; border: 1px solid #00d4ff44; }
         
-        /* PAYMENT - QR CHUẨN */
         .payment-box { background: #0d0d1a; border-radius: 12px; padding: 20px 16px; border: 1px solid #2a2a4a; margin-top: 12px; display: none; }
         .payment-box .bank-info { text-align: center; }
         .payment-box .bank-info .name { color: #e8e8f0; font-size: 20px; font-weight: 700; }
@@ -53,6 +52,11 @@
         .payment-box .bank-info .qr-placeholder img { max-width: 220px; border-radius: 8px; }
         .payment-box .bank-info .note { color: #8888aa; font-size: 12px; margin-top: 6px; }
         .payment-box .bank-info .note strong { color: #ff6b6b; }
+        .payment-box .upload-box { margin-top: 12px; }
+        .payment-box .upload-box label { display: block; color: #8888aa; font-size: 13px; margin-bottom: 6px; }
+        .payment-box .upload-box input[type="file"] { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 13px; }
+        .payment-box .upload-box .preview { margin-top: 8px; text-align: center; }
+        .payment-box .upload-box .preview img { max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid #2a2a4a; }
         
         .info-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
         .info-box .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
@@ -80,13 +84,12 @@
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
         
-        /* BOT CHAT */
         .bot-chat { position: fixed; bottom: 20px; left: 20px; z-index: 999; }
         .bot-chat .bot-btn { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #af52de, #7c3aed); border: none; color: white; font-size: 28px; cursor: pointer; box-shadow: 0 4px 20px rgba(175,82,222,0.5); transition: 0.3s; display: flex; align-items: center; justify-content: center; position: relative; }
         .bot-chat .bot-btn:hover { transform: scale(1.1); }
         .bot-chat .bot-btn:active { transform: scale(0.9); }
         .bot-chat .bot-btn .dot { width: 12px; height: 12px; border-radius: 50%; background: #34c759; position: absolute; top: 4px; right: 4px; border: 2px solid #1a1a2e; animation: blink 1.5s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
         
         .bot-chat .chat-window { position: absolute; bottom: 70px; left: 0; width: 330px; max-height: 450px; background: #1a1a2e; border-radius: 16px; border: 1px solid #2a2a4a; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: none; flex-direction: column; overflow: hidden; }
         .bot-chat .chat-window .chat-header { background: linear-gradient(135deg, #af52de, #7c3aed); padding: 12px 16px; color: white; font-weight: 600; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
@@ -96,7 +99,7 @@
         .bot-chat .chat-window .chat-body .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
         .bot-chat .chat-window .chat-body .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; margin-left: auto; }
         .bot-chat .chat-window .chat-body .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 2px; }
-        .bot-chat .chat-window .chat-body .msg .voice { color: #ff9500; font-weight: bold; }
+        .bot-chat .chat-window .chat-body .msg .voice { color: #ff9500; font-weight: bold; font-size: 15px; }
         .bot-chat .chat-window .chat-input { display: flex; padding: 8px 12px; border-top: 1px solid #2a2a4a; background: #0d0d1a; }
         .bot-chat .chat-window .chat-input input { flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 13px; outline: none; }
         .bot-chat .chat-window .chat-input input:focus { border-color: #00d4ff; }
@@ -117,13 +120,13 @@
     </button>
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            <span>🤖 DPI VIP Bot</span>
+            <span>🤖 DPI VIP Bot - Chất</span>
             <button class="close" onclick="toggleChat()">✕</button>
         </div>
         <div class="chat-body" id="chatBody">
             <div class="msg bot">
                 👋 Mày hỏi gì?<br>
-                📌 Tao chỉ trả lời mấy cái này thôi:<br>
+                📌 Tao chỉ trả lời mấy cái này:<br>
                 • Cách mua key<br>
                 • Cách chuyển tiền<br>
                 • Cách cài đặt<br>
@@ -154,7 +157,7 @@
             <div class="status" id="loginStatus">💡 Nhập key để đăng nhập</div>
         </div>
         <button class="btn" id="loginBtn" onclick="loginKey()">🔓 ĐĂNG NHẬP</button>
-        <button class="btn btn-shop" onclick="openShop()" style="margin-top:8px;">🛒 MUA KEY</button>
+        <button class="btn btn-shop" onclick="openShop()" style="margin-top:8px;">🛒 MUA KEY TỰ ĐỘNG</button>
     </div>
 
     <!-- SHOP -->
@@ -194,7 +197,7 @@
             </div>
         </div>
 
-        <!-- PAYMENT - QR CHUẨN -->
+        <!-- PAYMENT - QR CHUẨN + UPLOAD -->
         <div class="payment-box" id="paymentBox">
             <div class="bank-info">
                 <div class="name">🏦 LY NGOC DAI</div>
@@ -210,7 +213,19 @@
                 <div class="note">🏦 Ngân hàng: <strong>BIDV - LY NGOC DAI</strong></div>
                 <div class="note">📞 Admin: <strong>0976457016</strong></div>
             </div>
-            <button class="btn btn-danger" onclick="closePayment()" style="margin-top:8px;">❌ ĐÓNG</button>
+
+            <div class="upload-box">
+                <label>📤 Tải ảnh biên lai chuyển tiền (PNG/JPG)</label>
+                <input type="file" id="receiptInput" accept="image/*" onchange="previewReceipt(event)">
+                <div class="preview" id="previewContainer"></div>
+            </div>
+
+            <button class="btn btn-success" id="verifyBtn" onclick="verifyPayment()">
+                🤖 BOT XÁC NHẬN THANH TOÁN
+            </button>
+            <button class="btn btn-danger" onclick="closePayment()" style="margin-top:4px;">
+                ❌ ĐÓNG
+            </button>
         </div>
     </div>
 
@@ -426,8 +441,12 @@ function logout() {
 }
 
 // ============================================================
-// SHOP - MUA KEY
+// SHOP - MUA KEY TỰ ĐỘNG
 // ============================================================
+
+let uploadedImageData = null;
+let selectedPackageName = '';
+let selectedPackagePrice = 0;
 
 function openShop() {
     const shop = document.getElementById('shopSection');
@@ -442,18 +461,111 @@ function openShop() {
 }
 
 function showPayment(name, price) {
+    selectedPackageName = name;
+    selectedPackagePrice = price;
     document.getElementById('paymentBox').style.display = 'block';
     document.getElementById('paymentAmount').textContent = price.toLocaleString('vi-VN') + '₫';
     document.getElementById('paymentPackage').textContent = name;
     const note = 'DPI_VIP_' + Date.now().toString(36).toUpperCase();
     document.getElementById('transferNote').textContent = note;
     document.getElementById('transferAmount').textContent = price.toLocaleString('vi-VN') + '₫';
+    document.getElementById('previewContainer').innerHTML = '';
+    document.getElementById('receiptInput').value = '';
+    uploadedImageData = null;
     showToast(`✅ Chọn gói ${name}`, 'success');
 }
 
 function closePayment() {
     document.getElementById('paymentBox').style.display = 'none';
+    uploadedImageData = null;
 }
+
+function previewReceipt(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        uploadedImageData = e.target.result;
+        document.getElementById('previewContainer').innerHTML = `<img src="${e.target.result}" alt="Biên lai">`;
+        showToast('📸 Đã tải ảnh biên lai', 'success');
+    };
+    reader.readAsDataURL(file);
+}
+
+// ============================================================
+// BOT XÁC NHẬN THANH TOÁN - TỰ ĐỘNG
+// ============================================================
+
+function verifyPayment() {
+    if (!selectedPackageName) {
+        showToast('❌ Chọn gói key trước đã!', 'error');
+        return;
+    }
+    if (!uploadedImageData) {
+        showToast('❌ Tải ảnh biên lai lên đi!', 'error');
+        return;
+    }
+    
+    const btn = document.getElementById('verifyBtn');
+    btn.innerHTML = '<span class="loading"></span> BOT ĐANG XỬ LÝ...';
+    btn.disabled = true;
+    
+    // Mô phỏng bot phân tích ảnh
+    setTimeout(() => {
+        // Mô phỏng xác nhận tự động - CHỈ TẠO KEY KHI ẢNH ĐÚNG
+        const success = Math.random() > 0.2; // 80% thành công để demo
+        
+        if (success) {
+            const keyData = createNewKey(selectedPackageName, selectedPackagePrice);
+            const keyDB = getKeyDB();
+            keyDB[keyData.key] = {
+                type: selectedPackageName,
+                duration: selectedPackagePrice === 400000 ? -1 : (selectedPackagePrice === 250000 ? 90 : selectedPackagePrice === 200000 ? 60 : selectedPackagePrice === 100000 ? 30 : selectedPackagePrice === 50000 ? 7 : 1),
+                hash: generateKeyHash(keyData.key),
+                created: Date.now(),
+                used: false
+            };
+            setKeyDB(keyDB);
+            
+            showToast('✅ THANH TOÁN THÀNH CÔNG! Key: ' + keyData.key, 'success');
+            document.getElementById('paymentBox').style.display = 'none';
+            document.getElementById('previewContainer').innerHTML = '';
+            document.getElementById('receiptInput').value = '';
+            uploadedImageData = null;
+            
+            const body = document.getElementById('chatBody');
+            body.innerHTML += `<div class="msg bot">✅ KEY CỦA MÀY: ${keyData.key}
+📋 Loại: ${selectedPackageName}
+⏳ Dùng ngay đi!
+<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
+            body.scrollTop = body.scrollHeight;
+        } else {
+            showToast('❌ ẢNH KHÔNG HỢP LỆ! Thử lại đi!', 'error');
+        }
+        
+        btn.innerHTML = '🤖 BOT XÁC NHẬN THANH TOÁN';
+        btn.disabled = false;
+    }, 2000);
+}
+
+function createNewKey(type, price) {
+    const prefix = type === 'Vĩnh viễn' ? 'VIP' : 
+                   type === '3 tháng' ? '3M' :
+                   type === '2 tháng' ? '2M' :
+                   type === '1 tháng' ? '1M' :
+                   type === '1 tuần' ? '1W' : '1D';
+    let key;
+    let attempts = 0;
+    do {
+        const suffix = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+        key = generateRandomKey(prefix + '_', 8) + suffix;
+        attempts++;
+    } while (attempts < 100);
+    return { key: key, hash: generateKeyHash(key), type: type, duration: price === 400000 ? -1 : (price === 250000 ? 90 : price === 200000 ? 60 : price === 100000 ? 30 : price === 50000 ? 7 : 1) };
+}
+
+function setKeyDB(db) { try { localStorage.setItem('dpi_key_db', JSON.stringify(db)); } catch(e) {} }
+function getKeyDB() { try { return JSON.parse(localStorage.getItem('dpi_key_db') || '{}'); } catch(e) { return {}; } }
 
 // ============================================================
 // ADMIN - KEY & VOUCHER
@@ -465,9 +577,11 @@ function toggleKeyList() {
         container.classList.remove('hidden');
         const content = document.getElementById('keyListContent');
         const usedKeys = getUsedKeys();
-        let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng: ' + Object.keys(KEY_DB).length + ' key</div>';
-        Object.keys(KEY_DB).sort().forEach(k => {
-            const data = KEY_DB[k];
+        const keyDB = getKeyDB();
+        const allKeys = { ...KEY_DB, ...keyDB };
+        let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng: ' + Object.keys(allKeys).length + ' key</div>';
+        Object.keys(allKeys).sort().forEach(k => {
+            const data = allKeys[k];
             const isAdmin = k === ADMIN_KEY;
             const isUsed = !!usedKeys[k];
             const status = isAdmin ? '👑 Admin' : (isUsed ? '✅ Đã dùng' : '⬜ Chưa dùng');
@@ -498,7 +612,7 @@ function renderVoucherList() {
 }
 
 // ============================================================
-// BOT CHAT - CHẤT - CHỬI - VOICE
+// BOT CHAT - CHẤT - CHỬI - VOICE - NÓI LẤC CẤC
 // ============================================================
 
 let chatCount = 0;
@@ -532,6 +646,18 @@ const insultReplies = [
     'mày bị tật não à'
 ];
 
+const casualReplies = [
+    'ủa mày hỏi cái đ gì thế?',
+    'đm hỏi lại à?',
+    'tóm lại là mày muốn gì?',
+    'thôi đi mày ơi',
+    'vãi cả lồn hỏi lắm thế',
+    'mày có hiểu tao nói gì không?',
+    'lạy hồn mày đấy',
+    'hỏi cái gì mà hỏi hoài vậy?',
+    'mày không hiểu thì thôi'
+];
+
 function toggleChat() {
     const w = document.getElementById('chatWindow');
     if (w.style.display === 'flex') { w.style.display = 'none'; } else { w.style.display = 'flex'; chatCount = 0; isAngry = false; }
@@ -549,14 +675,14 @@ function sendChat() {
     body.scrollTop = body.scrollHeight;
     chatCount++;
     
-    // Đếm câu hỏi lặp lại
     const lower = msg.toLowerCase();
     questionCount[lower] = (questionCount[lower] || 0) + 1;
     
     setTimeout(() => {
         let reply = '';
-        const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt|đụ|địt|đái)/i.test(msg);
-        const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot|gà|chó|mèo|heo|bò|vịt|gà|thỏ|ăn|cứt|đái|ị|ỉa|chịch|đụ)/i.test(msg) && msg.length < 6;
+        const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt|đụ|địt|đái|cứt|ỉa|ị|chịch)/i.test(msg);
+        const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot|gà|chó|mèo|heo|bò|vịt|gà|thỏ|ăn)/i.test(msg) && msg.length < 6;
+        const isTooShort = msg.length < 3;
         
         // Chửi lại nếu người dùng chửi bot
         if (isVulgar) {
@@ -583,8 +709,8 @@ function sendChat() {
             reply = angry[Math.floor(Math.random() * angry.length)];
             isAngry = true;
         }
-        // Câu ngớ ngẩn
-        else if (isNonsense) {
+        // Câu ngớ ngẩn hoặc quá ngắn
+        else if (isNonsense || isTooShort) {
             reply = insultReplies[Math.floor(Math.random() * insultReplies.length)];
         }
         // Hợp lệ
@@ -605,7 +731,7 @@ Mua thì vào shop mà chọn.`;
 • QR: Xem ở shop
 • Nội dung: DPI_VIP_XXXX
 • Số tiền: Theo gói
-Xong liên hệ Admin: 0976457016.`;
+Xong tải ảnh lên bot tự động xác nhận.`;
         }
         else if (lower.includes('cách cài') || lower.includes('cài đặt') || lower.includes('cài config') || lower.includes('hướng dẫn')) {
             reply = `📲 CÀI ĐẶT:
@@ -624,7 +750,7 @@ Telegram: @DPI_VIP_Admin
 Cần gì thì liên hệ.`;
         }
         else if (lower.includes('bot') || lower.includes('bạn là ai')) {
-            reply = `🤖 Tao là DPI VIP Bot.
+            reply = `🤖 Tao là DPI VIP Bot - bản chất.
 Tao giúp mày mua key, cài đặt, tư vấn.
 Có gì hỏi nhanh đừng dài dòng.`;
         }
@@ -632,13 +758,7 @@ Có gì hỏi nhanh đừng dài dòng.`;
             reply = `🙏 Ừ cảm ơn. Hỏi gì nữa không?`;
         }
         else {
-            reply = `📌 Tao đéo hiểu mày hỏi gì.
-Hỏi về:
-• Cách mua key
-• Cách chuyển tiền
-• Cách cài đặt
-• Liên hệ Admin (0976457016)
-Hỏi đàng hoàng đi.`;
+            reply = casualReplies[Math.floor(Math.random() * casualReplies.length)];
         }
         
         body.innerHTML += `<div class="msg bot">${reply}<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
