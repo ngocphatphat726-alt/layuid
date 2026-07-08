@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
-        .container { background: #1a1a2e; max-width: 480px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+        .container { background: #1a1a2e; max-width: 500px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
         .logo { text-align: center; margin-bottom: 20px; }
         .logo h1 { color: #00d4ff; font-size: 26px; font-weight: 700; letter-spacing: 1px; }
         .logo h1 span { color: #ff6b6b; }
@@ -28,6 +28,8 @@
         .btn-danger:hover { box-shadow: 0 8px 30px #ff446633; }
         .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
         .btn-success:hover { box-shadow: 0 8px 30px #34c75933; }
+        .btn-admin { background: linear-gradient(135deg, #ff9500, #ff6b00); }
+        .btn-admin:hover { box-shadow: 0 8px 30px #ff950033; }
         .hidden { display: none !important; }
         .info-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
         .info-box .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
@@ -46,16 +48,28 @@
         .footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid #1a1a2e; }
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
-        .key-list { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; max-height: 300px; overflow-y: auto; }
-        .key-list .item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #1a1a2e; font-size: 12px; }
+        .key-list { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; max-height: 400px; overflow-y: auto; }
+        .key-list .title { color: #8888aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .key-list .header { display: grid; grid-template-columns: 1fr 0.8fr 0.8fr 0.6fr; gap: 4px; padding: 6px 0; border-bottom: 1px solid #2a2a4a; font-size: 11px; color: #666688; font-weight: 600; }
+        .key-list .item { display: grid; grid-template-columns: 1fr 0.8fr 0.8fr 0.6fr; gap: 4px; padding: 6px 0; border-bottom: 1px solid #1a1a2e; font-size: 12px; }
         .key-list .item:last-child { border-bottom: none; }
-        .key-list .item .k { color: #8888aa; font-family: 'Courier New', monospace; }
+        .key-list .item .k { color: #8888aa; font-family: 'Courier New', monospace; font-size: 11px; word-break: break-all; }
         .key-list .item .t { color: #e8e8f0; }
         .key-list .item .t.green { color: #34c759; }
         .key-list .item .t.red { color: #ff6b6b; }
         .key-list .item .t.orange { color: #ff9500; }
-        .key-list .title { color: #8888aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-        @media (max-width: 400px) { .container { padding: 20px 16px; } }
+        .key-list .item .t.blue { color: #00d4ff; }
+        .key-list .item .t.purple { color: #af52de; }
+        .key-list .item .status-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; display: inline-block; }
+        .key-list .item .status-badge.used { background: #ff6b6b22; color: #ff6b6b; }
+        .key-list .item .status-badge.unused { background: #34c75922; color: #34c759; }
+        .key-list .item .status-badge.expired { background: #ff446622; color: #ff4466; }
+        .key-list .item .status-badge.active { background: #00d4ff22; color: #00d4ff; }
+        .key-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+        .key-stats .stat { background: #0a0a12; border-radius: 8px; padding: 8px 6px; text-align: center; border: 1px solid #1a1a2e; }
+        .key-stats .stat .num { color: #00d4ff; font-size: 18px; font-weight: 700; }
+        .key-stats .stat .lbl { color: #666688; font-size: 10px; margin-top: 2px; }
+        @media (max-width: 400px) { .container { padding: 20px 16px; } .key-list .header, .key-list .item { grid-template-columns: 1fr 0.6fr 0.6fr 0.5fr; font-size: 10px; } }
     </style>
 </head>
 <body>
@@ -91,10 +105,12 @@
         <!-- THÔNG TIN KEY -->
         <div class="info-box">
             <div class="row"><span class="label">🔑 Key đang dùng</span><span class="value blue" id="currentKey">---</span></div>
+            <div class="row"><span class="label">📋 Loại key</span><span class="value" id="keyType">---</span></div>
             <div class="row"><span class="label">⏳ Thời hạn</span><span class="value green" id="keyExpiry">---</span></div>
             <div class="row"><span class="label">⏱️ Còn lại</span><span class="value orange" id="keyRemain">---</span></div>
             <div class="row"><span class="label">📅 Lần đăng nhập đầu</span><span class="value" id="firstLogin">---</span></div>
             <div class="row"><span class="label">🔄 Gia hạn sau</span><span class="value" id="renewDate">---</span></div>
+            <div class="row"><span class="label">📊 Trạng thái</span><span class="value green" id="keyStatus">✅ Hoạt động</span></div>
         </div>
 
         <!-- NÚT TẢI CONFIG -->
@@ -103,13 +119,24 @@
         </button>
 
         <!-- NÚT QUẢN LÝ KEY (CHỈ ADMIN) -->
-        <button class="btn btn-danger hidden" id="adminBtn" onclick="toggleKeyList()">
+        <button class="btn btn-admin hidden" id="adminBtn" onclick="toggleKeyList()">
             👑 QUẢN LÝ KEY (ADMIN)
         </button>
 
         <!-- DANH SÁCH KEY (CHỈ ADMIN) -->
         <div class="key-list hidden" id="keyListContainer">
-            <div class="title">📋 DANH SÁCH KEY</div>
+            <div class="title">📋 DANH SÁCH TẤT CẢ KEY (SẮP XẾP TỪ LỚN ĐẾN BÉ)</div>
+            
+            <!-- Thống kê -->
+            <div class="key-stats" id="keyStats"></div>
+            
+            <!-- Header -->
+            <div class="header">
+                <span>KEY</span>
+                <span>LOẠI</span>
+                <span>THỜI HẠN</span>
+                <span>TRẠNG THÁI</span>
+            </div>
             <div id="keyListContent"></div>
         </div>
 
@@ -142,14 +169,13 @@
 
 <script>
 // ============================================================
-// DỮ LIỆU KEY ĐƯỢC MÃ HÓA (ẨN HOÀN TOÀN)
+// DỮ LIỆU KEY ĐẦY ĐỦ (MÃ HÓA - ẨN HOÀN TOÀN)
 // ============================================================
 
-// Tất cả key được lưu dưới dạng hash + mã hóa
-// Key thật: NPDPIVIPAIMLOCKLIVE (Admin)
-// Các key khác được tạo tự động
+// Key Admin đặc biệt
+const ADMIN_KEY = 'NPDPIVIPAIMLOCKLIVE';
 
-// Hàm tạo key ngẫu nhiên có hash
+// Hàm tạo hash key
 function generateKeyHash(key) {
     let hash = 0;
     for (let i = 0; i < key.length; i++) {
@@ -159,40 +185,39 @@ function generateKeyHash(key) {
     return Math.abs(hash).toString(16).padStart(8, '0').toUpperCase();
 }
 
-// Dữ liệu key (mã hóa - chỉ lưu hash + thông tin)
-const KEY_DATABASE = (function() {
-    const keys = {};
-    
-    // Hàm tạo key ngẫu nhiên
-    function generateRandomKey(prefix, length) {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let result = prefix || '';
-        for (let i = 0; i < length; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return result;
+// Hàm tạo key ngẫu nhiên
+function generateRandomKey(prefix, length) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix || '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    
-    // Tạo danh sách key với các loại thời hạn
+    return result;
+}
+
+// Tạo danh sách key đầy đủ
+function createKeyDatabase() {
+    const keys = {};
     const keyTypes = [
-        { type: 'Vĩnh viễn', count: 20, duration: -1, prefix: 'VIP' },
-        { type: '3 tháng', count: 30, duration: 90, prefix: '3M' },
-        { type: '2 tháng', count: 30, duration: 60, prefix: '2M' },
-        { type: '1 tháng', count: 30, duration: 30, prefix: '1M' },
-        { type: '1 tuần', count: 30, duration: 7, prefix: '1W' },
-        { type: '1 ngày', count: 40, duration: 1, prefix: '1D' },
-        { type: '11 giờ', count: 40, duration: 0.458, prefix: '11H' },
-        { type: '5 giờ', count: 40, duration: 0.208, prefix: '5H' },
-        { type: '2 giờ', count: 40, duration: 0.083, prefix: '2H' }
+        { type: 'Vĩnh viễn', count: 20, duration: -1, prefix: 'VIP', priority: 1 },
+        { type: '3 tháng', count: 30, duration: 90, prefix: '3M', priority: 2 },
+        { type: '2 tháng', count: 30, duration: 60, prefix: '2M', priority: 3 },
+        { type: '1 tháng', count: 30, duration: 30, prefix: '1M', priority: 4 },
+        { type: '1 tuần', count: 30, duration: 7, prefix: '1W', priority: 5 },
+        { type: '1 ngày', count: 40, duration: 1, prefix: '1D', priority: 6 },
+        { type: '11 giờ', count: 40, duration: 0.458, prefix: '11H', priority: 7 },
+        { type: '5 giờ', count: 40, duration: 0.208, prefix: '5H', priority: 8 },
+        { type: '2 giờ', count: 40, duration: 0.083, prefix: '2H', priority: 9 }
     ];
     
-    // Key admin đặc biệt
-    const adminKey = 'NPDPIVIPAIMLOCKLIVE';
-    keys[adminKey] = {
+    // Key Admin
+    keys[ADMIN_KEY] = {
         type: 'Admin',
         duration: -1,
-        hash: generateKeyHash(adminKey),
-        isAdmin: true
+        hash: generateKeyHash(ADMIN_KEY),
+        isAdmin: true,
+        priority: 0,
+        count: 1
     };
     
     // Tạo các key khác
@@ -201,32 +226,35 @@ const KEY_DATABASE = (function() {
             let key;
             let attempts = 0;
             do {
-                key = generateRandomKey(kt.prefix + '_', 12);
+                const suffix = String(i + 1).padStart(3, '0');
+                key = generateRandomKey(kt.prefix + '_', 8) + suffix;
                 attempts++;
             } while (keys[key] && attempts < 100);
             keys[key] = {
                 type: kt.type,
                 duration: kt.duration,
                 hash: generateKeyHash(key),
-                isAdmin: false
+                isAdmin: false,
+                priority: kt.priority,
+                count: kt.count
             };
         }
     });
     
-    // Lưu danh sách key đã tạo (chỉ để debug - sẽ bị ẩn)
-    console.log('Total keys generated:', Object.keys(keys).length);
-    
     return keys;
-})();
+}
 
-// Lưu key hash để kiểm tra (không lưu key thật)
+const KEY_DATABASE = createKeyDatabase();
+
+// Lưu key hash để kiểm tra
 const KEY_HASHES = {};
 Object.keys(KEY_DATABASE).forEach(k => {
     KEY_HASHES[KEY_DATABASE[k].hash] = {
         type: KEY_DATABASE[k].type,
         duration: KEY_DATABASE[k].duration,
         isAdmin: KEY_DATABASE[k].isAdmin || false,
-        key: k // lưu key để dùng khi xác thực
+        priority: KEY_DATABASE[k].priority || 99,
+        key: k
     };
 });
 
@@ -234,263 +262,12 @@ Object.keys(KEY_DATABASE).forEach(k => {
 // QUẢN LÝ KEY VÀ THỜI GIAN
 // ============================================================
 
-// Lưu trữ localStorage
 function getStorage(key, def) {
     try { return JSON.parse(localStorage.getItem(key)) || def; } catch(e) { return def; }
 }
 function setStorage(key, val) {
     try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
 }
-
-// Kiểm tra key hợp lệ
-function validateKey(inputKey) {
-    const hash = generateKeyHash(inputKey);
-    return KEY_HASHES[hash] || null;
-}
-
-// Đăng nhập key
-function loginKey() {
-    const input = document.getElementById('keyInput').value.trim().toUpperCase();
-    const status = document.getElementById('loginStatus');
-    
-    if (!input) {
-        status.textContent = '⚠️ Vui lòng nhập key!';
-        status.className = 'status error';
-        return;
-    }
-    
-    const keyData = validateKey(input);
-    if (!keyData) {
-        status.textContent = '❌ Key không hợp lệ! Vui lòng kiểm tra lại.';
-        status.className = 'status error';
-        showToast('❌ Key không hợp lệ!', 'error');
-        return;
-    }
-    
-    // Kiểm tra key đã được sử dụng chưa
-    const usedKeys = getStorage('usedKeys', {});
-    const deviceUID = getDeviceUID();
-    
-    if (usedKeys[input]) {
-        // Kiểm tra thiết bị đã đăng nhập key này
-        if (usedKeys[input].device !== deviceUID) {
-            status.textContent = '❌ Key này đã được sử dụng trên thiết bị khác!';
-            status.className = 'status error';
-            showToast('❌ Key đã được sử dụng!', 'error');
-            return;
-        }
-    }
-    
-    // Kiểm tra key còn hạn
-    const now = Date.now();
-    const keySessions = getStorage('keySessions', {});
-    let session = keySessions[input];
-    let firstLogin = null;
-    let expiry = null;
-    
-    if (session) {
-        firstLogin = session.firstLogin;
-        expiry = session.expiry;
-    }
-    
-    // Nếu key chưa từng đăng nhập
-    if (!session) {
-        firstLogin = now;
-        if (keyData.duration === -1) {
-            expiry = -1; // Vĩnh viễn
-        } else {
-            expiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
-        }
-        session = {
-            firstLogin: firstLogin,
-            expiry: expiry,
-            device: deviceUID
-        };
-        keySessions[input] = session;
-        setStorage('keySessions', keySessions);
-        
-        // Đánh dấu key đã dùng
-        usedKeys[input] = { device: deviceUID, time: now };
-        setStorage('usedKeys', usedKeys);
-    }
-    
-    // Kiểm tra hết hạn (trừ key vĩnh viễn và admin)
-    if (keyData.duration !== -1 && session.expiry < now) {
-        // Kiểm tra gia hạn (5 ngày sau hết hạn)
-        const gracePeriod = 5 * 24 * 60 * 60 * 1000;
-        if (now > session.expiry + gracePeriod) {
-            status.textContent = '❌ Key đã hết hạn quá 5 ngày! Vui lòng gia hạn.';
-            status.className = 'status error';
-            showToast('❌ Key đã hết hạn!', 'error');
-            return;
-        } else {
-            // Gia hạn tự động
-            const newExpiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
-            session.expiry = newExpiry;
-            keySessions[input] = session;
-            setStorage('keySessions', keySessions);
-            status.textContent = '✅ Đã gia hạn key thành công!';
-            status.className = 'status success';
-        }
-    }
-    
-    // Đăng nhập thành công
-    status.textContent = '✅ Đăng nhập thành công!';
-    status.className = 'status success';
-    showToast('✅ Đăng nhập thành công!', 'success');
-    
-    // Lưu key hiện tại
-    setStorage('currentKey', input);
-    setStorage('currentKeyData', keyData);
-    
-    // Vào app
-    enterApp(input, keyData, session);
-}
-
-// Vào app
-function enterApp(key, keyData, session) {
-    document.getElementById('loginSection').classList.add('hidden');
-    document.getElementById('appSection').classList.remove('hidden');
-    
-    // Hiển thị thông tin
-    const uid = getDeviceUID();
-    document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
-    document.getElementById('currentKey').textContent = key.substring(0, 4) + '...' + key.substring(key.length - 4);
-    
-    // Thời hạn
-    if (keyData.duration === -1) {
-        document.getElementById('keyExpiry').textContent = '♾️ Vĩnh viễn';
-        document.getElementById('keyExpiry').className = 'value green';
-        document.getElementById('keyRemain').textContent = '♾️ Không giới hạn';
-        document.getElementById('renewDate').textContent = 'Không cần gia hạn';
-    } else {
-        const expiryDate = new Date(session.expiry);
-        document.getElementById('keyExpiry').textContent = expiryDate.toLocaleString('vi-VN');
-        document.getElementById('keyExpiry').className = 'value orange';
-        
-        // Tính thời gian còn lại
-        const remain = session.expiry - Date.now();
-        if (remain > 0) {
-            const days = Math.floor(remain / (24*60*60*1000));
-            const hours = Math.floor((remain % (24*60*60*1000)) / (60*60*1000));
-            const mins = Math.floor((remain % (60*60*1000)) / (60*1000));
-            document.getElementById('keyRemain').textContent = `${days} ngày ${hours} giờ ${mins} phút`;
-            document.getElementById('keyRemain').className = 'value green';
-        } else {
-            document.getElementById('keyRemain').textContent = '⏳ Đã hết hạn (chờ gia hạn)';
-            document.getElementById('keyRemain').className = 'value red';
-        }
-        
-        // Gia hạn sau 5 ngày
-        const renewAfter = new Date(session.expiry + 5*24*60*60*1000);
-        document.getElementById('renewDate').textContent = renewAfter.toLocaleString('vi-VN');
-    }
-    
-    document.getElementById('firstLogin').textContent = new Date(session.firstLogin).toLocaleString('vi-VN');
-    
-    // Hiện nút admin nếu là admin
-    if (keyData.isAdmin) {
-        document.getElementById('adminBtn').classList.remove('hidden');
-    }
-}
-
-// Đăng xuất
-function logout() {
-    if (!confirm('Bạn có chắc muốn đăng xuất?')) return;
-    setStorage('currentKey', null);
-    setStorage('currentKeyData', null);
-    document.getElementById('loginSection').classList.remove('hidden');
-    document.getElementById('appSection').classList.add('hidden');
-    document.getElementById('keyListContainer').classList.add('hidden');
-    document.getElementById('keyInput').value = '';
-    document.getElementById('loginStatus').textContent = 'Vui lòng nhập key để tiếp tục';
-    document.getElementById('loginStatus').className = 'status';
-    showToast('🚪 Đã đăng xuất', 'success');
-}
-
-// ============================================================
-// QUẢN LÝ KEY (CHỈ ADMIN)
-// ============================================================
-
-function toggleKeyList() {
-    const container = document.getElementById('keyListContainer');
-    if (container.classList.contains('hidden')) {
-        container.classList.remove('hidden');
-        renderKeyList();
-    } else {
-        container.classList.add('hidden');
-    }
-}
-
-function renderKeyList() {
-    const content = document.getElementById('keyListContent');
-    const keySessions = getStorage('keySessions', {});
-    const usedKeys = getStorage('usedKeys', {});
-    const now = Date.now();
-    
-    // Lấy tất cả key từ database
-    let list = [];
-    Object.keys(KEY_DATABASE).forEach(k => {
-        const data = KEY_DATABASE[k];
-        const session = keySessions[k];
-        const isUsed = !!usedKeys[k];
-        let status = 'Chưa sử dụng';
-        let expiry = '---';
-        let remain = '---';
-        
-        if (session) {
-            status = 'Đã sử dụng';
-            if (data.duration === -1) {
-                expiry = '♾️ Vĩnh viễn';
-                remain = '♾️';
-            } else {
-                expiry = new Date(session.expiry).toLocaleString('vi-VN');
-                const r = session.expiry - now;
-                if (r > 0) {
-                    remain = Math.floor(r/(24*60*60*1000)) + ' ngày';
-                } else {
-                    remain = 'Hết hạn';
-                }
-            }
-        }
-        
-        list.push({
-            key: k,
-            type: data.type,
-            duration: data.duration,
-            isAdmin: data.isAdmin || false,
-            isUsed: isUsed,
-            status: status,
-            expiry: expiry,
-            remain: remain,
-            session: session
-        });
-    });
-    
-    // Sắp xếp: Admin trước, theo loại
-    list.sort((a, b) => {
-        if (a.isAdmin && !b.isAdmin) return -1;
-        if (!a.isAdmin && b.isAdmin) return 1;
-        return a.type.localeCompare(b.type);
-    });
-    
-    // Render
-    let html = '';
-    list.forEach(item => {
-        const color = item.isAdmin ? 'green' : (item.isUsed ? 'orange' : '');
-        html += `
-            <div class="item">
-                <span class="k">${item.key.substring(0, 6)}...${item.key.substring(item.key.length - 4)}</span>
-                <span class="t ${color}">${item.type} ${item.isAdmin ? '👑' : ''} - ${item.status}</span>
-            </div>
-        `;
-    });
-    content.innerHTML = html;
-}
-
-// ============================================================
-// LẤY UID TỰ ĐỘNG
-// ============================================================
 
 function getDeviceUID() {
     try {
@@ -519,6 +296,308 @@ function getDeviceUID() {
     } catch(e) {
         return 'UNKNOWN_' + Date.now().toString(16).toUpperCase();
     }
+}
+
+function validateKey(inputKey) {
+    const hash = generateKeyHash(inputKey);
+    return KEY_HASHES[hash] || null;
+}
+
+// Đăng nhập key
+function loginKey() {
+    const input = document.getElementById('keyInput').value.trim().toUpperCase();
+    const status = document.getElementById('loginStatus');
+    
+    if (!input) {
+        status.textContent = '⚠️ Vui lòng nhập key!';
+        status.className = 'status error';
+        return;
+    }
+    
+    const keyData = validateKey(input);
+    if (!keyData) {
+        status.textContent = '❌ Key không hợp lệ! Vui lòng kiểm tra lại.';
+        status.className = 'status error';
+        showToast('❌ Key không hợp lệ!', 'error');
+        return;
+    }
+    
+    const deviceUID = getDeviceUID();
+    const usedKeys = getStorage('usedKeys', {});
+    
+    if (usedKeys[input]) {
+        if (usedKeys[input].device !== deviceUID) {
+            status.textContent = '❌ Key này đã được sử dụng trên thiết bị khác!';
+            status.className = 'status error';
+            showToast('❌ Key đã được sử dụng!', 'error');
+            return;
+        }
+    }
+    
+    const now = Date.now();
+    const keySessions = getStorage('keySessions', {});
+    let session = keySessions[input];
+    let firstLogin = null;
+    let expiry = null;
+    
+    if (session) {
+        firstLogin = session.firstLogin;
+        expiry = session.expiry;
+    }
+    
+    if (!session) {
+        firstLogin = now;
+        if (keyData.duration === -1) {
+            expiry = -1;
+        } else {
+            expiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
+        }
+        session = {
+            firstLogin: firstLogin,
+            expiry: expiry,
+            device: deviceUID
+        };
+        keySessions[input] = session;
+        setStorage('keySessions', keySessions);
+        
+        usedKeys[input] = { device: deviceUID, time: now };
+        setStorage('usedKeys', usedKeys);
+    }
+    
+    // Kiểm tra hết hạn
+    if (keyData.duration !== -1 && session.expiry < now) {
+        const gracePeriod = 5 * 24 * 60 * 60 * 1000;
+        if (now > session.expiry + gracePeriod) {
+            status.textContent = '❌ Key đã hết hạn quá 5 ngày! Vui lòng gia hạn.';
+            status.className = 'status error';
+            showToast('❌ Key đã hết hạn!', 'error');
+            return;
+        } else {
+            const newExpiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
+            session.expiry = newExpiry;
+            keySessions[input] = session;
+            setStorage('keySessions', keySessions);
+            status.textContent = '✅ Đã gia hạn key thành công!';
+            status.className = 'status success';
+        }
+    }
+    
+    status.textContent = '✅ Đăng nhập thành công!';
+    status.className = 'status success';
+    showToast('✅ Đăng nhập thành công!', 'success');
+    
+    setStorage('currentKey', input);
+    setStorage('currentKeyData', keyData);
+    
+    enterApp(input, keyData, session);
+}
+
+// Vào app
+function enterApp(key, keyData, session) {
+    document.getElementById('loginSection').classList.add('hidden');
+    document.getElementById('appSection').classList.remove('hidden');
+    
+    const uid = getDeviceUID();
+    document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
+    document.getElementById('currentKey').textContent = key.substring(0, 6) + '...' + key.substring(key.length - 4);
+    document.getElementById('keyType').textContent = keyData.isAdmin ? '👑 Admin' : keyData.type;
+    document.getElementById('keyType').className = 'value ' + (keyData.isAdmin ? 'purple' : 'blue');
+    
+    if (keyData.duration === -1) {
+        document.getElementById('keyExpiry').textContent = '♾️ Vĩnh viễn';
+        document.getElementById('keyExpiry').className = 'value green';
+        document.getElementById('keyRemain').textContent = '♾️ Không giới hạn';
+        document.getElementById('renewDate').textContent = 'Không cần gia hạn';
+        document.getElementById('keyStatus').textContent = '✅ Hoạt động';
+        document.getElementById('keyStatus').className = 'value green';
+    } else {
+        const expiryDate = new Date(session.expiry);
+        document.getElementById('keyExpiry').textContent = expiryDate.toLocaleString('vi-VN');
+        document.getElementById('keyExpiry').className = 'value orange';
+        
+        const remain = session.expiry - Date.now();
+        if (remain > 0) {
+            const days = Math.floor(remain / (24*60*60*1000));
+            const hours = Math.floor((remain % (24*60*60*1000)) / (60*60*1000));
+            const mins = Math.floor((remain % (60*60*1000)) / (60*1000));
+            document.getElementById('keyRemain').textContent = `${days} ngày ${hours} giờ ${mins} phút`;
+            document.getElementById('keyRemain').className = 'value green';
+            document.getElementById('keyStatus').textContent = '✅ Hoạt động';
+            document.getElementById('keyStatus').className = 'value green';
+        } else {
+            document.getElementById('keyRemain').textContent = '⏳ Đã hết hạn (chờ gia hạn)';
+            document.getElementById('keyRemain').className = 'value red';
+            document.getElementById('keyStatus').textContent = '⏳ Chờ gia hạn';
+            document.getElementById('keyStatus').className = 'value orange';
+        }
+        
+        const renewAfter = new Date(session.expiry + 5*24*60*60*1000);
+        document.getElementById('renewDate').textContent = renewAfter.toLocaleString('vi-VN');
+    }
+    
+    document.getElementById('firstLogin').textContent = new Date(session.firstLogin).toLocaleString('vi-VN');
+    
+    // Hiện nút admin nếu là admin
+    if (keyData.isAdmin) {
+        document.getElementById('adminBtn').classList.remove('hidden');
+    }
+}
+
+// Đăng xuất
+function logout() {
+    if (!confirm('Bạn có chắc muốn đăng xuất?')) return;
+    setStorage('currentKey', null);
+    setStorage('currentKeyData', null);
+    document.getElementById('loginSection').classList.remove('hidden');
+    document.getElementById('appSection').classList.add('hidden');
+    document.getElementById('keyListContainer').classList.add('hidden');
+    document.getElementById('keyInput').value = '';
+    document.getElementById('loginStatus').textContent = 'Vui lòng nhập key để tiếp tục';
+    document.getElementById('loginStatus').className = 'status';
+    showToast('🚪 Đã đăng xuất', 'success');
+}
+
+// ============================================================
+// QUẢN LÝ KEY (CHỈ ADMIN) - SẮP XẾP TỪ LỚN ĐẾN BÉ
+// ============================================================
+
+function toggleKeyList() {
+    const container = document.getElementById('keyListContainer');
+    if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        renderKeyList();
+    } else {
+        container.classList.add('hidden');
+    }
+}
+
+function renderKeyList() {
+    const content = document.getElementById('keyListContent');
+    const statsContainer = document.getElementById('keyStats');
+    const keySessions = getStorage('keySessions', {});
+    const usedKeys = getStorage('usedKeys', {});
+    const now = Date.now();
+    
+    // Lấy tất cả key từ database
+    let list = [];
+    let stats = {
+        total: 0,
+        used: 0,
+        unused: 0,
+        active: 0,
+        expired: 0,
+        byType: {}
+    };
+    
+    Object.keys(KEY_DATABASE).forEach(k => {
+        const data = KEY_DATABASE[k];
+        const session = keySessions[k];
+        const isUsed = !!usedKeys[k];
+        let statusText = 'Chưa sử dụng';
+        let statusClass = 'unused';
+        let expiryDisplay = '---';
+        let remainDisplay = '---';
+        let isActive = false;
+        let isExpired = false;
+        
+        if (session) {
+            if (data.duration === -1) {
+                expiryDisplay = '♾️ Vĩnh viễn';
+                remainDisplay = '♾️';
+                isActive = true;
+                statusText = 'Hoạt động';
+                statusClass = 'active';
+            } else {
+                expiryDisplay = new Date(session.expiry).toLocaleString('vi-VN');
+                const r = session.expiry - now;
+                if (r > 0) {
+                    const days = Math.floor(r/(24*60*60*1000));
+                    remainDisplay = days + ' ngày';
+                    isActive = true;
+                    statusText = 'Hoạt động';
+                    statusClass = 'active';
+                } else {
+                    const grace = 5 * 24 * 60 * 60 * 1000;
+                    if (now > session.expiry + grace) {
+                        remainDisplay = 'Hết hạn';
+                        isExpired = true;
+                        statusText = 'Hết hạn';
+                        statusClass = 'expired';
+                    } else {
+                        remainDisplay = 'Chờ gia hạn';
+                        statusText = 'Chờ gia hạn';
+                        statusClass = 'orange';
+                    }
+                }
+            }
+        }
+        
+        const item = {
+            key: k,
+            type: data.type,
+            duration: data.duration,
+            isAdmin: data.isAdmin || false,
+            isUsed: isUsed,
+            status: statusText,
+            statusClass: statusClass,
+            expiry: expiryDisplay,
+            remain: remainDisplay,
+            session: session,
+            isActive: isActive,
+            isExpired: isExpired,
+            priority: data.priority || 99,
+            count: data.count || 0
+        };
+        list.push(item);
+        
+        // Thống kê
+        stats.total++;
+        if (isUsed) stats.used++;
+        else stats.unused++;
+        if (isActive) stats.active++;
+        if (isExpired) stats.expired++;
+        if (!stats.byType[data.type]) stats.byType[data.type] = 0;
+        stats.byType[data.type]++;
+    });
+    
+    // Sắp xếp: Admin trước, sau đó theo priority (từ lớn đến bé: Vĩnh viễn -> 3 tháng -> 2 tháng -> ...)
+    list.sort((a, b) => {
+        if (a.isAdmin && !b.isAdmin) return -1;
+        if (!a.isAdmin && b.isAdmin) return 1;
+        return a.priority - b.priority;
+    });
+    
+    // Render thống kê
+    statsContainer.innerHTML = `
+        <div class="stat"><div class="num">${stats.total}</div><div class="lbl">Tổng key</div></div>
+        <div class="stat"><div class="num" style="color:#34c759;">${stats.active}</div><div class="lbl">Đang hoạt động</div></div>
+        <div class="stat"><div class="num" style="color:#ff6b6b;">${stats.unused}</div><div class="lbl">Chưa sử dụng</div></div>
+    `;
+    
+    // Render danh sách
+    let html = '';
+    let currentType = '';
+    list.forEach(item => {
+        // Nhóm theo loại
+        if (currentType !== item.type) {
+            currentType = item.type;
+            html += `<div style="grid-column:1/-1;color:#00d4ff;font-size:12px;font-weight:600;padding:8px 0 4px;border-bottom:1px solid #00d4ff22;">📌 ${item.type} (${item.isAdmin ? '👑 Admin' : ''})</div>`;
+        }
+        
+        const statusColor = item.statusClass === 'active' ? 'green' : 
+                           item.statusClass === 'expired' ? 'red' : 
+                           item.statusClass === 'orange' ? 'orange' : 'blue';
+        
+        html += `
+            <div class="item">
+                <span class="k">${item.key.substring(0, 6)}...${item.key.substring(item.key.length - 4)}</span>
+                <span class="t">${item.isAdmin ? '👑' : item.type}</span>
+                <span class="t">${item.expiry}</span>
+                <span class="t ${statusColor}">${item.status}</span>
+            </div>
+        `;
+    });
+    content.innerHTML = html;
 }
 
 // ============================================================
@@ -788,7 +867,6 @@ function showToast(msg, type = '') {
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Kiểm tra đã đăng nhập chưa
     const currentKey = getStorage('currentKey', null);
     if (currentKey) {
         const keyData = getStorage('currentKeyData', null);
