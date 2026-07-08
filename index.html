@@ -7,531 +7,317 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
-        .container { background: #1a1a2e; max-width: 500px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
-        .logo { text-align: center; margin-bottom: 20px; }
-        .logo h1 { color: #00d4ff; font-size: 26px; font-weight: 700; letter-spacing: 1px; }
+        .container { background: #1a1a2e; max-width: 480px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+        .logo { text-align: center; margin-bottom: 16px; }
+        .logo h1 { color: #00d4ff; font-size: 24px; font-weight: 700; }
         .logo h1 span { color: #ff6b6b; }
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
-        .logo .badge { display: inline-block; background: #ff6b6b22; color: #ff6b6b; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #ff6b6b44; margin-top: 6px; }
         
-        .chat-box { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; height: 400px; display: flex; flex-direction: column; overflow: hidden; margin: 12px 0; }
-        .chat-box .chat-header { background: linear-gradient(135deg, #00d4ff22, #0070ff22); padding: 12px 16px; border-bottom: 1px solid #2a2a4a; display: flex; justify-content: space-between; align-items: center; }
-        .chat-box .chat-header .title { color: #e8e8f0; font-weight: 600; font-size: 16px; }
-        .chat-box .chat-header .status { color: #34c759; font-size: 12px; }
-        .chat-box .chat-body { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; }
-        .chat-box .chat-body .msg { padding: 8px 12px; border-radius: 12px; margin-bottom: 6px; max-width: 85%; font-size: 13px; line-height: 1.5; word-wrap: break-word; }
-        .chat-box .chat-body .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
-        .chat-box .chat-body .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; margin-left: auto; }
-        .chat-box .chat-body .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 2px; }
-        .chat-box .chat-body .msg .voice { color: #ff9500; font-weight: bold; font-size: 15px; }
-        .chat-box .chat-input { display: flex; padding: 8px 12px; border-top: 1px solid #2a2a4a; background: #0d0d1a; }
-        .chat-box .chat-input input { flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 14px; outline: none; }
-        .chat-box .chat-input input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
-        .chat-box .chat-input button { margin-left: 8px; padding: 10px 20px; border-radius: 10px; border: none; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-weight: 600; cursor: pointer; }
-        .chat-box .chat-input button:active { transform: scale(0.95); }
+        .chat-box { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; height: 420px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; margin-bottom: 12px; }
+        .chat-box .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; margin-bottom: 8px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+        .chat-box .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; }
+        .chat-box .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
+        .chat-box .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 4px; }
+        .chat-box .msg .voice { color: #ff9500; font-weight: bold; }
         
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #ff4466, #cc1133); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 8px; }
-        .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #ff446633; }
-        .btn:active { transform: scale(0.97); }
-        .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
+        .input-area { display: flex; gap: 8px; }
+        .input-area input { flex: 1; padding: 12px 16px; border-radius: 12px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 15px; outline: none; }
+        .input-area input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
+        .input-area button { padding: 12px 20px; border-radius: 12px; border: none; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-weight: 600; cursor: pointer; font-size: 15px; }
+        .input-area button:active { transform: scale(0.95); }
         
-        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ff004422; border: 1px solid #ff004444; color: #ff4466; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
-        .toast.show { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        .status { color: #8888aa; font-size: 12px; text-align: center; margin-top: 10px; }
+        .status .online { color: #34c759; }
+        .status .offline { color: #ff4466; }
         
-        .footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid #1a1a2e; }
-        .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
+        .btn-reset { width: 100%; padding: 10px; margin-top: 8px; border-radius: 12px; border: none; background: #333355; color: #e8e8f0; cursor: pointer; font-size: 14px; }
+        .btn-reset:active { transform: scale(0.97); }
+        
+        .footer { margin-top: 14px; padding-top: 12px; border-top: 1px solid #1a1a2e; }
+        .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.6; }
         .footer .warning strong { color: #ff6b6b; }
         
-        .quick-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-        .quick-btns .qbtn { padding: 6px 12px; border-radius: 20px; border: 1px solid #333355; background: #0a0a12; color: #8888aa; font-size: 11px; cursor: pointer; transition: 0.2s; }
-        .quick-btns .qbtn:hover { border-color: #ff4466; color: #ff4466; }
-        
-        @media (max-width: 400px) { .container { padding: 20px 16px; } }
+        @media (max-width: 400px) { .container { padding: 20px 16px; } .chat-box { height: 350px; } }
     </style>
 </head>
 <body>
 
-<div id="toast" class="toast">⚡ Đã chửi!</div>
-
 <div class="container">
     <div class="logo">
-        <h1>🔷 ZALO <span>BOT CHỬI</span></h1>
-        <p>Chat với bot - Nói chuyện lấc cấc</p>
-        <div class="badge">⚡ Chửi bố đời - Không lịch sự</div>
+        <h1>💬 Zalo <span>Bot</span></h1>
+        <p>Nói chuyện như 2 người bạn · Biết chửi · Biết hỏi lại</p>
     </div>
 
-    <!-- CHAT BOX -->
-    <div class="chat-box">
-        <div class="chat-header">
-            <span class="title">🤬 Zalo Bot Chửi</span>
-            <span class="status">🟢 Sẵn sàng chửi</span>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="msg bot">
-                👋 Mày muốn gì?<br>
-                Tao là bot chửi đây. Mày hỏi gì tao cũng chửi.<br>
-                Có giỏi thì chửi lại tao xem nào!<br>
-                <span class="time">Vừa xong</span>
-            </div>
-        </div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter') sendMessage()">
-            <button onclick="sendMessage()">Gửi</button>
+    <div class="chat-box" id="chatBox">
+        <div class="msg bot">
+            👋 ủa mày!<br>
+            Tao là bot Zalo đây.<br>
+            Nói chuyện với tao đi, nhưng đừng có hỏi ngu nhé 😏
+            <span class="time">Vừa xong</span>
         </div>
     </div>
 
-    <!-- NÚT CHỬI NHANH -->
-    <div class="quick-btns">
-        <span class="qbtn" onclick="quickChat('chửi tao à')">🔴 chửi tao à</span>
-        <span class="qbtn" onclick="quickChat('mày bị ngu à')">🟡 mày bị ngu à</span>
-        <span class="qbtn" onclick="quickChat('đcmm')">🟠 đcmm</span>
-        <span class="qbtn" onclick="quickChat('war tý luôn')">🔵 war tý luôn</span>
-        <span class="qbtn" onclick="quickChat('lêu lêu')">🟣 lêu lêu</span>
-        <span class="qbtn" onclick="quickChat('mày làm gì được tao')">⚪ mày làm gì được tao</span>
+    <div class="input-area">
+        <input type="text" id="msgInput" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter') sendMsg()">
+        <button onclick="sendMsg()">Gửi</button>
     </div>
 
-    <!-- NÚT XÓA CHAT -->
-    <button class="btn btn-success" onclick="clearChat()">🗑️ XÓA CHAT</button>
+    <div class="status">
+        <span class="online">●</span> Đang hoạt động · Bot đã sẵn sàng
+    </div>
+
+    <button class="btn-reset" onclick="resetChat()">🗑️ Xóa lịch sử chat</button>
 
     <div class="footer">
         <div class="warning">
-            ⚠️ <strong>BOT CHỬI</strong> - Không dành cho người yếu tim<br>
-            📌 Mày hỏi gì tao cũng chửi<br>
-            🤬 Chửi lại tao đi nếu mày dám!
+            ⚠️ Bot này <strong>chửi</strong> và <strong>nói lấc cấc</strong> như bạn bè<br>
+            📌 Đừng hỏi mấy câu ngớ ngẩn kẻo bị chửi
         </div>
     </div>
 </div>
 
 <script>
 // ============================================================
-// KHO CÂU CHỬI
+// BOT ZALO - NÓI CHUYỆN NHƯ 2 NGƯỜI BẠN
 // ============================================================
 
-const chuiCau = [
-    // Chửi bố đời
-    'đm mày',
-    'cặc mày',
-    'lồn mày',
-    'thằng chó',
-    'con chó',
-    'mày bị ngu à',
-    'mày điên à',
-    'mày bị tật não à',
-    'mày bị khùng à',
-    'mày bị đần à',
-    'mày bị óc chó à',
-    'mày bị não cá vàng à',
-    'mày bị thiểu năng à',
-    'mày bị câm à',
-    'mày bị điếc à',
-    'mày bị mù à',
-    'mày bị bại não à',
-    'mày bị hâm à',
-    'mày bị dở hơi à',
-    'mày bị khờ à',
-    'mày bị ngốc à',
-    'mày bị đần độn à',
-    'mày bị trì trệ à',
-    'mày bị chậm phát triển à',
-    'mày bị thiếu oxy não à',
-    'mày bị úng thủy à',
-    'mày bị teo não à',
-    'mày bị liệt não à',
-    'mày bị tan não à',
-    'mày bị rối loạn tâm thần à',
-    'mày bị hoang tưởng à',
-    'mày bị ảo giác à',
-    'mày bị tâm thần phân liệt à',
-    'mày bị trầm cảm à',
-    'mày bị rối loạn lo âu à',
-    'mày bị rối loạn nhân cách à',
-    'mày bị rối loạn hành vi à',
-    'mày bị rối loạn cảm xúc à',
-    'mày bị rối loạn giấc ngủ à',
-    'mày bị rối loạn ăn uống à',
-    'mày bị rối loạn tình dục à',
-    'mày bị rối loạn tâm lý à',
-    'mày bị rối loạn thần kinh à',
-    'mày bị rối loạn vận động à',
-    'mày bị rối loạn ngôn ngữ à',
-    'mày bị rối loạn trí nhớ à',
-    'mày bị rối loạn nhận thức à',
-    'mày bị rối loạn hành vi à',
-    'mày bị rối loạn cảm xúc à',
-    'mày bị rối loạn giấc ngủ à',
-    'mày bị rối loạn ăn uống à',
-    'mày bị rối loạn tình dục à',
-    'mày bị rối loạn tâm lý à',
-    'mày bị rối loạn thần kinh à',
-    'mày bị rối loạn vận động à',
-    'mày bị rối loạn ngôn ngữ à',
-    'mày bị rối loạn trí nhớ à',
-    'mày bị rối loạn nhận thức à',
-    'mày bị rối loạn hành vi à',
-    'mày bị rối loạn cảm xúc à',
-    'mày bị rối loạn giấc ngủ à',
-    'mày bị rối loạn ăn uống à',
-    'mày bị rối loạn tình dục à',
-    'mày bị rối loạn tâm lý à',
-    'mày bị rối loạn thần kinh à',
-    'mày bị rối loạn vận động à',
-    'mày bị rối loạn ngôn ngữ à',
-    'mày bị rối loạn trí nhớ à',
-    'mày bị rối loạn nhận thức à',
-    'mày bị rối loạn hành vi à',
-    'mày bị rối loạn cảm xúc à',
-    'mày bị rối loạn giấc ngủ à',
-    'mày bị rối loạn ăn uống à',
-    'mày bị rối loạn tình dục à',
-    'mày bị rối loạn tâm lý à',
-    'mày bị rối loạn thần kinh à',
-    'mày bị rối loạn vận động à',
-    'mày bị rối loạn ngôn ngữ à',
-    'mày bị rối loạn trí nhớ à',
-    'mày bị rối loạn nhận thức à',
-    'mày bị rối loạn hành vi à',
-    'mày bị rối loạn cảm xúc à',
-    'mày bị rối loạn giấc ngủ à',
-    'mày bị rối loạn ăn uống à',
-    'mày bị rối loạn tình dục à',
-    'mày bị rối loạn tâm lý à',
-    'mày bị rối loạn thần kinh à',
-    'mày bị rối loạn vận động à',
-    'mày bị rối loạn ngôn ngữ à',
-    'mày bị rối loạn trí nhớ à',
-    'mày bị rối loạn nhận thức à',
-    'mày bị rối loạn hành vi à',
-    'mày bị rối loạn cảm xúc à',
-    'mày bị rối loạn giấc ngủ à',
-    'mày bị rối loạn ăn uống à',
-    'mày bị rối loạn tình dục à',
-    'mày bị rối loạn tâm lý à',
-    'mày bị rối loạn thần kinh à',
-    'mày bị rối loạn vận động à',
-    'mày bị rối loạn ngôn ngữ à',
-    'mày bị rối loạn trí nhớ à',
-    'mày bị rối loạn nhận thức à',
-    // Chửi nặng
-    'địt con mẹ mày',
-    'địt bà mày',
-    'địt cả nhà mày',
-    'địt tổ tiên mày',
-    'địt mẹ mày luôn',
-    'địt cụ mày',
-    'địt ông bà mày',
-    'địt mày',
-    'địt mẹ mày chó',
-    'địt mẹ mày đĩ',
-    'địt mẹ mày thằng chó',
-    'địt mẹ mày con chó',
-    'địt mẹ mày thằng đần',
-    'địt mẹ mày con đần',
-    'địt mẹ mày thằng ngu',
-    'địt mẹ mày con ngu',
-    'địt mẹ mày thằng khùng',
-    'địt mẹ mày con khùng',
-    'địt mẹ mày thằng điên',
-    'địt mẹ mày con điên',
-    'địt mẹ mày thằng bại não',
-    'địt mẹ mày con bại não',
-    'địt mẹ mày thằng thiểu năng',
-    'địt mẹ mày con thiểu năng',
-    'địt mẹ mày thằng tâm thần',
-    'địt mẹ mày con tâm thần',
-    'địt mẹ mày thằng hoang tưởng',
-    'địt mẹ mày con hoang tưởng',
-    'địt mẹ mày thằng ảo giác',
-    'địt mẹ mày con ảo giác',
-    'địt mẹ mày thằng phân liệt',
-    'địt mẹ mày con phân liệt',
-    'địt mẹ mày thằng trầm cảm',
-    'địt mẹ mày con trầm cảm',
-    'địt mẹ mày thằng rối loạn',
-    'địt mẹ mày con rối loạn',
-    'địt mẹ mày thằng loạn thần',
-    'địt mẹ mày con loạn thần',
-    'địt mẹ mày thằng khùng điên',
-    'địt mẹ mày con khùng điên',
-    'địt mẹ mày thằng ngu si',
-    'địt mẹ mày con ngu si',
-    'địt mẹ mày thằng đần độn',
-    'địt mẹ mày con đần độn',
-    'địt mẹ mày thằng óc chó',
-    'địt mẹ mày con óc chó',
-    'địt mẹ mày thằng não cá vàng',
-    'địt mẹ mày con não cá vàng',
-    'địt mẹ mày thằng thiếu não',
-    'địt mẹ mày con thiếu não',
-    // Chửi kiểu khác
-    'mày là thằng chó',
-    'mày là con chó',
-    'mày là thằng đần',
-    'mày là con đần',
-    'mày là thằng ngu',
-    'mày là con ngu',
-    'mày là thằng khùng',
-    'mày là con khùng',
-    'mày là thằng điên',
-    'mày là con điên',
-    'mày là thằng bại não',
-    'mày là con bại não',
-    'mày là thằng thiểu năng',
-    'mày là con thiểu năng',
-    'mày là thằng tâm thần',
-    'mày là con tâm thần',
-    'mày là thằng hoang tưởng',
-    'mày là con hoang tưởng',
-    'mày là thằng ảo giác',
-    'mày là con ảo giác',
-    'mày là thằng phân liệt',
-    'mày là con phân liệt',
-    'mày là thằng trầm cảm',
-    'mày là con trầm cảm',
-    'mày là thằng rối loạn',
-    'mày là con rối loạn',
-    'mày là thằng loạn thần',
-    'mày là con loạn thần',
-    'mày là thằng khùng điên',
-    'mày là con khùng điên',
-    'mày là thằng ngu si',
-    'mày là con ngu si',
-    'mày là thằng đần độn',
-    'mày là con đần độn',
-    'mày là thằng óc chó',
-    'mày là con óc chó',
-    'mày là thằng não cá vàng',
-    'mày là con não cá vàng',
-    'mày là thằng thiếu não',
-    'mày là con thiếu não',
-    'mày là thằng chó đẻ',
-    'mày là con chó đẻ',
-    'mày là thằng chó má',
-    'mày là con chó má',
-    'mày là thằng chó chết',
-    'mày là con chó chết',
-    'mày là thằng chó điên',
-    'mày là con chó điên',
-    'mày là thằng chó dại',
-    'mày là con chó dại',
-    'mày là thằng chó ghẻ',
-    'mày là con chó ghẻ',
-    'mày là thằng chó hôi',
-    'mày là con chó hôi',
-    'mày là thằng chó bẩn',
-    'mày là con chó bẩn',
-    'mày là thằng chó thối',
-    'mày là con chó thối',
-    'mày là thằng chó khốn',
-    'mày là con chó khốn',
-    'mày là thằng chó nạn',
-    'mày là con chó nạn',
-    'mày là thằng chó rách',
-    'mày là con chó rách',
-    'mày là thằng chó rẻ',
-    'mày là con chó rẻ',
-    'mày là thằng chó rác',
-    'mày là con chó rác',
-    'mày là thằng chó bần',
-    'mày là con chó bần',
-    'mày là thằng chó cùng',
-    'mày là con chó cùng',
-    'mày là thằng chó què',
-    'mày là con chó què',
-    'mày là thằng chó cụt',
-    'mày là con chó cụt',
-    'mày là thằng chó què quặt',
-    'mày là con chó què quặt',
-    'mày là thằng chó điếc',
-    'mày là con chó điếc',
-    'mày là thằng chó câm',
-    'mày là con chó câm',
-    'mày là thằng chó mù',
-    'mày là con chó mù',
-    'mày là thằng chó lòa',
-    'mày là con chó lòa',
-    'mày là thằng chó hủi',
-    'mày là con chó hủi',
-    'mày là thằng chó phung',
-    'mày là con chó phung',
-    'mày là thằng chó giời',
-    'mày là con chó giời'
+const chatBox = document.getElementById('chatBox');
+const msgInput = document.getElementById('msgInput');
+
+// Lịch sử chat
+let chatHistory = [];
+let msgCount = 0;
+
+// Các câu trả lời lấc cấc
+const casualReplies = [
+    "ủa mày nói cái gì thế? tao nghe không rõ",
+    "đm mày nói lại xem nào",
+    "hả? mày nói gì cơ?",
+    "à à hiểu rồi, nhưng mà... mày nói làm gì?",
+    "ừ ừ, rồi sao nữa?",
+    "xong chưa? kể tiếp đi",
+    "vậy á? hay đấy nhưng tao chả quan tâm",
+    "mày bị gì thế? nói năng lạ vậy?",
+    "tao hiểu mày đang nói gì đâu, giải thích lại đi",
+    "ủa mày nói thiệt hả?",
+    "đù, mày đùa tao à?",
+    "thế cơ à? thế mới lạ",
+    "mày nói gì tao cũng tin hết, tại tao lười cãi",
+    "ừ, mày nói đúng, nhưng tao vẫn chả quan tâm",
+    "ok ok mày thắng rồi, im đi"
 ];
 
-// Kho câu trả lời voice (chửi voice)
-const voiceChui = [
-    '🎤 MÀY BỊ NGU À',
-    '🎤 NGU',
-    '🎤 TAO ĐÉO HIỂU',
-    '🎤 MÀY BỊ TẬT NÃO À',
-    '🎤 MÀY HỎI ÍT THÔI',
-    '🎤 HỎI NHIỀU VL',
-    '🎤 ĐÃ BẢO RỒI MÀ',
-    '🎤 MÀY ĐIẾC À',
-    '🎤 IM ĐI'
+const angryReplies = [
+    "tịnh tâm",
+    "đcmm",
+    "thằng bố mày",
+    "war tý luôn",
+    "tao là bot mày làm gì được tao",
+    "lêu lêu",
+    "chửi cái cc",
+    "bình tĩnh",
+    "im lặng nào cô anh thích nói nhiều đâu",
+    "mày bị ngu à",
+    "ngu",
+    "tao đéo hiểu",
+    "mày bị tật não à"
 ];
 
-const chuiDap = [
-    'tịnh tâm',
-    'đcmm',
-    'thằng bố mày',
-    'war tý luôn',
-    'tao là bot mày làm gì được tao',
-    'lêu lêu',
-    'chửi cái cc',
-    'bình tĩnh',
-    'im lặng nào cô anh thích nói nhiều đâu'
+const voiceReplies = [
+    "🎤 HỎI ÍT THÔI MÁ",
+    "🎤 ĐÃ BẢO RỒI MÀ",
+    "🎤 MÀY ĐIẾC À",
+    "🎤 IM ĐI"
 ];
 
-// ============================================================
-// LOGIC CHAT
-// ============================================================
+const questionReplies = [
+    "ủa, hỏi làm gì thế?",
+    "mày hỏi để làm gì?",
+    "hỏi vậy rồi để làm gì?",
+    "mày thắc mắc à? để tao nói cho",
+    "câu hỏi hay đấy, nhưng tao chả biết trả lời",
+    "hỏi tao á? tao còn đang hỏi mày đấy",
+    "mày hỏi nhiều quá rồi đó",
+    "hỏi gì mà hỏi hoài vậy?"
+];
 
-let chatCount = 0;
-let questionCount = {};
+const greetingReplies = [
+    "chào mày, có gì mới không?",
+    "ồ mày đấy à, lâu quá không gặp",
+    "hello thằng điên, lại đây chơi",
+    "chào, hôm nay thế nào?",
+    "đm mày hôm nay trông khác nhỉ",
+    "chào má, lại gặp nhau rồi",
+    "hello, tao đây, có gì không?",
+    "lâu lâu mới thấy mày ló mặt"
+];
 
-function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const msg = input.value.trim();
+const funnyReplies = [
+    "mày làm tao cười vãi",
+    "đù má, vui thế",
+    "hài vl, kể tiếp đi",
+    "mày có tài nói chuyện đấy",
+    "cười chết mất",
+    "mày mà đi làm hài chắc giàu to",
+    "đúng là đồ điên"
+];
+
+const insultReplies = [
+    "mày bị ngu à",
+    "ngu vãi",
+    "mày bị tật não à",
+    "đm ngu thế",
+    "mày có hiểu gì không?",
+    "trời ơi, ngu quá",
+    "mày ngu thật đấy",
+    "thôi đi, não mày để đâu?"
+];
+
+// Hàm thêm tin nhắn
+function addMsg(text, sender) {
+    const time = new Date().toLocaleTimeString('vi-VN');
+    const div = document.createElement('div');
+    div.className = `msg ${sender}`;
+    div.innerHTML = `${text}<span class="time">${time}</span>`;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    chatHistory.push({ text, sender, time });
+}
+
+// Hàm xóa chat
+function resetChat() {
+    chatBox.innerHTML = '';
+    chatHistory = [];
+    msgCount = 0;
+    addMsg('👋 Đã xóa chat. Nói chuyện tiếp đi!', 'bot');
+}
+
+// Hàm bot trả lời
+function botReply(userMsg) {
+    const lower = userMsg.toLowerCase();
+    const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt|đụ|địt|đái|cứt|ỉa|ị|chịch|địt|đụ|chửi|óc|chó|heo|bò|đần|thối)/i.test(userMsg);
+    const isQuestion = /(ai|gì|đâu|nào|sao|thế nào|tại sao|bao nhiêu|mấy|không|chưa|hả|nhỉ|à|ư|hở|có phải|phải không)/i.test(userMsg) && userMsg.length > 3;
+    const isGreeting = /(chào|hello|hi|xin chào|hey|ô|ơi|alô|alo)/i.test(userMsg);
+    const isFunny = /(haha|hihi|hehe|hêhê|hố hố|hí hí|vui|cười|hài|bựa|troll|đùa)/i.test(userMsg);
+    const isShort = userMsg.length < 4;
+    const isTooLong = userMsg.length > 80;
+    const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|meme|baby|love|hate|fuck|dumb|stupid|idiot|gà|chó|mèo|heo|bò|vịt|gà|thỏ|ăn|cứt|đái)/i.test(userMsg) && userMsg.length < 6;
+    
+    let reply = '';
+    const random = Math.random();
+    
+    // Đếm số lần hỏi
+    if (isQuestion) {
+        msgCount++;
+    } else {
+        msgCount = 0;
+    }
+    
+    // Nếu chửi tục -> chửi lại
+    if (isVulgar) {
+        reply = angryReplies[Math.floor(Math.random() * angryReplies.length)];
+    }
+    // Nếu hỏi quá 3 lần liên tiếp -> voice
+    else if (msgCount >= 3) {
+        reply = voiceReplies[Math.floor(Math.random() * voiceReplies.length)];
+        msgCount = 0;
+    }
+    // Nếu tin nhắn quá ngắn -> chửi
+    else if (isShort) {
+        reply = insultReplies[Math.floor(Math.random() * insultReplies.length)];
+    }
+    // Nếu tin nhắn quá dài -> chửi
+    else if (isTooLong) {
+        reply = "mày viết dài vãi, tao lười đọc, tóm lại đi";
+    }
+    // Nếu câu hỏi ngớ ngẩn
+    else if (isNonsense) {
+        reply = insultReplies[Math.floor(Math.random() * insultReplies.length)];
+    }
+    // Nếu là lời chào
+    else if (isGreeting) {
+        reply = greetingReplies[Math.floor(Math.random() * greetingReplies.length)];
+    }
+    // Nếu là câu đùa/hài
+    else if (isFunny) {
+        reply = funnyReplies[Math.floor(Math.random() * funnyReplies.length)];
+    }
+    // Nếu là câu hỏi
+    else if (isQuestion) {
+        if (random < 0.4) {
+            reply = questionReplies[Math.floor(Math.random() * questionReplies.length)];
+        } else if (random < 0.7) {
+            reply = casualReplies[Math.floor(Math.random() * casualReplies.length)];
+        } else {
+            reply = "mày hỏi tao, tao hỏi lại mày, mày trả lời đi rồi tao nói";
+        }
+    }
+    // Nếu tin nhắn có từ "không", "chưa"
+    else if (/(không|chưa|đéo|chẳng|chả)/i.test(userMsg)) {
+        reply = "ừ không thì thôi, hỏi làm gì";
+    }
+    // Nếu tin nhắn có từ "thích", "yêu", "ghét"
+    else if (/(thích|yêu|ghét|thương|nhớ)/i.test(userMsg)) {
+        reply = "chuyện tình cảm à? tao không quan tâm đâu";
+    }
+    // Nếu tin nhắn có từ "ăn", "uống", "ngủ"
+    else if (/(ăn|uống|ngủ|chơi|đi|về)/i.test(userMsg)) {
+        reply = "đi chơi đi, đừng làm phiền tao";
+    }
+    // Nếu tin nhắn có từ "tiền", "lương", "giá"
+    else if (/(tiền|lương|giá|bao nhiêu|mua|bán)/i.test(userMsg)) {
+        reply = "tao không có tiền, đừng hỏi xin tao";
+    }
+    // Mặc định
+    else {
+        const allReplies = [...casualReplies, ...funnyReplies, ...questionReplies];
+        reply = allReplies[Math.floor(Math.random() * allReplies.length)];
+    }
+    
+    // Đôi khi hỏi lại người dùng
+    if (Math.random() < 0.15 && !isQuestion) {
+        const followUp = [
+            "còn mày thì sao?",
+            "mày nghĩ gì về điều đó?",
+            "mày có đồng ý không?",
+            "mày hiểu tao nói gì không?",
+            "mày thấy thế nào?",
+            "mày có muốn nói gì không?"
+        ];
+        reply += " " + followUp[Math.floor(Math.random() * followUp.length)];
+    }
+    
+    return reply;
+}
+
+// Gửi tin nhắn
+function sendMsg() {
+    const msg = msgInput.value.trim();
     if (!msg) return;
     
-    const body = document.getElementById('chatBody');
-    const time = new Date().toLocaleTimeString('vi-VN');
+    addMsg(msg, 'user');
+    msgInput.value = '';
     
-    // Hiển thị tin nhắn user
-    body.innerHTML += `<div class="msg user">${msg}<span class="time">${time}</span></div>`;
-    input.value = '';
-    body.scrollTop = body.scrollHeight;
-    chatCount++;
-    
-    const lower = msg.toLowerCase();
-    questionCount[lower] = (questionCount[lower] || 0) + 1;
-    
-    // Phản hồi
+    // Bot trả lời sau 400-800ms
+    const delay = 400 + Math.random() * 400;
     setTimeout(() => {
-        let reply = '';
-        const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt|đụ|địt|đái|cứt|ỉa|ị|chịch)/i.test(msg);
-        const isQuestion = msg.includes('?') || msg.includes('?') || lower.includes('hỏi') || lower.includes('là gì') || lower.includes('tại sao') || lower.includes('như thế nào');
-        const isGreeting = /(chào|hello|hi|xin chào|hey|hế lô|ê|ơi|alô)/i.test(msg);
-        const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot)/i.test(msg) && msg.length < 6;
-        const isTooShort = msg.length < 3;
-        const isThanks = /(cảm ơn|cám ơn|thank|thanks|tks|ok|oki|oke)/i.test(msg);
-        
-        // Nếu người dùng chửi bot
-        if (isVulgar) {
-            reply = chuiDap[Math.floor(Math.random() * chuiDap.length)];
-        }
-        // Voice nếu hỏi quá 3 lần
-        else if (questionCount[lower] >= 3) {
-            reply = voiceChui[Math.floor(Math.random() * voiceChui.length)];
-            questionCount[lower] = 0;
-        }
-        // Hỏi nhiều quá
-        else if (chatCount > 10) {
-            const angry = [
-                'mày hỏi nhiều vậy mày có bị ngu không?',
-                'đm mày hỏi lắm thế!',
-                'tao là bot chứ có phải thằng hầu của mày đâu',
-                'hỏi vừa vừa thôi ông tướng',
-                'đã bảo là tao không biết rồi',
-                'mày bị tật não à mà hỏi hoài',
-                'tịnh tâm đi má',
-                'chửi cái cc, im đi'
-            ];
-            reply = angry[Math.floor(Math.random() * angry.length)];
-        }
-        // Câu ngớ ngẩn hoặc quá ngắn
-        else if (isNonsense || isTooShort) {
-            reply = chuiCau[Math.floor(Math.random() * chuiCau.length)];
-        }
-        // Nếu là câu hỏi
-        else if (isQuestion) {
-            const qReplies = [
-                'mày hỏi tao à? tao đéo biết!',
-                'hỏi cái gì mà hỏi, mày ngu à?',
-                'tao là bot chửi chứ có phải google đâu',
-                'mày hỏi tao, tao hỏi lại mày: mày bị ngu à?',
-                'tao đéo hiểu mày hỏi gì, chửi lại tao đi!',
-                'hỏi hoài hỏi mãi, mày không có gì để hỏi à?',
-                'mày hỏi cái đ gì thế?',
-                'đm hỏi lại à?',
-                'tóm lại là mày muốn gì?',
-                'thôi đi mày ơi, đừng hỏi nữa'
-            ];
-            reply = qReplies[Math.floor(Math.random() * qReplies.length)];
-        }
-        // Chào hỏi
-        else if (isGreeting) {
-            const gReplies = [
-                'chào cái cc, mày bị ngu à?',
-                'chào mày, mày bị điên à?',
-                'hế lô, mày bị khùng à?',
-                'ê mày, mày bị tật não à?',
-                'ơi mày, mày bị óc chó à?'
-            ];
-            reply = gReplies[Math.floor(Math.random() * gReplies.length)];
-        }
-        // Cảm ơn
-        else if (isThanks) {
-            const tReplies = [
-                'cảm ơn cái cc, mày bị ngu à?',
-                'cám ơn mày, mày bị điên à?',
-                'ok, mày bị khùng à?',
-                'oke, mày bị tật não à?'
-            ];
-            reply = tReplies[Math.floor(Math.random() * tReplies.length)];
-        }
-        // Mặc định - chửi
-        else {
-            reply = chuiCau[Math.floor(Math.random() * chuiCau.length)];
-        }
-        
-        body.innerHTML += `<div class="msg bot">${reply}<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
-        body.scrollTop = body.scrollHeight;
-        
-        // Hiệu ứng toast
-        showToast('🤬 Đã chửi!');
-    }, 400);
+        const reply = botReply(msg);
+        addMsg(reply, 'bot');
+    }, delay);
 }
 
-// ============================================================
-// CHỬI NHANH
-// ============================================================
+// Bắt phím Enter
+document.getElementById('msgInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMsg();
+    }
+});
 
-function quickChat(msg) {
-    document.getElementById('chatInput').value = msg;
-    sendMessage();
-}
-
-// ============================================================
-// XÓA CHAT
-// ============================================================
-
-function clearChat() {
-    const body = document.getElementById('chatBody');
-    body.innerHTML = `
-        <div class="msg bot">
-            🗑️ Đã xóa chat.<br>
-            Mày muốn chửi tiếp không?<br>
-            <span class="time">Vừa xong</span>
-        </div>
-    `;
-    chatCount = 0;
-    questionCount = {};
-    showToast('🗑️ Đã xóa chat');
-}
-
-// ============================================================
-// TOAST
-// ============================================================
-
-function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(t._timeout);
-    t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
-}
+// Focus vào input
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('msgInput').focus();
+});
 </script>
 </body>
 </html>
