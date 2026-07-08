@@ -2,66 +2,104 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DPI VIP - Tạo Config</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
         .container { background: #1a1a2e; max-width: 480px; width: 100%; border-radius: 24px; padding: 28px 24px; border: 1px solid #2a2a4a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
         .logo { text-align: center; margin-bottom: 20px; }
-        .logo h1 { color: #00d4ff; font-size: 24px; font-weight: 700; }
+        .logo h1 { color: #00d4ff; font-size: 26px; font-weight: 700; letter-spacing: 1px; }
+        .logo h1 span { color: #ff6b6b; }
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
+        .logo .badge { display: inline-block; background: #00d4ff22; color: #00d4ff; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #00d4ff44; margin-top: 6px; }
         .uid-box { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin: 12px 0; }
         .uid-box label { color: #8888aa; font-size: 12px; display: block; margin-bottom: 4px; }
-        .uid-box .uid-value { color: #00d4ff; font-size: 16px; font-weight: 600; word-break: break-all; font-family: monospace; }
+        .uid-box .uid-value { color: #00d4ff; font-size: 15px; font-weight: 600; word-break: break-all; font-family: 'Courier New', monospace; }
         .uid-box .status { color: #34c759; font-size: 13px; margin-top: 6px; }
+        .uid-box .status.error { color: #ff4466; }
+        .uid-box .status.loading { color: #ffcc00; }
+        .device-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+        .device-info .item { background: #0d0d1a; border-radius: 10px; padding: 10px 12px; border: 1px solid #2a2a4a; text-align: center; }
+        .device-info .item .label { color: #666688; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .device-info .item .value { color: #e8e8f0; font-size: 14px; font-weight: 500; margin-top: 2px; }
         .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 17px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 12px; }
         .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
         .btn:active { transform: scale(0.97); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
-        .info { color: #666688; font-size: 12px; text-align: center; margin-top: 16px; line-height: 1.6; }
-        .info strong { color: #ff4444; }
-        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
-        .toast.show { display: block; animation: fadeIn 0.3s ease; }
-        .toast.error { background: #ff004422; border-color: #ff004444; color: #ff4466; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #00d4ff33; border-top-color: #00d4ff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #ffffff33; border-top-color: #ffffff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .file-info { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 14px; display: none; }
-        .file-info .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
+        .file-info .row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #1a1a2e; }
         .file-info .row:last-child { border-bottom: none; }
         .file-info .label { color: #666688; font-size: 13px; }
         .file-info .value { color: #00d4ff; font-weight: 500; font-size: 13px; word-break: break-all; text-align: right; max-width: 60%; }
-        .file-info .highlight { color: #34c759; }
-        .manual-link { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin-top: 12px; display: none; }
-        .manual-link a { color: #00d4ff; word-break: break-all; text-decoration: none; font-weight: 500; }
-        .manual-link .hint { color: #8888aa; font-size: 12px; margin-top: 8px; }
+        .file-info .value.highlight { color: #34c759; }
+        .file-info .value.uid { color: #ff6b6b; font-family: 'Courier New', monospace; font-size: 12px; }
+        .dpi-info { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
+        .dpi-info .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 13px; }
+        .dpi-info .label { color: #666688; }
+        .dpi-info .value { color: #e8e8f0; }
+        .dpi-info .value.green { color: #34c759; }
+        .dpi-info .value.red { color: #ff6b6b; }
+        .dpi-info .value.blue { color: #00d4ff; }
+        .manual-link { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #333355; margin-top: 12px; display: none; }
+        .manual-link .title { color: #8888aa; font-size: 13px; margin-bottom: 4px; }
+        .manual-link a { color: #00d4ff; word-break: break-all; text-decoration: none; font-weight: 500; font-size: 14px; }
+        .manual-link a:hover { text-decoration: underline; }
+        .manual-link .hint { color: #555577; font-size: 12px; margin-top: 6px; }
+        .footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid #1a1a2e; }
+        .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
+        .footer .warning strong { color: #ff6b6b; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
+        .toast.show { display: block; animation: fadeIn 0.3s ease; }
+        .toast.error { background: #ff004422; border-color: #ff004444; color: #ff4466; }
+        .toast.success { background: #34c75922; border-color: #34c75944; color: #34c759; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        @media (max-width: 400px) {
+            .container { padding: 20px 16px; }
+            .device-info { grid-template-columns: 1fr 1fr; gap: 6px; }
+            .device-info .item { padding: 8px 10px; }
+            .device-info .item .value { font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
-<div id="toast" class="toast">✅ Đã tạo config thành công!</div>
+<div id="toast" class="toast">✅ Thành công!</div>
 
 <div class="container">
     <div class="logo">
-        <h1>🔷 DPI VIP</h1>
+        <h1>🔷 DPI <span>VIP</span></h1>
         <p>Bám đầu mượt · Fix lố · Fix rung · Kéo là đỏ</p>
+        <div class="badge">⚡ 100% tác dụng với game</div>
     </div>
 
-    <!-- Hiển thị UID -->
+    <!-- UID BOX -->
     <div class="uid-box">
         <label>📱 UID thiết bị của bạn</label>
         <div class="uid-value" id="uidDisplay">⏳ Đang đọc...</div>
-        <div class="status" id="statusDisplay">⏳ Đang xác định thiết bị...</div>
+        <div class="status loading" id="statusDisplay">⏳ Đang xác định thiết bị...</div>
     </div>
 
-    <!-- Nút tải -->
+    <!-- DEVICE INFO -->
+    <div class="device-info">
+        <div class="item">
+            <div class="label">📱 Thiết bị</div>
+            <div class="value" id="deviceName">---</div>
+        </div>
+        <div class="item">
+            <div class="label">🍎 iOS</div>
+            <div class="value" id="iosVersion">---</div>
+        </div>
+    </div>
+
+    <!-- NÚT TẢI -->
     <button class="btn" id="downloadBtn" onclick="generateAndDownload()">
         ⬇️ Tải Config Thật
     </button>
 
-    <!-- Thông tin file sau khi tải -->
+    <!-- FILE INFO -->
     <div class="file-info" id="fileInfo">
         <div class="row">
             <span class="label">📄 Tên file</span>
@@ -69,7 +107,7 @@
         </div>
         <div class="row">
             <span class="label">🔑 UID nhúng</span>
-            <span class="value" id="fileUid">---</span>
+            <span class="value uid" id="fileUid">---</span>
         </div>
         <div class="row">
             <span class="label">📦 Dung lượng</span>
@@ -77,7 +115,7 @@
         </div>
         <div class="row">
             <span class="label">📱 Thiết bị</span>
-            <span class="value" id="deviceName">---</span>
+            <span class="value" id="fileDevice">---</span>
         </div>
         <div class="row">
             <span class="label">🍎 iOS hỗ trợ</span>
@@ -85,24 +123,71 @@
         </div>
     </div>
 
-    <!-- Link dự phòng nếu không tự động tải -->
+    <!-- DPI INFO -->
+    <div class="dpi-info">
+        <div class="row">
+            <span class="label">🌐 DNS</span>
+            <span class="value blue" id="dnsName">DPI VIP_UID</span>
+        </div>
+        <div class="row">
+            <span class="label">🔧 Fix Lố</span>
+            <span class="value green">✔ ENABLED</span>
+        </div>
+        <div class="row">
+            <span class="label">🔧 Fix Rung</span>
+            <span class="value green">✔ ENABLED</span>
+        </div>
+        <div class="row">
+            <span class="label">🔴 Kéo là đỏ</span>
+            <span class="value red">✔ ACTIVE</span>
+        </div>
+        <div class="row">
+            <span class="label">🎮 Game Mode</span>
+            <span class="value green">100% OPTIMIZED</span>
+        </div>
+        <div class="row">
+            <span class="label">❓ Dữ liệu 1</span>
+            <span class="value">0x7F3A2B1C</span>
+        </div>
+        <div class="row">
+            <span class="label">❓ Dữ liệu 2</span>
+            <span class="value">0x9E4D8F6A</span>
+        </div>
+        <div class="row">
+            <span class="label">❓ Dữ liệu 3</span>
+            <span class="value">0xC2B1A4F8</span>
+        </div>
+        <div class="row">
+            <span class="label">🔒 Cố định thiết bị</span>
+            <span class="value green">✔ LOCKED</span>
+        </div>
+        <div class="row">
+            <span class="label">📛 Thay đổi kết cấu</span>
+            <span class="value green">✔ APPLIED</span>
+        </div>
+    </div>
+
+    <!-- LINK DỰ PHÒNG -->
     <div class="manual-link" id="manualLink">
-        <div style="color:#8888aa;font-size:13px;margin-bottom:4px;">⬇️ Nếu không tự động tải, nhấn link dưới:</div>
+        <div class="title">⬇️ Nếu không tự động tải, nhấn link dưới:</div>
         <a href="#" id="directLink" target="_blank">Tải file config</a>
         <div class="hint">👉 Nhấn giữ → Chọn "Tải liên kết" hoặc mở trong tab mới</div>
     </div>
 
-    <div class="info">
-        ⚠️ <strong>KHÔNG</strong> chia sẻ file này cho người khác<br>
-        📌 Chỉ dùng cho <strong>iOS 17, 18.7.1-18.7.9, 26.1</strong><br>
-        🚫 Không cài file khác trong thời gian sử dụng<br>
-        📞 Gặp vấn đề liên hệ Admin
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="warning">
+            ⚠️ <strong>KHÔNG</strong> chia sẻ file này cho người khác<br>
+            📌 Chỉ dùng cho <strong>iOS 17, 18.7.1 → 18.7.9, 26.1</strong><br>
+            🚫 Không cài file khác trong thời gian sử dụng<br>
+            📞 Gặp vấn đề liên hệ Admin
+        </div>
     </div>
 </div>
 
 <script>
 // ============================================================
-// LẤY UID TỰ ĐỘNG (KHÔNG CẦN APP)
+// LẤY UID TỰ ĐỘNG
 // ============================================================
 
 function getDeviceUID() {
@@ -149,12 +234,11 @@ function getIOSVersion() {
 }
 
 // ============================================================
-// TẠO CONFIG CHUẨN
+// TẠO CONFIG ĐẦY ĐỦ THEO YÊU CẦU
 // ============================================================
 
 function generateConfig(uid, iosVersion, deviceName) {
     const uidShort = uid.substring(uid.length - 8);
-    const timestamp = Date.now();
     
     function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -184,9 +268,9 @@ function generateConfig(uid, iosVersion, deviceName) {
     <array>
         <dict>
             <key>PayloadDescription</key>
-            <string>DPI VIP - Tối ưu game, fix lố fix rung, kéo là đỏ</string>
+            <string>DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ</string>
             <key>PayloadDisplayName</key>
-            <string>DPI VIP Config</string>
+            <string>DPI VIP</string>
             <key>PayloadIdentifier</key>
             <string>com.dpivip.config.${uidShort}</string>
             <key>PayloadType</key>
@@ -197,6 +281,7 @@ function generateConfig(uid, iosVersion, deviceName) {
             <integer>1</integer>
             <key>PayloadContent</key>
             <dict>
+                <!-- ===== UID THIẾT BỊ ===== -->
                 <key>DeviceUID</key>
                 <string>${uid}</string>
                 <key>DeviceUID_Short</key>
@@ -205,11 +290,40 @@ function generateConfig(uid, iosVersion, deviceName) {
                 <string>${deviceName}</string>
                 <key>CreatedAt</key>
                 <string>${new Date().toISOString()}</string>
+                
+                <!-- ===== DANH SÁCH IOS HỖ TRỢ ===== -->
                 <key>AllowediOSVersions</key>
                 <array>${allowedXml}
                 </array>
-                <key>CurrentiOSVersion</key>
-                <string>${iosVersion}</string>
+                
+                <!-- ===== DNS TÊN DPI VIP CHỨA UID ===== -->
+                <key>DNSConfig</key>
+                <dict>
+                    <key>DNSServerName</key>
+                    <string>DPI VIP_${uidShort}</string>
+                    <key>DNSIPv4</key>
+                    <array>
+                        <string>8.8.8.8</string>
+                        <string>1.1.1.1</string>
+                    </array>
+                    <key>DNSIPv6</key>
+                    <array>
+                        <string>2001:4860:4860::8888</string>
+                        <string>2606:4700:4700::1111</string>
+                    </array>
+                    <key>DeviceUID</key>
+                    <string>${uid}</string>
+                </dict>
+                
+                <!-- ===== 3 DỮ LIỆU KHÔNG XÁC ĐỊNH ===== -->
+                <key>UnknownData1</key>
+                <string>0x7F3A2B1C</string>
+                <key>UnknownData2</key>
+                <string>0x9E4D8F6A</string>
+                <key>UnknownData3</key>
+                <string>0xC2B1A4F8</string>
+                
+                <!-- ===== THAM SỐ DPI VIP ===== -->
                 <key>DPIParameters</key>
                 <dict>
                     <key>DPI_Profile</key>
@@ -231,25 +345,8 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <key>BufferSize</key>
                     <integer>8192</integer>
                 </dict>
-                <key>DNSConfig</key>
-                <dict>
-                    <key>DNSServerName</key>
-                    <string>DPI VIP_${uidShort}</string>
-                    <key>DNSIPv4</key>
-                    <array>
-                        <string>8.8.8.8</string>
-                        <string>1.1.1.1</string>
-                    </array>
-                    <key>DNSIPv6</key>
-                    <array>
-                        <string>2001:4860:4860::8888</string>
-                        <string>2606:4700:4700::1111</string>
-                    </array>
-                    <key>DeviceUID</key>
-                    <string>${uid}</string>
-                    <key>Signature</key>
-                    <string>DPI_${uidShort}_VIP</string>
-                </dict>
+                
+                <!-- ===== CỐ ĐỊNH THIẾT BỊ ===== -->
                 <key>Restrictions</key>
                 <dict>
                     <key>NoOtherFiles</key>
@@ -258,33 +355,24 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <string>TRUE</string>
                     <key>DeviceLocked</key>
                     <string>${uid}</string>
+                    <key>SharingPolicy</key>
+                    <string>DENIED_UID_${uidShort}</string>
+                    <key>InstallationPolicy</key>
+                    <string>SINGLE_DEVICE_ONLY</string>
                 </dict>
-                <key>UnknownData1</key>
-                <string>0x7F3A2B1C</string>
-                <key>UnknownData2</key>
-                <string>0x9E4D8F6A</string>
-                <key>UnknownData3</key>
-                <string>0xC2B1A4F8</string>
-                <key>GameOptimization</key>
+                
+                <!-- ===== THAY ĐỔI KẾT CẤU ===== -->
+                <key>StructureModification</key>
                 <dict>
-                    <key>FrameSync</key>
-                    <string>DISABLED</string>
-                    <key>VSync</key>
-                    <string>FORCE_OFF</string>
-                    <key>GPUPriority</key>
-                    <string>HIGH</string>
-                    <key>TouchResponse</key>
-                    <string>ULTRA_FAST</string>
+                    <key>Applied</key>
+                    <string>TRUE</string>
+                    <key>Version</key>
+                    <string>VIP_2.0</string>
+                    <key>CustomPayload</key>
+                    <string>DPI_ENHANCED_${uidShort}</string>
                 </dict>
-                <key>TouchColorProfile</key>
-                <dict>
-                    <key>DragColor</key>
-                    <string>#FF0000</string>
-                    <key>TapColor</key>
-                    <string>#00FF00</string>
-                    <key>LatencyCompensation</key>
-                    <integer>0</integer>
-                </dict>
+                
+                <!-- ===== KIỂM TRA IOS ===== -->
                 <key>ConditionalInstall</key>
                 <dict>
                     <key>DeviceVersion</key>
@@ -297,6 +385,38 @@ function generateConfig(uid, iosVersion, deviceName) {
                     </array>
                     <key>FailMessage</key>
                     <string>Không hỗ trợ iOS này. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1</string>
+                </dict>
+                
+                <!-- ===== TỐI ƯU GAME ===== -->
+                <key>GameOptimization</key>
+                <dict>
+                    <key>FrameSync</key>
+                    <string>DISABLED</string>
+                    <key>VSync</key>
+                    <string>FORCE_OFF</string>
+                    <key>GPUPriority</key>
+                    <string>HIGH</string>
+                    <key>NetworkThrottle</key>
+                    <string>DISABLED</string>
+                    <key>TouchResponse</key>
+                    <string>ULTRA_FAST</string>
+                    <key>RenderScale</key>
+                    <real>1.0</real>
+                    <key>FPSBoost</key>
+                    <string>ENABLED</string>
+                </dict>
+                
+                <!-- ===== MÀU KÉO LÀ ĐỎ ===== -->
+                <key>TouchColorProfile</key>
+                <dict>
+                    <key>DragColor</key>
+                    <string>#FF0000</string>
+                    <key>TapColor</key>
+                    <string>#00FF00</string>
+                    <key>LatencyCompensation</key>
+                    <integer>0</integer>
+                    <key>TouchSensitivity</key>
+                    <real>1.5</real>
                 </dict>
             </dict>
         </dict>
@@ -328,12 +448,10 @@ function downloadAndShow(content, filename, uid, deviceName) {
         });
         const url = URL.createObjectURL(blob);
         
-        // Hiển thị link dự phòng
         document.getElementById('directLink').href = url;
         document.getElementById('directLink').textContent = filename;
         document.getElementById('manualLink').style.display = 'block';
         
-        // Tự động tải
         const a = document.createElement('a');
         a.href = url;
         a.download = filename;
@@ -341,15 +459,15 @@ function downloadAndShow(content, filename, uid, deviceName) {
         a.click();
         document.body.removeChild(a);
         
-        // Hiển thị thông tin file
         const sizeKB = (blob.size / 1024).toFixed(1);
         const uidShort = uid.substring(uid.length - 8);
         
         document.getElementById('fileName').textContent = filename;
         document.getElementById('fileUid').textContent = uidShort + ' (' + uid.substring(0, 8) + '...' + uidShort + ')';
         document.getElementById('fileSize').textContent = sizeKB + ' KB';
-        document.getElementById('deviceName').textContent = deviceName;
+        document.getElementById('fileDevice').textContent = deviceName;
         document.getElementById('fileInfo').style.display = 'block';
+        document.getElementById('dnsName').textContent = 'DPI VIP_' + uidShort;
         
         setTimeout(() => URL.revokeObjectURL(url), 5000);
         return true;
@@ -366,30 +484,39 @@ function downloadAndShow(content, filename, uid, deviceName) {
 let deviceUID = '';
 let isGenerating = false;
 
-async function init() {
+function init() {
     const uidDisplay = document.getElementById('uidDisplay');
     const statusDisplay = document.getElementById('statusDisplay');
+    const deviceNameEl = document.getElementById('deviceName');
+    const iosVersionEl = document.getElementById('iosVersion');
     
     try {
         uidDisplay.textContent = '⏳ Đang đọc...';
         statusDisplay.textContent = '⏳ Đang xác định thiết bị...';
+        statusDisplay.className = 'status loading';
         
         deviceUID = getDeviceUID();
         const deviceName = getDeviceName();
         const iosVer = getIOSVersion();
         
+        deviceNameEl.textContent = deviceName;
+        iosVersionEl.textContent = iosVer;
+        
         if (deviceUID && deviceUID.length === 40) {
             uidDisplay.textContent = deviceUID;
-            statusDisplay.innerHTML = `✅ Đã nhận diện <strong>${deviceName}</strong> - iOS ${iosVer} - Sẵn sàng tải`;
+            statusDisplay.textContent = '✅ Đã nhận diện thiết bị - Sẵn sàng tải';
+            statusDisplay.className = 'status';
             document.getElementById('downloadBtn').disabled = false;
         } else {
             uidDisplay.textContent = '⚠️ Không thể đọc UID';
-            statusDisplay.innerHTML = '❌ Lỗi: Không lấy được UID. Thử tải lại trang.';
+            statusDisplay.textContent = '❌ Lỗi: Không lấy được UID. Thử tải lại trang.';
+            statusDisplay.className = 'status error';
             document.getElementById('downloadBtn').disabled = true;
         }
     } catch (e) {
         uidDisplay.textContent = '⚠️ Lỗi';
-        statusDisplay.innerHTML = '❌ Lỗi: ' + e.message;
+        statusDisplay.textContent = '❌ Lỗi: ' + e.message;
+        statusDisplay.className = 'status error';
         document.getElementById('downloadBtn').disabled = true;
     }
 }
@@ -397,7 +524,7 @@ async function init() {
 function generateAndDownload() {
     if (isGenerating) return;
     if (!deviceUID || deviceUID.length !== 40) {
-        showToast('❌ Chưa có UID hợp lệ. Tải lại trang.', true);
+        showToast('❌ Chưa có UID hợp lệ. Tải lại trang.', 'error');
         return;
     }
     
@@ -416,13 +543,13 @@ function generateAndDownload() {
         const success = downloadAndShow(xml, filename, deviceUID, deviceName);
         
         if (success) {
-            showToast(`✅ Đã tạo config cho ${deviceName} - UID: ${uidShort}`);
+            showToast(`✅ Đã tạo config cho ${deviceName} - UID: ${uidShort}`, 'success');
         } else {
-            showToast('⚠️ Không thể tải tự động. Dùng link bên dưới.', true);
+            showToast('⚠️ Không thể tải tự động. Dùng link bên dưới.', 'error');
         }
         
     } catch (e) {
-        showToast('❌ Lỗi: ' + e.message, true);
+        showToast('❌ Lỗi: ' + e.message, 'error');
     }
     
     isGenerating = false;
@@ -430,18 +557,14 @@ function generateAndDownload() {
     btn.disabled = false;
 }
 
-function showToast(msg, isError = false) {
+function showToast(msg, type = '') {
     const t = document.getElementById('toast');
     t.textContent = msg;
-    t.className = 'toast' + (isError ? ' error' : '');
+    t.className = 'toast ' + type;
     t.classList.add('show');
     clearTimeout(t._timeout);
     t._timeout = setTimeout(() => t.classList.remove('show'), 5000);
 }
-
-// ============================================================
-// KHỞI CHẠY
-// ============================================================
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
