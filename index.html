@@ -39,7 +39,7 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         
         /* ===== GIAO DIỆN GIỐNG CÀI HỒ SƠ ===== */
-        .profile-card { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; margin-top: 14px; overflow: hidden; }
+        .profile-card { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; margin-top: 14px; overflow: hidden; display: none; }
         .profile-header { background: linear-gradient(135deg, #00d4ff22, #0070ff22); padding: 16px 18px; border-bottom: 1px solid #2a2a4a; }
         .profile-header .title { color: #ffffff; font-size: 18px; font-weight: 600; }
         .profile-header .sub { color: #8888aa; font-size: 12px; margin-top: 2px; }
@@ -51,7 +51,6 @@
         .profile-body .value.green { color: #34c759; }
         .profile-body .value.red { color: #ff6b6b; }
         .profile-body .value.blue { color: #00d4ff; }
-        .profile-body .value.orange { color: #ff9500; }
         .profile-body .value.uid { color: #ff6b6b; font-family: 'Courier New', monospace; font-size: 12px; }
         
         .profile-warning { background: #ff6b6b11; border-top: 1px solid #ff6b6b33; padding: 12px 18px; }
@@ -62,12 +61,26 @@
         .profile-footer .footer-text { color: #666688; font-size: 11px; text-align: center; }
         .profile-footer .footer-text strong { color: #ff6b6b; }
         
-        /* MÔ TẢ */
-        .desc-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
-        .desc-box .title { color: #8888aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-        .desc-box .content { color: #c8c8e0; font-size: 12px; line-height: 1.8; white-space: pre-wrap; }
-        .desc-box .content .highlight { color: #00d4ff; }
-        .desc-box .content .warn { color: #ff6b6b; }
+        /* ===== MÔ TẢ CHI TIẾT (GHÉP TỪ ẢNH) ===== */
+        .desc-box { background: #0d0d1a; border-radius: 12px; border: 1px solid #2a2a4a; margin-top: 12px; overflow: hidden; display: none; }
+        .desc-header { background: #111122; padding: 10px 16px; border-bottom: 1px solid #1a1a2e; }
+        .desc-header .title { color: #8888aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .desc-body { padding: 14px 16px; }
+        .desc-body .line { color: #c8c8e0; font-size: 13px; padding: 4px 0; line-height: 1.6; }
+        .desc-body .line.highlight { color: #00d4ff; font-weight: 600; }
+        .desc-body .line.warn { color: #ff6b6b; }
+        .desc-body .line.green { color: #34c759; }
+        .desc-body .line.orange { color: #ff9500; }
+        .desc-body .line .check { color: #34c759; }
+        .desc-body .line .uid-text { color: #ff6b6b; font-family: 'Courier New', monospace; }
+        .desc-body .line .dns-text { color: #00d4ff; font-family: 'Courier New', monospace; }
+        .desc-body .divider { border-top: 1px solid #1a1a2e; margin: 6px 0; }
+        
+        /* ===== MÔ TẢ NGẮN (BÊN PHẢI) ===== */
+        .desc-short { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 10px; display: none; }
+        .desc-short .text { color: #c8c8e0; font-size: 13px; line-height: 1.6; }
+        .desc-short .text .highlight { color: #00d4ff; }
+        .desc-short .text .warn { color: #ff6b6b; }
         
         /* LINK DỰ PHÒNG */
         .manual-link { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #333355; margin-top: 12px; display: none; }
@@ -105,7 +118,7 @@
     <div class="logo">
         <h1>🔷 DPI <span>VIP</span></h1>
         <p>Bám đầu mượt · Fix lố · Fix rung · Kéo là đỏ</p>
-        <div class="badge">VUI LÒNG LÀM THEO CÁC HƯỚNG DẪN</div>
+        <div class="badge">⚡ 100% tác dụng với game</div>
     </div>
 
     <!-- UID BOX -->
@@ -129,16 +142,16 @@
 
     <!-- NÚT TẢI -->
     <button class="btn" id="downloadBtn" onclick="generateAndDownload()">
-        ⬇️ Tải Config
+        ⬇️ Tải Config Thật
     </button>
 
     <!-- ========================================================= -->
     <!--     GIAO DIỆN GIỐNG CÀI ĐẶT HỒ SƠ (SAU KHI TẢI)         -->
     <!-- ========================================================= -->
-    <div class="profile-card" id="profileCard" style="display:none;">
+    <div class="profile-card" id="profileCard">
         <div class="profile-header">
             <div class="title">Cài đặt hồ sơ</div>
-            <div class="sub">DPI VIP - Bám đầu mượt</div>
+            <div class="sub" id="profileSub">DPI VIP - Bám đầu mượt</div>
         </div>
         <div class="profile-body">
             <div class="row">
@@ -163,7 +176,7 @@
             </div>
         </div>
         <div class="profile-warning">
-            <div class="warn-item">KHÔNG chia sẻ file này cho người khác</div>
+            <div class="warn-item" id="warnSharing">KHÔNG chia sẻ file này cho người khác</div>
             <div class="warn-item">KHÔNG cài file khác trong thời gian sử dụng</div>
             <div class="warn-item">Chỉ hỗ trợ iOS 17, 18.7.1-18.7.9, 26.1</div>
         </div>
@@ -172,29 +185,48 @@
         </div>
     </div>
 
-    <!-- MÔ TẢ CHI TIẾT -->
-    <div class="desc-box" id="descBox" style="display:none;">
-        <div class="title">📋 MÔ TẢ</div>
-        <div class="content" id="descContent">
-🔷 <span class="highlight">DPI VIP LÀ GÌ?</span>
-- DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
+    <!-- ========================================================= -->
+    <!--     MÔ TẢ CHI TIẾT (GHÉP TỪ ẢNH BÊN TRÁI)                -->
+    <!-- ========================================================= -->
+    <div class="desc-box" id="descBox">
+        <div class="desc-header">
+            <div class="title">📋 MÔ TẢ</div>
+        </div>
+        <div class="desc-body" id="descBody">
+            <div class="line highlight">🔷 DPI VIP LÀ GÌ?</div>
+            <div class="line" style="padding-left:16px;">- DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU</div>
+            <div class="divider"></div>
+            <div class="line highlight">CÔNG DỤNG CẤU HÌNH DPI VIP:</div>
+            <div class="line green" style="padding-left:16px;"><span class="check">✅</span> BÁM ĐẦU MƯỢT</div>
+            <div class="line green" style="padding-left:16px;"><span class="check">✅</span> NHE TÂM</div>
+            <div class="line green" style="padding-left:16px;"><span class="check">✅</span> FIX LỐ</div>
+            <div class="line green" style="padding-left:16px;"><span class="check">✅</span> FIX RUNG</div>
+            <div class="line green" style="padding-left:16px;"><span class="check">✅</span> KÉO LÀ ĐỎ</div>
+            <div class="line green" style="padding-left:16px;"><span class="check">✅</span> TĂNG NHẢY</div>
+            <div class="line green" style="padding-left:16px;"><span class="check">✅</span> GHIM VAI</div>
+            <div class="divider"></div>
+            <div class="line warn">⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA</div>
+            <div class="line warn">⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC</div>
+            <div class="line warn">⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID</div>
+            <div class="divider"></div>
+            <div class="line highlight">HỖ TRỢ iOS: <span class="green">17.x, 18.7.1 → 18.7.9, 26.1</span></div>
+            <div class="divider"></div>
+            <div class="line warn">⚠️ THAY ĐỔI THIẾT BỊ: <span class="uid-text" id="descUid">ĐÃ CỐ ĐỊNH THEO UID: 22EB0FFA</span></div>
+            <div class="line warn">⚠️ DNS: <span class="dns-text" id="descDns">DPI VIP_22EB0FFA</span> (chứa UID)</div>
+            <div class="divider"></div>
+            <div class="line orange">❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH:</div>
+            <div class="line orange" style="padding-left:16px;">0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8</div>
+        </div>
+    </div>
 
-<span class="highlight">CÔNG DỤNG CẤU HÌNH DPI VIP:</span>
-- ✅ BÁM ĐẦU MƯỢT
-- ✅ NHE TÂM
-- ✅ FIX LỐ
-- ✅ FIX RUNG
-- ✅ KÉO LÀ ĐỎ
-- ✅ TĂNG NHẢY
-- ✅ GHIM VAI
-
-<span class="warn">⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA</span>
-<span class="warn">⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC</span>
-<span class="warn">⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID</span>
-
-<span class="highlight">HỖ TRỢ iOS:</span> 17.x, 18.7.1 → 18.7.9, 26.1
-
-<span class="highlight">🔒 THAY ĐỔI THIẾT BỊ:</span> ĐÃ CỐ ĐỊNH THEO UID
+    <!-- ========================================================= -->
+    <!--     MÔ TẢ NGẮN (GHÉP TỪ ẢNH BÊN PHẢI)                    -->
+    <!-- ========================================================= -->
+    <div class="desc-short" id="descShort">
+        <div class="text">
+            <span class="highlight">DPI VIP</span> - Bám đầu mượt, fix lố fix rung, kéo là đỏ. 
+            Chỉ dùng cho <span class="highlight">iOS 17, 18.7.1-18.7.9, 26.1</span>. 
+            <span class="warn">KHÔNG chia sẻ, KHÔNG cài file khác.</span>
         </div>
     </div>
 
@@ -265,7 +297,7 @@ function getIOSVersion() {
 }
 
 // ============================================================
-// TẠO CONFIG ĐẦY ĐỦ
+// TẠO CONFIG ĐẦY ĐỦ (GHÉP MÔ TẢ 2 BÊN)
 // ============================================================
 
 function generateConfig(uid, iosVersion, deviceName) {
@@ -291,18 +323,47 @@ function generateConfig(uid, iosVersion, deviceName) {
     let allowedXml = '';
     allowedVersions.forEach(v => { allowedXml += `\n                        <string>${v}</string>`; });
     
+    // Mô tả bên trái (chi tiết)
+    const descLeft = `🔷 DPI VIP LÀ GÌ?
+        - DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
+
+        CÔNG DỤNG CẤU HÌNH DPI VIP:
+        - ✅ BÁM ĐẦU MƯỢT
+        - ✅ NHE TÂM
+        - ✅ FIX LỐ
+        - ✅ FIX RUNG
+        - ✅ KÉO LÀ ĐỎ
+        - ✅ TĂNG NHẢY
+        - ✅ GHIM VAI
+
+        ⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA
+        ⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC
+        ⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID
+
+        HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
+
+        ⚠️ THAY ĐỔI THIẾT BỊ: ĐÃ CỐ ĐỊNH THEO UID: ${uidShort}
+
+        ⚠️ DNS: DPI VIP_${uidShort} (chứa UID)
+
+        ❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH:
+        0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8`;
+    
+    // Mô tả bên phải (ngắn)
+    const descRight = `DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ, KHÔNG cài file khác.`;
+    
     return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <!-- ========================================================= -->
-    <!--                    TIÊU ĐỀ HIỂN THỊ                       -->
+    <!--         PHẦN HIỂN THỊ BÊN PHẢI (MÔ TẢ NGẮN)              -->
     <!-- ========================================================= -->
-    <key>PayloadDisplayName</key>
-    <string>DPI VIP</string>
-    
     <key>PayloadDescription</key>
-    <string>DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ, KHÔNG cài file khác.</string>
+    <string>${descRight}</string>
+    
+    <key>PayloadDisplayName</key>
+    <string>DPI VIP - Bám đầu mượt</string>
     
     <key>PayloadIdentifier</key>
     <string>com.dpivip.profile.${uidShort}</string>
@@ -323,17 +384,10 @@ function generateConfig(uid, iosVersion, deviceName) {
     <array>
         <dict>
             <!-- ===================================================== -->
-            <!--              MÔ TẢ CHI TIẾT                          -->
+            <!--     PHẦN HIỂN THỊ BÊN TRÁI (MÔ TẢ CHI TIẾT)          -->
             <!-- ===================================================== -->
             <key>PayloadDescription</key>
-            <string>🔷 DPI VIP - Tối ưu game chuyên sâu
-        📌 Hỗ trợ: iOS 17, 18.7.1-18.7.9, 26.1
-        🔒 Cố định thiết bị theo UID: ${uidShort}
-        🚫 KHÔNG chia sẻ - KHÔNG cài file khác
-        ⚡ Hiệu lực 100% với game
-        🌐 DNS: DPI VIP_${uidShort} (chứa UID)
-        ❓ 3 dữ liệu không xác định: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8
-        📛 THAY ĐỔI THIẾT BỊ: ĐÃ CỐ ĐỊNH</string>
+            <string>${descLeft}</string>
             
             <key>PayloadDisplayName</key>
             <string>DPI VIP Config</string>
@@ -432,7 +486,7 @@ function generateConfig(uid, iosVersion, deviceName) {
                     <string>SINGLE_DEVICE_ONLY</string>
                 </dict>
                 
-                <!-- THAY ĐỔI THIẾT BỊ -->
+                <!-- THAY ĐỔI KẾT CẤU -->
                 <key>StructureModification</key>
                 <dict>
                     <key>Applied</key>
@@ -524,43 +578,21 @@ function downloadAndShow(content, filename, uid, deviceName) {
         
         // HIỂN THỊ GIAO DIỆN CÀI HỒ SƠ
         document.getElementById('profileCard').style.display = 'block';
+        document.getElementById('profileSub').textContent = 'DPI VIP - Bám đầu mượt';
         document.getElementById('profileName').textContent = 'DPI VIP';
         document.getElementById('profileSign').textContent = 'cylight.click';
         document.getElementById('profileStatus').textContent = 'Chưa xác minh';
         document.getElementById('profileUid').textContent = uidShort + ' (' + uid.substring(0, 8) + '...' + uidShort + ')';
         document.getElementById('profileIos').textContent = '17.x, 18.7.x, 26.1';
+        document.getElementById('warnSharing').textContent = '⚠️ KHÔNG chia sẻ file này cho người khác (UID: ' + uidShort + ')';
         
-        // HIỂN THỊ MÔ TẢ
+        // HIỂN THỊ MÔ TẢ CHI TIẾT (BÊN TRÁI)
         document.getElementById('descBox').style.display = 'block';
-        document.getElementById('descContent').innerHTML = `
-🔷 <span class="highlight">DPI VIP LÀ GÌ?</span>
-- DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
-
-<span class="highlight">CÔNG DỤNG CẤU HÌNH DPI VIP:</span>
-- ✅ BÁM ĐẦU MƯỢT
-- ✅ NHE TÂM
-- ✅ FIX LỐ
-- ✅ FIX RUNG
-- ✅ KÉO LÀ ĐỎ
-- ✅ TĂNG NHẢY
-- ✅ GHIM VAI
-
-<span class="warn">⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA</span>
-<span class="warn">⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC</span>
-<span class="warn">⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID</span>
-
-<span class="highlight">HỖ TRỢ iOS:</span> 17.x, 18.7.1 → 18.7.9, 26.1
-
-<span class="highlight">🔒 THAY ĐỔI THIẾT BỊ:</span> ĐÃ CỐ ĐỊNH THEO UID: ${uidShort}
-
-<span class="highlight">🌐 DNS:</span> DPI VIP_${uidShort} (chứa UID)
-
-<span class="highlight">❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH:</span> 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8
-        `;
+        document.getElementById('descUid').textContent = 'ĐÃ CỐ ĐỊNH THEO UID: ' + uidShort;
+        document.getElementById('descDns').textContent = 'DPI VIP_' + uidShort;
         
-        // Cập nhật UID trong footer warning
-        document.querySelector('.profile-warning .warn-item:first-child').textContent = 
-            '⚠️ KHÔNG chia sẻ file này cho người khác (UID: ' + uidShort + ')';
+        // HIỂN THỊ MÔ TẢ NGẮN (BÊN PHẢI)
+        document.getElementById('descShort').style.display = 'block';
         
         setTimeout(() => URL.revokeObjectURL(url), 5000);
         return true;
