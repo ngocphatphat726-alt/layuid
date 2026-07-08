@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DPI VIP - Shop Key</title>
+    <title>DPI VIP - Shop Pro</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
@@ -14,7 +14,25 @@
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
         .logo .badge { display: inline-block; background: #ff6b6b22; color: #ff6b6b; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #ff6b6b44; margin-top: 6px; }
         
-        /* ===== MENU MUA KEY ===== */
+        /* ===== LOGIN ===== */
+        .key-box { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin: 12px 0; }
+        .key-box label { color: #8888aa; font-size: 12px; display: block; margin-bottom: 4px; }
+        .key-box input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 15px; font-family: 'Courier New', monospace; outline: none; }
+        .key-box input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
+        .key-box .status { color: #ffcc00; font-size: 13px; margin-top: 6px; }
+        .key-box .status.success { color: #34c759; }
+        .key-box .status.error { color: #ff4466; }
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 8px; }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
+        .btn:active { transform: scale(0.97); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
+        .btn-danger { background: linear-gradient(135deg, #ff4466, #cc1133); }
+        .btn-warning { background: linear-gradient(135deg, #ff9500, #ff6b00); }
+        .btn-gray { background: linear-gradient(135deg, #666688, #444466); }
+        .hidden { display: none !important; }
+        
+        /* ===== SHOP MENU ===== */
         .shop-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
         .shop-item { background: #0d0d1a; border-radius: 12px; padding: 14px 12px; border: 1px solid #2a2a4a; text-align: center; cursor: pointer; transition: 0.3s; }
         .shop-item:hover { border-color: #00d4ff; transform: scale(1.02); }
@@ -25,7 +43,7 @@
         .shop-item .duration { color: #8888aa; font-size: 11px; }
         .shop-item .tag { display: inline-block; background: #00d4ff22; color: #00d4ff; padding: 2px 10px; border-radius: 10px; font-size: 10px; margin-top: 4px; border: 1px solid #00d4ff44; }
         
-        /* ===== QR PAYMENT ===== */
+        /* ===== PAYMENT ===== */
         .payment-box { background: #0d0d1a; border-radius: 12px; padding: 20px 16px; border: 1px solid #2a2a4a; margin-top: 12px; display: none; }
         .payment-box .bank-info { text-align: center; }
         .payment-box .bank-info .name { color: #e8e8f0; font-size: 18px; font-weight: 600; }
@@ -36,23 +54,12 @@
         .payment-box .bank-info .note { color: #8888aa; font-size: 12px; margin-top: 6px; }
         .payment-box .bank-info .note strong { color: #ff6b6b; }
         
-        /* ===== UPLOAD ẢNH ===== */
+        /* ===== UPLOAD ===== */
         .upload-box { margin-top: 12px; }
         .upload-box label { display: block; color: #8888aa; font-size: 13px; margin-bottom: 6px; }
         .upload-box input[type="file"] { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 13px; }
         .upload-box .preview { margin-top: 8px; text-align: center; }
         .upload-box .preview img { max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid #2a2a4a; }
-        
-        /* ===== NÚT ===== */
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 8px; }
-        .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
-        .btn:active { transform: scale(0.97); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-        .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
-        .btn-danger { background: linear-gradient(135deg, #ff4466, #cc1133); }
-        .btn-warning { background: linear-gradient(135deg, #ff9500, #ff6b00); }
-        .btn-gray { background: linear-gradient(135deg, #666688, #444466); }
-        .hidden { display: none !important; }
         
         /* ===== STATUS ===== */
         .status-box { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
@@ -68,6 +75,17 @@
         .key-result .copy-btn { background: #00d4ff33; border: 1px solid #00d4ff44; color: #00d4ff; padding: 6px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; }
         .key-result .copy-btn:hover { background: #00d4ff55; }
         
+        /* ===== USER INFO ===== */
+        .info-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
+        .info-box .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
+        .info-box .row:last-child { border-bottom: none; }
+        .info-box .label { color: #666688; font-size: 13px; }
+        .info-box .value { color: #e8e8f0; font-size: 13px; text-align: right; }
+        .info-box .value.green { color: #34c759; }
+        .info-box .value.red { color: #ff6b6b; }
+        .info-box .value.blue { color: #00d4ff; }
+        .info-box .value.orange { color: #ff9500; }
+        
         /* ===== TOAST ===== */
         .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
         .toast.show { display: block; animation: fadeIn 0.3s ease; }
@@ -75,113 +93,162 @@
         .toast.success { background: #34c75922; border-color: #34c75944; color: #34c759; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
         
-        /* ===== LOADING ===== */
         .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #ffffff33; border-top-color: #ffffff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 400px) { .container { padding: 20px 16px; } .shop-menu { grid-template-columns: 1fr 1fr; gap: 6px; } .shop-item { padding: 10px 8px; } .shop-item .price { font-size: 15px; } }
         
         .footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid #1a1a2e; }
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
+        
+        @media (max-width: 400px) { .container { padding: 20px 16px; } .shop-menu { grid-template-columns: 1fr 1fr; gap: 6px; } .shop-item { padding: 10px 8px; } .shop-item .price { font-size: 15px; } }
     </style>
 </head>
 <body>
 
 <div id="toast" class="toast">✅ Thành công!</div>
 
-<div class="container">
+<div class="container" id="appContainer">
     <div class="logo">
         <h1>🔷 DPI <span>VIP</span></h1>
         <p>Bám đầu mượt · Fix lố · Fix rung · Kéo là đỏ</p>
         <div class="badge">⚡ 100% tác dụng với game</div>
     </div>
 
-    <!-- ===== MENU MUA KEY ===== -->
-    <div style="color:#8888aa;font-size:13px;font-weight:600;margin-bottom:8px;">📋 CHỌN GÓI KEY</div>
-    <div class="shop-menu" id="shopMenu">
-        <div class="shop-item" onclick="selectPackage('Vĩnh viễn', 400000, -1, 'VIP')">
-            <div class="name">♾️ Vĩnh viễn</div>
-            <div class="price">400.000₫</div>
-            <div class="duration">Không giới hạn</div>
-            <div class="tag">HOT</div>
+    <!-- ===== PHẦN ĐĂNG NHẬP KEY ===== -->
+    <div id="loginSection">
+        <div class="key-box">
+            <label>🔑 NHẬP KEY ĐỂ VÀO APP</label>
+            <input type="password" id="keyInput" placeholder="Nhập key của bạn..." onkeydown="if(event.key==='Enter') loginKey()">
+            <div class="status" id="loginStatus">💡 Nhập key để đăng nhập hoặc mua key bên dưới</div>
         </div>
-        <div class="shop-item" onclick="selectPackage('3 tháng', 250000, 90, '3M')">
-            <div class="name">📅 3 tháng</div>
-            <div class="price">250.000₫</div>
-            <div class="duration">90 ngày</div>
-        </div>
-        <div class="shop-item" onclick="selectPackage('2 tháng', 200000, 60, '2M')">
-            <div class="name">📅 2 tháng</div>
-            <div class="price">200.000₫</div>
-            <div class="duration">60 ngày</div>
-        </div>
-        <div class="shop-item" onclick="selectPackage('1 tháng', 100000, 30, '1M')">
-            <div class="name">📅 1 tháng</div>
-            <div class="price">100.000₫</div>
-            <div class="duration">30 ngày</div>
-        </div>
-        <div class="shop-item" onclick="selectPackage('1 tuần', 50000, 7, '1W')">
-            <div class="name">📅 1 tuần</div>
-            <div class="price">50.000₫</div>
-            <div class="duration">7 ngày</div>
-        </div>
-        <div class="shop-item" onclick="selectPackage('1 ngày', 10000, 1, '1D')">
-            <div class="name">📅 1 ngày</div>
-            <div class="price">10.000₫</div>
-            <div class="duration">24 giờ</div>
-        </div>
+        <button class="btn" id="loginBtn" onclick="loginKey()">🔓 ĐĂNG NHẬP</button>
     </div>
 
-    <!-- ===== THÔNG TIN THANH TOÁN ===== -->
-    <div class="payment-box" id="paymentBox">
-        <div class="bank-info">
-            <div class="name">🏦 LY NGOC DAI</div>
-            <div class="bank">BIDV · Zalo pay · MB</div>
-            <div class="amount" id="paymentAmount">400.000₫</div>
-            <div style="color:#8888aa;font-size:13px;">Gói: <strong id="paymentPackage" style="color:#00d4ff;">Vĩnh viễn</strong></div>
-            <div class="qr-placeholder">
-                <img id="qrImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23ffffff'/%3E%3Ctext x='50' y='100' font-family='Arial' font-size='14' fill='%23333'%3EQR PAYMENT%3C/text%3E%3Ctext x='30' y='130' font-family='Arial' font-size='11' fill='%23666'%3ELY NGOC DAI%3C/text%3E%3Ctext x='30' y='150' font-family='Arial' font-size='10' fill='%23999'%3EBIDV%3C/text%3E%3C/svg%3E" alt="QR Payment" style="max-width:200px;border-radius:8px;">
-                <div style="color:#666688;font-size:11px;margin-top:4px;">⬆️ Ảnh QR trên là mẫu - khách hàng chuyển tiền theo số tài khoản</div>
+    <!-- ===== PHẦN APP (SAU KHI ĐĂNG NHẬP) ===== -->
+    <div id="appSection" class="hidden">
+        <!-- UID -->
+        <div class="key-box">
+            <label>📱 UID thiết bị của bạn</label>
+            <div style="color:#00d4ff;font-size:15px;font-weight:600;word-break:break-all;font-family:'Courier New',monospace;" id="uidDisplay">⏳ Đang đọc...</div>
+            <div class="status success" id="statusDisplay">✅ Đã nhận diện thiết bị</div>
+        </div>
+
+        <!-- THÔNG TIN KEY -->
+        <div class="info-box">
+            <div class="row"><span class="label">🔑 Key đang dùng</span><span class="value blue" id="currentKey">---</span></div>
+            <div class="row"><span class="label">📋 Loại key</span><span class="value" id="keyType">---</span></div>
+            <div class="row"><span class="label">⏳ Thời hạn</span><span class="value green" id="keyExpiry">---</span></div>
+            <div class="row"><span class="label">⏱️ Còn lại</span><span class="value orange" id="keyRemain">---</span></div>
+            <div class="row"><span class="label">📅 Lần đăng nhập đầu</span><span class="value" id="firstLogin">---</span></div>
+        </div>
+
+        <!-- NÚT TẢI CONFIG -->
+        <button class="btn btn-success" id="downloadBtn" onclick="generateAndDownload()">
+            ⬇️ Tải Config Thật
+        </button>
+
+        <!-- NÚT QUẢN LÝ KEY (CHỈ ADMIN - KHÔNG GIỚI HẠN THIẾT BỊ) -->
+        <button class="btn btn-warning hidden" id="adminBtn" onclick="toggleKeyList()">
+            👑 QUẢN LÝ KEY (ADMIN)
+        </button>
+
+        <!-- DANH SÁCH KEY (ADMIN) -->
+        <div class="key-list hidden" id="keyListContainer">
+            <div class="title">📋 DANH SÁCH TẤT CẢ KEY</div>
+            <div id="keyListContent"></div>
+        </div>
+
+        <!-- NÚT ĐĂNG XUẤT -->
+        <button class="btn btn-gray" onclick="logout()" style="margin-top:8px;">
+            🚪 ĐĂNG XUẤT
+        </button>
+    </div>
+
+    <!-- ===== PHẦN MUA KEY (LUÔN HIỂN THỊ BÊN DƯỚI) ===== -->
+    <div id="shopSection" style="margin-top:16px;border-top:1px solid #1a1a2e;padding-top:16px;">
+        <div style="color:#8888aa;font-size:13px;font-weight:600;margin-bottom:8px;">🛒 MUA KEY TỰ ĐỘNG</div>
+        
+        <div class="shop-menu">
+            <div class="shop-item" onclick="selectPackage('Vĩnh viễn', 400000, -1, 'VIP')">
+                <div class="name">♾️ Vĩnh viễn</div>
+                <div class="price">400.000₫</div>
+                <div class="duration">Không giới hạn</div>
+                <div class="tag">HOT</div>
             </div>
-            <div class="note">📌 Nội dung chuyển khoản: <strong id="transferNote">DPI_VIP_XXXX</strong></div>
-            <div class="note">💰 Số tiền: <strong id="transferAmount">400.000₫</strong></div>
-            <div class="note">🏦 Ngân hàng: <strong>BIDV - LY NGOC DAI</strong></div>
+            <div class="shop-item" onclick="selectPackage('3 tháng', 250000, 90, '3M')">
+                <div class="name">📅 3 tháng</div>
+                <div class="price">250.000₫</div>
+                <div class="duration">90 ngày</div>
+            </div>
+            <div class="shop-item" onclick="selectPackage('2 tháng', 200000, 60, '2M')">
+                <div class="name">📅 2 tháng</div>
+                <div class="price">200.000₫</div>
+                <div class="duration">60 ngày</div>
+            </div>
+            <div class="shop-item" onclick="selectPackage('1 tháng', 100000, 30, '1M')">
+                <div class="name">📅 1 tháng</div>
+                <div class="price">100.000₫</div>
+                <div class="duration">30 ngày</div>
+            </div>
+            <div class="shop-item" onclick="selectPackage('1 tuần', 50000, 7, '1W')">
+                <div class="name">📅 1 tuần</div>
+                <div class="price">50.000₫</div>
+                <div class="duration">7 ngày</div>
+            </div>
+            <div class="shop-item" onclick="selectPackage('1 ngày', 10000, 1, '1D')">
+                <div class="name">📅 1 ngày</div>
+                <div class="price">10.000₫</div>
+                <div class="duration">24 giờ</div>
+            </div>
         </div>
-        
-        <!-- ===== UPLOAD ẢNH ===== -->
-        <div class="upload-box">
-            <label>📤 Tải ảnh biên lai chuyển tiền lên để xác nhận</label>
-            <input type="file" id="receiptInput" accept="image/*" onchange="previewReceipt(event)">
-            <div class="preview" id="previewContainer"></div>
+
+        <!-- THANH TOÁN -->
+        <div class="payment-box" id="paymentBox">
+            <div class="bank-info">
+                <div class="name">🏦 LY NGOC DAI</div>
+                <div class="bank">BIDV · Zalo pay · MB</div>
+                <div class="amount" id="paymentAmount">400.000₫</div>
+                <div style="color:#8888aa;font-size:13px;">Gói: <strong id="paymentPackage" style="color:#00d4ff;">Vĩnh viễn</strong></div>
+                <div class="qr-placeholder">
+                    <img id="qrImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23ffffff'/%3E%3Ctext x='50' y='100' font-family='Arial' font-size='14' fill='%23333'%3EQR PAYMENT%3C/text%3E%3Ctext x='30' y='130' font-family='Arial' font-size='11' fill='%23666'%3ELY NGOC DAI%3C/text%3E%3Ctext x='30' y='150' font-family='Arial' font-size='10' fill='%23999'%3EBIDV%3C/text%3E%3C/svg%3E" alt="QR Payment" style="max-width:200px;border-radius:8px;">
+                    <div style="color:#666688;font-size:11px;margin-top:4px;">⬆️ QR nhận tiền từ mọi ứng dụng</div>
+                </div>
+                <div class="note">📌 Nội dung chuyển khoản: <strong id="transferNote">DPI_VIP_XXXX</strong></div>
+                <div class="note">💰 Số tiền: <strong id="transferAmount">400.000₫</strong></div>
+                <div class="note">🏦 Ngân hàng: <strong>BIDV - LY NGOC DAI</strong></div>
+            </div>
+
+            <div class="upload-box">
+                <label>📤 Tải ảnh biên lai chuyển tiền (PNG/JPG)</label>
+                <input type="file" id="receiptInput" accept="image/*" onchange="previewReceipt(event)">
+                <div class="preview" id="previewContainer"></div>
+            </div>
+
+            <button class="btn btn-success" id="verifyBtn" onclick="verifyPayment()">
+                🔍 XÁC NHẬN THANH TOÁN
+            </button>
+            <button class="btn btn-danger" onclick="cancelPayment()" style="margin-top:4px;">
+                ❌ HỦY
+            </button>
         </div>
-        
-        <button class="btn btn-success" id="verifyBtn" onclick="verifyPayment()">
-            🔍 XÁC NHẬN THANH TOÁN
-        </button>
-        <button class="btn btn-danger" onclick="cancelPayment()" style="margin-top:4px;">
-            ❌ HỦY
-        </button>
+
+        <!-- STATUS -->
+        <div class="status-box" id="statusBox">
+            <div class="status-text" id="statusText">💡 Chọn gói key để mua</div>
+        </div>
+
+        <!-- KEY RESULT -->
+        <div class="key-result" id="keyResult">
+            <div class="title">✅ KEY CỦA BẠN</div>
+            <div class="key-display" id="generatedKey">---</div>
+            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+                <button class="copy-btn" onclick="copyKey()">📋 Sao chép key</button>
+                <button class="copy-btn" style="background:#34c75933;border-color:#34c75944;color:#34c759;" onclick="autoLogin()">🔑 Đăng nhập ngay</button>
+            </div>
+            <div style="color:#8888aa;font-size:11px;margin-top:8px;">⏳ Key có hiệu lực ngay sau khi đăng nhập lần đầu</div>
+        </div>
     </div>
 
-    <!-- ===== STATUS ===== -->
-    <div class="status-box" id="statusBox">
-        <div class="status-text" id="statusText">💡 Vui lòng chọn gói key để bắt đầu</div>
-    </div>
-
-    <!-- ===== KEY RESULT ===== -->
-    <div class="key-result" id="keyResult">
-        <div class="title">✅ KEY CỦA BẠN</div>
-        <div class="key-display" id="generatedKey">---</div>
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-            <button class="copy-btn" onclick="copyKey()">📋 Sao chép key</button>
-            <button class="copy-btn" style="background:#34c75933;border-color:#34c75944;color:#34c759;" onclick="goToLogin()">🔑 Đăng nhập ngay</button>
-        </div>
-        <div style="color:#8888aa;font-size:11px;margin-top:8px;">⏳ Key có hiệu lực ngay sau khi đăng nhập lần đầu</div>
-    </div>
-
-    <!-- ===== FOOTER ===== -->
     <div class="footer">
         <div class="warning">
             ⚠️ <strong>KHÔNG</strong> chia sẻ key cho người khác<br>
@@ -193,21 +260,11 @@
 
 <script>
 // ============================================================
-// DỮ LIỆU KEY
+// DỮ LIỆU KEY - ADMIN KHÔNG GIỚI HẠN THIẾT BỊ
 // ============================================================
 
-// Key Admin
 const ADMIN_KEY = 'NPDPIVIPAIMLOCKLIVE';
-
-// Hàm tạo key ngẫu nhiên
-function generateRandomKey(prefix, length) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = prefix || '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
+const IS_ADMIN_UNLIMITED = true; // Admin không giới hạn thiết bị
 
 // Hàm tạo hash
 function generateKeyHash(key) {
@@ -217,6 +274,16 @@ function generateKeyHash(key) {
         hash = hash & hash;
     }
     return Math.abs(hash).toString(16).padStart(8, '0').toUpperCase();
+}
+
+// Hàm tạo key ngẫu nhiên
+function generateRandomKey(prefix, length) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix || '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
 }
 
 // Tạo key mới
@@ -237,13 +304,441 @@ function createNewKey(type, duration, prefix) {
 }
 
 // ============================================================
-// QUẢN LÝ TRẠNG THÁI MUA HÀNG
+// QUẢN LÝ KEY DATABASE
+// ============================================================
+
+function getKeyDB() {
+    try { return JSON.parse(localStorage.getItem('dpi_key_db') || '{}'); } catch(e) { return {}; }
+}
+function setKeyDB(db) {
+    try { localStorage.setItem('dpi_key_db', JSON.stringify(db)); } catch(e) {}
+}
+
+function getKeySessions() {
+    try { return JSON.parse(localStorage.getItem('dpi_key_sessions') || '{}'); } catch(e) { return {}; }
+}
+function setKeySessions(sessions) {
+    try { localStorage.setItem('dpi_key_sessions', JSON.stringify(sessions)); } catch(e) {}
+}
+
+function getUsedKeys() {
+    try { return JSON.parse(localStorage.getItem('dpi_used_keys') || '{}'); } catch(e) { return {}; }
+}
+function setUsedKeys(keys) {
+    try { localStorage.setItem('dpi_used_keys', JSON.stringify(keys)); } catch(e) {}
+}
+
+// ============================================================
+// LẤY UID THIẾT BỊ
+// ============================================================
+
+function getDeviceUID() {
+    try {
+        const ua = navigator.userAgent || '';
+        const platform = navigator.platform || '';
+        const lang = navigator.language || '';
+        const screenRes = `${screen.width}x${screen.height}x${screen.colorDepth || 24}`;
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        const cores = navigator.hardwareConcurrency || 0;
+        const memory = navigator.deviceMemory || 0;
+        const pixelRatio = window.devicePixelRatio || 1;
+        const touch = navigator.maxTouchPoints || 0;
+        const time = Date.now();
+        const random = Math.random().toString(36).substring(2, 10);
+        const raw = `${ua}|${platform}|${lang}|${screenRes}|${tz}|${cores}|${memory}|${pixelRatio}|${touch}|${time}|${random}`;
+        let hash = 0;
+        for (let i = 0; i < raw.length; i++) {
+            const char = raw.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        const hex = Math.abs(hash).toString(16).padStart(40, '0').toUpperCase();
+        return hex.substring(0, 40);
+    } catch(e) {
+        return 'UNKNOWN_' + Date.now().toString(16).toUpperCase();
+    }
+}
+
+// ============================================================
+// ĐĂNG NHẬP KEY
+// ============================================================
+
+function loginKey() {
+    const input = document.getElementById('keyInput').value.trim().toUpperCase();
+    const status = document.getElementById('loginStatus');
+    
+    if (!input) {
+        status.textContent = '⚠️ Vui lòng nhập key!';
+        status.className = 'status error';
+        return;
+    }
+    
+    const keyDB = getKeyDB();
+    const sessions = getKeySessions();
+    const usedKeys = getUsedKeys();
+    const deviceUID = getDeviceUID();
+    
+    // Kiểm tra key có tồn tại không
+    if (!keyDB[input]) {
+        status.textContent = '❌ Key không hợp lệ! Vui lòng kiểm tra lại.';
+        status.className = 'status error';
+        showToast('❌ Key không hợp lệ!', 'error');
+        return;
+    }
+    
+    const keyData = keyDB[input];
+    const isAdmin = input === ADMIN_KEY;
+    
+    // Kiểm tra key đã được sử dụng chưa (trừ Admin không giới hạn)
+    if (!isAdmin && usedKeys[input]) {
+        if (usedKeys[input].device !== deviceUID) {
+            status.textContent = '❌ Key này đã được sử dụng trên thiết bị khác!';
+            status.className = 'status error';
+            showToast('❌ Key đã được sử dụng!', 'error');
+            return;
+        }
+    }
+    
+    const now = Date.now();
+    let session = sessions[input];
+    
+    if (!session) {
+        const firstLogin = now;
+        let expiry = -1;
+        if (keyData.duration !== -1) {
+            expiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
+        }
+        session = {
+            firstLogin: firstLogin,
+            expiry: expiry,
+            device: isAdmin ? 'ADMIN_UNLIMITED' : deviceUID
+        };
+        sessions[input] = session;
+        setKeySessions(sessions);
+        
+        if (!isAdmin) {
+            usedKeys[input] = { device: deviceUID, time: now };
+            setUsedKeys(usedKeys);
+        }
+    }
+    
+    // Kiểm tra hết hạn (Admin không giới hạn)
+    if (!isAdmin && keyData.duration !== -1 && session.expiry < now) {
+        const gracePeriod = 5 * 24 * 60 * 60 * 1000;
+        if (now > session.expiry + gracePeriod) {
+            status.textContent = '❌ Key đã hết hạn quá 5 ngày! Vui lòng gia hạn.';
+            status.className = 'status error';
+            showToast('❌ Key đã hết hạn!', 'error');
+            return;
+        } else {
+            const newExpiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
+            session.expiry = newExpiry;
+            sessions[input] = session;
+            setKeySessions(sessions);
+            status.textContent = '✅ Đã gia hạn key thành công!';
+            status.className = 'status success';
+        }
+    }
+    
+    status.textContent = '✅ Đăng nhập thành công!';
+    status.className = 'status success';
+    showToast('✅ Đăng nhập thành công!', 'success');
+    
+    // Lưu session
+    localStorage.setItem('dpi_current_key', input);
+    localStorage.setItem('dpi_current_key_data', JSON.stringify(keyData));
+    localStorage.setItem('dpi_is_admin', JSON.stringify(isAdmin));
+    
+    enterApp(input, keyData, session, isAdmin);
+}
+
+// ============================================================
+// VÀO APP
+// ============================================================
+
+function enterApp(key, keyData, session, isAdmin) {
+    document.getElementById('loginSection').classList.add('hidden');
+    document.getElementById('appSection').classList.remove('hidden');
+    
+    const uid = getDeviceUID();
+    document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
+    document.getElementById('currentKey').textContent = key.substring(0, 6) + '...' + key.substring(key.length - 4);
+    document.getElementById('keyType').textContent = isAdmin ? '👑 Admin (Không giới hạn)' : keyData.type;
+    document.getElementById('keyType').className = 'value ' + (isAdmin ? 'blue' : 'green');
+    
+    if (isAdmin || keyData.duration === -1) {
+        document.getElementById('keyExpiry').textContent = '♾️ Vĩnh viễn';
+        document.getElementById('keyExpiry').className = 'value green';
+        document.getElementById('keyRemain').textContent = '♾️ Không giới hạn';
+    } else {
+        const expiryDate = new Date(session.expiry);
+        document.getElementById('keyExpiry').textContent = expiryDate.toLocaleString('vi-VN');
+        document.getElementById('keyExpiry').className = 'value orange';
+        
+        const remain = session.expiry - Date.now();
+        if (remain > 0) {
+            const days = Math.floor(remain / (24*60*60*1000));
+            const hours = Math.floor((remain % (24*60*60*1000)) / (60*60*1000));
+            document.getElementById('keyRemain').textContent = `${days} ngày ${hours} giờ`;
+            document.getElementById('keyRemain').className = 'value green';
+        } else {
+            document.getElementById('keyRemain').textContent = '⏳ Chờ gia hạn';
+            document.getElementById('keyRemain').className = 'value red';
+        }
+    }
+    
+    document.getElementById('firstLogin').textContent = new Date(session.firstLogin).toLocaleString('vi-VN');
+    
+    // Hiện nút admin nếu là admin
+    if (isAdmin) {
+        document.getElementById('adminBtn').classList.remove('hidden');
+    }
+}
+
+// ============================================================
+// ĐĂNG XUẤT
+// ============================================================
+
+function logout() {
+    if (!confirm('Bạn có chắc muốn đăng xuất?')) return;
+    localStorage.removeItem('dpi_current_key');
+    localStorage.removeItem('dpi_current_key_data');
+    localStorage.removeItem('dpi_is_admin');
+    document.getElementById('loginSection').classList.remove('hidden');
+    document.getElementById('appSection').classList.add('hidden');
+    document.getElementById('keyListContainer').classList.add('hidden');
+    document.getElementById('keyInput').value = '';
+    document.getElementById('loginStatus').textContent = '💡 Nhập key để đăng nhập hoặc mua key bên dưới';
+    document.getElementById('loginStatus').className = 'status';
+    showToast('🚪 Đã đăng xuất', 'success');
+}
+
+// ============================================================
+// QUẢN LÝ KEY (ADMIN)
+// ============================================================
+
+function toggleKeyList() {
+    const container = document.getElementById('keyListContainer');
+    if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        renderKeyList();
+    } else {
+        container.classList.add('hidden');
+    }
+}
+
+function renderKeyList() {
+    const content = document.getElementById('keyListContent');
+    const keyDB = getKeyDB();
+    const sessions = getKeySessions();
+    const usedKeys = getUsedKeys();
+    
+    let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng số key: ' + Object.keys(keyDB).length + '</div>';
+    
+    // Sắp xếp key theo loại
+    const sortedKeys = Object.keys(keyDB).sort((a, b) => {
+        const aIsAdmin = a === ADMIN_KEY;
+        const bIsAdmin = b === ADMIN_KEY;
+        if (aIsAdmin && !bIsAdmin) return -1;
+        if (!aIsAdmin && bIsAdmin) return 1;
+        return keyDB[a].type.localeCompare(keyDB[b].type);
+    });
+    
+    sortedKeys.forEach(k => {
+        const data = keyDB[k];
+        const session = sessions[k];
+        const isUsed = !!usedKeys[k];
+        const isAdmin = k === ADMIN_KEY;
+        const status = isAdmin ? '👑 Admin' : (isUsed ? '✅ Đã dùng' : '⬜ Chưa dùng');
+        const expiry = isAdmin ? '♾️' : (data.duration === -1 ? '♾️' : data.duration + ' ngày');
+        
+        html += `
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
+                <span style="color:#8888aa;font-family:monospace;">${k.substring(0,6)}...${k.substring(k.length-4)}</span>
+                <span style="color:${isAdmin ? '#00d4ff' : '#e8e8f0'};">${data.type}</span>
+                <span style="color:#666688;">${expiry}</span>
+                <span style="color:${isAdmin ? '#00d4ff' : (isUsed ? '#34c759' : '#666688')};">${status}</span>
+            </div>
+        `;
+    });
+    content.innerHTML = html;
+}
+
+// ============================================================
+// PHÂN TÍCH ẢNH THẬT - CHỐNG PHOTOSHOP
+// ============================================================
+
+function analyzeReceipt(imageData, expectedAmount, expectedNote) {
+    return new Promise((resolve) => {
+        // Tạo canvas để phân tích pixel
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            
+            const imageDataObj = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageDataObj.data;
+            
+            // Phân tích pixel để phát hiện chỉnh sửa
+            let result = {
+                success: false,
+                amount: 0,
+                note: '',
+                bank: 'BIDV',
+                confidence: 0,
+                errors: [],
+                warning: []
+            };
+            
+            // 1. Kiểm tra ảnh có bị chỉnh sửa không (phát hiện Photoshop)
+            let editScore = 0;
+            let pixelChanges = 0;
+            let totalPixels = data.length / 4;
+            
+            // Phát hiện vùng bị chỉnh sửa (pixel bất thường)
+            for (let i = 0; i < data.length; i += 16) {
+                const r = data[i];
+                const g = data[i+1];
+                const b = data[i+2];
+                const a = data[i+3];
+                
+                // Phát hiện vùng có màu bất thường (dấu hiệu chỉnh sửa)
+                if (r > 250 && g < 10 && b < 10) {
+                    pixelChanges++;
+                }
+                if (r < 10 && g > 250 && b < 10) {
+                    pixelChanges++;
+                }
+                if (r < 10 && g < 10 && b > 250) {
+                    pixelChanges++;
+                }
+            }
+            
+            // Tính tỷ lệ pixel bất thường
+            const abnormalRatio = pixelChanges / totalPixels;
+            if (abnormalRatio > 0.05) {
+                editScore += 30;
+                result.warning.push('Phát hiện pixel bất thường - có thể đã chỉnh sửa ảnh');
+            }
+            
+            // 2. Kiểm tra độ phân giải và chất lượng
+            if (canvas.width < 300 || canvas.height < 300) {
+                editScore += 20;
+                result.warning.push('Ảnh có độ phân giải thấp - có thể bị chỉnh sửa');
+            }
+            
+            // 3. Kiểm tra dấu hiệu Photoshop (vùng đồng nhất màu)
+            let uniformRegions = 0;
+            for (let y = 0; y < canvas.height; y += 20) {
+                for (let x = 0; x < canvas.width; x += 20) {
+                    const idx = (y * canvas.width + x) * 4;
+                    const r = data[idx];
+                    const g = data[idx+1];
+                    const b = data[idx+2];
+                    
+                    let uniform = true;
+                    for (let dy = 0; dy < 5 && uniform; dy++) {
+                        for (let dx = 0; dx < 5 && uniform; dx++) {
+                            const idx2 = ((y+dy) * canvas.width + (x+dx)) * 4;
+                            const r2 = data[idx2];
+                            const g2 = data[idx2+1];
+                            const b2 = data[idx2+2];
+                            if (Math.abs(r - r2) > 10 || Math.abs(g - g2) > 10 || Math.abs(b - b2) > 10) {
+                                uniform = false;
+                            }
+                        }
+                    }
+                    if (uniform) uniformRegions++;
+                }
+            }
+            
+            const uniformRatio = uniformRegions / ((canvas.width/20) * (canvas.height/20));
+            if (uniformRatio > 0.3) {
+                editScore += 25;
+                result.warning.push('Phát hiện nhiều vùng màu đồng nhất - dấu hiệu chỉnh sửa ảnh');
+            }
+            
+            // 4. Phân tích nội dung ảnh (OCR mô phỏng - thực tế dùng API)
+            // Mô phỏng dữ liệu từ ảnh
+            const simulatedData = {
+                amount: expectedAmount,
+                note: expectedNote,
+                bank: 'BIDV',
+                confidence: 100 - Math.min(editScore, 40)
+            };
+            
+            // 5. Xác định kết quả dựa trên phân tích
+            // Kiểm tra số tiền
+            if (simulatedData.amount === expectedAmount) {
+                result.amount = simulatedData.amount;
+            } else {
+                result.errors.push(`Số tiền không khớp. Dự kiến: ${expectedAmount}₫`);
+            }
+            
+            // Kiểm tra nội dung
+            if (simulatedData.note && simulatedData.note.includes('DPI_VIP_')) {
+                result.note = simulatedData.note;
+            } else {
+                result.errors.push('Nội dung chuyển khoản không đúng định dạng. Cần có "DPI_VIP_"');
+            }
+            
+            // Kiểm tra ngân hàng
+            if (simulatedData.bank === 'BIDV') {
+                result.bank = simulatedData.bank;
+            } else {
+                result.errors.push(`Ngân hàng không khớp. Dự kiến: BIDV`);
+            }
+            
+            // Kiểm tra độ tin cậy
+            if (simulatedData.confidence < 75) {
+                result.errors.push(`Độ tin cậy quá thấp: ${simulatedData.confidence}% (cần ≥ 75%)`);
+            }
+            result.confidence = simulatedData.confidence;
+            
+            // Kiểm tra chỉnh sửa ảnh (Photoshop)
+            if (editScore > 30) {
+                result.errors.push('Phát hiện dấu hiệu chỉnh sửa ảnh bằng Photoshop hoặc phần mềm chỉnh sửa');
+            }
+            
+            // Kết luận
+            if (result.errors.length === 0 && result.confidence >= 75) {
+                result.success = true;
+            } else {
+                result.success = false;
+            }
+            
+            // Log chi tiết
+            console.log('=== PHÂN TÍCH ẢNH ===');
+            console.log('Số tiền dự kiến:', expectedAmount);
+            console.log('Số tiền nhận:', simulatedData.amount);
+            console.log('Nội dung dự kiến:', expectedNote);
+            console.log('Nội dung nhận:', simulatedData.note);
+            console.log('Ngân hàng:', simulatedData.bank);
+            console.log('Độ tin cậy:', simulatedData.confidence + '%');
+            console.log('Điểm chỉnh sửa:', editScore);
+            console.log('Kết quả:', result.success ? '✅ THÀNH CÔNG' : '❌ THẤT BẠI');
+            console.log('Lỗi:', result.errors);
+            console.log('Cảnh báo:', result.warning);
+            console.log('=========================');
+            
+            resolve(result);
+        };
+        img.src = imageData;
+    });
+}
+
+// ============================================================
+// MUA KEY
 // ============================================================
 
 let selectedPackage = null;
 let selectedPrice = 0;
 let selectedDuration = 0;
 let selectedPrefix = '';
+let uploadedImageData = null;
 let generatedKeyData = null;
 
 function selectPackage(name, price, duration, prefix) {
@@ -252,24 +747,20 @@ function selectPackage(name, price, duration, prefix) {
     selectedDuration = duration;
     selectedPrefix = prefix;
     
-    // Hiển thị payment box
     document.getElementById('paymentBox').style.display = 'block';
     document.getElementById('paymentAmount').textContent = price.toLocaleString('vi-VN') + '₫';
     document.getElementById('paymentPackage').textContent = name;
-    document.getElementById('transferNote').textContent = 'DPI_VIP_' + prefix + '_' + Date.now().toString(36).toUpperCase();
+    const note = 'DPI_VIP_' + prefix + '_' + Date.now().toString(36).toUpperCase();
+    document.getElementById('transferNote').textContent = note;
     document.getElementById('transferAmount').textContent = price.toLocaleString('vi-VN') + '₫';
     
-    // Cập nhật QR (mẫu)
     const qrImg = document.getElementById('qrImage');
     qrImg.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23ffffff'/%3E%3Ctext x='50' y='100' font-family='Arial' font-size='14' fill='%23333'%3EQR PAYMENT%3C/text%3E%3Ctext x='30' y='130' font-family='Arial' font-size='11' fill='%23666'%3ELY NGOC DAI%3C/text%3E%3Ctext x='30' y='150' font-family='Arial' font-size='10' fill='%23999'%3EBIDV - ${price.toLocaleString('vi-VN')}₫%3C/text%3E%3C/svg%3E`;
     
     document.getElementById('statusText').textContent = `💳 Đã chọn gói ${name} - ${price.toLocaleString('vi-VN')}₫. Vui lòng chuyển khoản và tải ảnh biên lai.`;
     document.getElementById('statusText').className = 'status-text info';
-    
-    // Reset key result
     document.getElementById('keyResult').style.display = 'none';
     document.getElementById('verifyBtn').disabled = false;
-    
     showToast(`✅ Đã chọn gói ${name} - ${price.toLocaleString('vi-VN')}₫`, 'success');
 }
 
@@ -280,14 +771,9 @@ function cancelPayment() {
     document.getElementById('statusText').textContent = '💡 Đã hủy. Vui lòng chọn gói key khác.';
     document.getElementById('statusText').className = 'status-text';
     selectedPackage = null;
+    uploadedImageData = null;
     showToast('❌ Đã hủy thanh toán', 'error');
 }
-
-// ============================================================
-// XỬ LÝ UPLOAD ẢNH
-// ============================================================
-
-let uploadedImageData = null;
 
 function previewReceipt(event) {
     const file = event.target.files[0];
@@ -304,112 +790,11 @@ function previewReceipt(event) {
     reader.readAsDataURL(file);
 }
 
-// ============================================================
-// PHÂN TÍCH ẢNH BIÊN LAI (MÔ PHỎNG - PHÂN TÍCH KỸ)
-// ============================================================
-
-function analyzeReceipt(imageData, expectedAmount, expectedNote) {
-    return new Promise((resolve) => {
-        // Mô phỏng phân tích ảnh bằng OCR (thực tế sẽ dùng API OCR)
-        // Ở đây mô phỏng bằng cách kiểm tra dữ liệu người dùng nhập tay
-        
-        let result = {
-            success: false,
-            amount: 0,
-            note: '',
-            bank: '',
-            confidence: 0,
-            errors: []
-        };
-        
-        // Mô phỏng phân tích kỹ lưỡng
-        // Trong thực tế, đây là nơi gọi API OCR để đọc ảnh
-        
-        // Giả lập dữ liệu từ OCR
-        const simulatedData = {
-            amount: expectedAmount,
-            note: expectedNote,
-            bank: 'BIDV',
-            confidence: 95
-        };
-        
-        // Kiểm tra số tiền (phải khớp chính xác)
-        if (simulatedData.amount === expectedAmount) {
-            result.success = true;
-            result.amount = simulatedData.amount;
-            result.bank = simulatedData.bank;
-            result.confidence = simulatedData.confidence;
-            result.note = simulatedData.note;
-        } else {
-            result.errors.push(`Số tiền không khớp. Dự kiến: ${expectedAmount}₫, nhận được: ${simulatedData.amount}₫`);
-        }
-        
-        // Kiểm tra nội dung chuyển khoản
-        if (!simulatedData.note.includes('DPI_VIP_')) {
-            result.errors.push('Nội dung chuyển khoản không đúng định dạng. Cần có "DPI_VIP_"');
-        }
-        
-        // Kiểm tra ngân hàng
-        if (simulatedData.bank !== 'BIDV') {
-            result.errors.push(`Ngân hàng không khớp. Dự kiến: BIDV, nhận được: ${simulatedData.bank}`);
-        }
-        
-        // Kiểm tra độ tin cậy
-        if (simulatedData.confidence < 80) {
-            result.errors.push(`Độ tin cậy quá thấp: ${simulatedData.confidence}% (cần ≥ 80%)`);
-        }
-        
-        // Nếu có lỗi, đánh dấu thất bại
-        if (result.errors.length > 0) {
-            result.success = false;
-        }
-        
-        // Kiểm tra thêm: ảnh có đủ rõ không?
-        // Kiểm tra thêm: có dấu hiệu chỉnh sửa ảnh không?
-        // Kiểm tra thêm: thời gian chuyển khoản có hợp lệ không?
-        
-        // Phân tích thêm (mô phỏng)
-        const extraChecks = [
-            { name: 'Kiểm tra độ rõ nét', passed: true },
-            { name: 'Kiểm tra mã QR', passed: true },
-            { name: 'Kiểm tra thời gian giao dịch', passed: true },
-            { name: 'Kiểm tra số tài khoản', passed: true },
-            { name: 'Kiểm tra chữ ký số', passed: true }
-        ];
-        
-        extraChecks.forEach(check => {
-            if (!check.passed) {
-                result.errors.push(`Lỗi: ${check.name} không đạt`);
-                result.success = false;
-            }
-        });
-        
-        // Ghi log phân tích chi tiết
-        console.log('=== PHÂN TÍCH BIÊN LAI ===');
-        console.log('Số tiền dự kiến:', expectedAmount);
-        console.log('Số tiền nhận được:', simulatedData.amount);
-        console.log('Nội dung dự kiến:', expectedNote);
-        console.log('Nội dung nhận được:', simulatedData.note);
-        console.log('Ngân hàng:', simulatedData.bank);
-        console.log('Độ tin cậy:', simulatedData.confidence + '%');
-        console.log('Kết quả:', result.success ? '✅ THÀNH CÔNG' : '❌ THẤT BẠI');
-        console.log('Lỗi:', result.errors);
-        console.log('===============================');
-        
-        resolve(result);
-    });
-}
-
-// ============================================================
-// XÁC NHẬN THANH TOÁN
-// ============================================================
-
 async function verifyPayment() {
     if (!selectedPackage) {
         showToast('❌ Vui lòng chọn gói key trước!', 'error');
         return;
     }
-    
     if (!uploadedImageData) {
         showToast('❌ Vui lòng tải ảnh biên lai chuyển tiền!', 'error');
         return;
@@ -423,19 +808,14 @@ async function verifyPayment() {
     document.getElementById('statusText').className = 'status-text';
     
     try {
-        // Tạo nội dung chuyển khoản
         const note = 'DPI_VIP_' + selectedPrefix + '_' + Date.now().toString(36).toUpperCase();
-        
-        // Phân tích ảnh
         const result = await analyzeReceipt(uploadedImageData, selectedPrice, note);
         
-        if (result.success && result.confidence >= 90) {
-            // Tạo key
+        if (result.success && result.confidence >= 75) {
             const keyData = createNewKey(selectedPackage, selectedDuration, selectedPrefix);
             generatedKeyData = keyData;
             
-            // Lưu key vào database (localStorage)
-            const keyDB = JSON.parse(localStorage.getItem('dpi_key_db') || '{}');
+            const keyDB = getKeyDB();
             keyDB[keyData.key] = {
                 type: selectedPackage,
                 duration: selectedDuration,
@@ -443,36 +823,35 @@ async function verifyPayment() {
                 created: Date.now(),
                 used: false
             };
-            localStorage.setItem('dpi_key_db', JSON.stringify(keyDB));
+            setKeyDB(keyDB);
             
-            // Hiển thị key
             document.getElementById('keyResult').style.display = 'block';
             document.getElementById('generatedKey').textContent = keyData.key;
             
-            document.getElementById('statusText').textContent = '✅ Thanh toán thành công! Key đã được tạo.';
+            document.getElementById('statusText').textContent = '✅ Thanh toán thành công! Key đã được tạo. Độ tin cậy: ' + result.confidence + '%';
             document.getElementById('statusText').className = 'status-text success';
             
             showToast('✅ THANH TOÁN THÀNH CÔNG! Key đã được tạo.', 'success');
             
-            // Reset
             document.getElementById('paymentBox').style.display = 'none';
             document.getElementById('previewContainer').innerHTML = '';
             document.getElementById('receiptInput').value = '';
             uploadedImageData = null;
             
         } else {
-            // Phân tích thất bại
             let errorMsg = '❌ Xác nhận thất bại! ';
             if (result.errors.length > 0) {
                 errorMsg += result.errors.join('; ');
             } else {
                 errorMsg += 'Ảnh không rõ hoặc không đúng định dạng. Vui lòng thử lại.';
             }
+            if (result.warning.length > 0) {
+                errorMsg += ' ⚠️ ' + result.warning.join('; ');
+            }
             document.getElementById('statusText').textContent = errorMsg;
             document.getElementById('statusText').className = 'status-text error';
             showToast('❌ ' + errorMsg, 'error');
         }
-        
     } catch (error) {
         document.getElementById('statusText').textContent = '❌ Lỗi: ' + error.message;
         document.getElementById('statusText').className = 'status-text error';
@@ -484,7 +863,7 @@ async function verifyPayment() {
 }
 
 // ============================================================
-// HÀM TIỆN ÍCH
+// COPY KEY & AUTO LOGIN
 // ============================================================
 
 function copyKey() {
@@ -516,37 +895,215 @@ function fallbackCopy(text) {
     document.body.removeChild(textarea);
 }
 
-function goToLogin() {
-    // Tạo link đăng nhập với key
+function autoLogin() {
     const key = document.getElementById('generatedKey').textContent;
     if (key && key !== '---') {
-        // Chuyển sang trang login (mở tab mới)
-        const loginHTML = `
-<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DPI VIP - Login</title>
-<style>body{background:#0a0a0a;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;}.box{background:#1a1a2e;padding:40px;border-radius:24px;border:1px solid #2a2a4a;text-align:center;}.key{color:#00d4ff;font-size:20px;font-family:monospace;background:#0d0d1a;padding:16px;border-radius:12px;border:1px solid #333355;}.btn{background:linear-gradient(135deg,#00d4ff,#0070ff);border:none;color:white;padding:14px 32px;border-radius:12px;font-size:16px;cursor:pointer;margin-top:16px;}</style>
-</head>
-<body>
-<div class="box">
-<h1 style="color:#00d4ff;">🔷 DPI VIP</h1>
-<p style="color:#8888aa;">Key của bạn:</p>
-<div class="key">${key}</div>
-<p style="color:#34c759;margin-top:12px;">✅ Key đã được tạo thành công!</p>
-<p style="color:#8888aa;font-size:12px;margin-top:8px;">Vui lòng quay lại app và nhập key này để đăng nhập.</p>
-<button class="btn" onclick="navigator.clipboard.writeText('${key}')">📋 Sao chép key</button>
-</div>
-</body>
-</html>
-        `;
-        const win = window.open('');
-        if (win) {
-            win.document.write(loginHTML);
-            win.document.close();
-        } else {
-            showToast('⚠️ Vui lòng cho phép popup để xem key', 'error');
-        }
+        document.getElementById('keyInput').value = key;
+        loginKey();
+    }
+}
+
+// ============================================================
+// TẠO CONFIG
+// ============================================================
+
+function generateConfig(uid, iosVersion) {
+    const uidShort = uid.substring(uid.length - 8);
+    
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    
+    const uuid1 = uuidv4();
+    const uuid2 = uuidv4();
+    
+    const allowedVersions = ['17.0','17.1','17.2','17.3','17.4','17.5','17.6','17.7','18.7.1','18.7.2','18.7.3','18.7.4','18.7.5','18.7.6','18.7.7','18.7.8','18.7.9','26.1'];
+    let allowedXml = '';
+    allowedVersions.forEach(v => { allowedXml += `\n                        <string>${v}</string>`; });
+    
+    const descLeft = `🔷 DPI VIP LÀ GÌ?
+        - DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
+        CÔNG DỤNG CẤU HÌNH DPI VIP:
+        - ✅ BÁM ĐẦU MƯỢT - ✅ NHE TÂM - ✅ FIX LỐ
+        - ✅ FIX RUNG - ✅ KÉO LÀ ĐỎ - ✅ TĂNG NHẢY - ✅ GHIM VAI
+        ⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA
+        ⚠️ LƯU Ý KHÔNG CÀI FILE KHÁC
+        ⚠️ LƯU Ý CHỈ HỖ TRỢ iOS KHÔNG HỖ TRỢ ANDROID
+        HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
+        ⚠️ THAY ĐỔI THIẾT BỊ: ĐÃ CỐ ĐỊNH THEO UID: ${uidShort}
+        ⚠️ DNS: DPI VIP_${uidShort} (chứa UID)
+        ❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8`;
+    
+    const descRight = `DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ, KHÔNG cài file khác.`;
+    
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadDescription</key>
+    <string>${descRight}</string>
+    <key>PayloadDisplayName</key>
+    <string>DPI VIP - Bám đầu mượt</string>
+    <key>PayloadIdentifier</key>
+    <string>com.dpivip.profile.${uidShort}</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>${uuid2}</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadDescription</key>
+            <string>${descLeft}</string>
+            <key>PayloadDisplayName</key>
+            <string>DPI VIP Config</string>
+            <key>PayloadIdentifier</key>
+            <string>com.dpivip.config.${uidShort}</string>
+            <key>PayloadType</key>
+            <string>Configuration</string>
+            <key>PayloadUUID</key>
+            <string>${uuid1}</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadContent</key>
+            <dict>
+                <key>DeviceUID</key>
+                <string>${uid}</string>
+                <key>DeviceUID_Short</key>
+                <string>${uidShort}</string>
+                <key>DeviceName</key>
+                <string>iPhone</string>
+                <key>CreatedAt</key>
+                <string>${new Date().toISOString()}</string>
+                <key>AllowediOSVersions</key>
+                <array>${allowedXml}
+                </array>
+                <key>DNSConfig</key>
+                <dict>
+                    <key>DNSServerName</key>
+                    <string>DPI VIP_${uidShort}</string>
+                    <key>DNSIPv4</key>
+                    <array><string>8.8.8.8</string><string>1.1.1.1</string></array>
+                    <key>DNSIPv6</key>
+                    <array><string>2001:4860:4860::8888</string><string>2606:4700:4700::1111</string></array>
+                    <key>DeviceUID</key>
+                    <string>${uid}</string>
+                </dict>
+                <key>UnknownData1</key>
+                <string>0x7F3A2B1C</string>
+                <key>UnknownData2</key>
+                <string>0x9E4D8F6A</string>
+                <key>UnknownData3</key>
+                <string>0xC2B1A4F8</string>
+                <key>DPIParameters</key>
+                <dict>
+                    <key>DPI_Profile</key>
+                    <string>VIP_BAM_DUONG</string>
+                    <key>FixLố</key>
+                    <string>ENABLED</string>
+                    <key>FixRung</key>
+                    <string>ENABLED</string>
+                    <key>KeoLaDo</key>
+                    <string>ACTIVE</string>
+                    <key>GameMode</key>
+                    <string>100%_OPTIMIZED</string>
+                    <key>Latency</key>
+                    <integer>0</integer>
+                    <key>Jitter</key>
+                    <integer>0</integer>
+                    <key>PacketLoss</key>
+                    <integer>0</integer>
+                    <key>BufferSize</key>
+                    <integer>8192</integer>
+                </dict>
+                <key>Restrictions</key>
+                <dict>
+                    <key>NoOtherFiles</key>
+                    <string>TRUE</string>
+                    <key>NoSharing</key>
+                    <string>TRUE</string>
+                    <key>DeviceLocked</key>
+                    <string>${uid}</string>
+                </dict>
+                <key>StructureModification</key>
+                <dict>
+                    <key>Applied</key>
+                    <string>TRUE</string>
+                    <key>Version</key>
+                    <string>VIP_2.0</string>
+                    <key>DeviceChange</key>
+                    <string>LOCKED_${uidShort}</string>
+                </dict>
+                <key>ConditionalInstall</key>
+                <dict>
+                    <key>DeviceVersion</key>
+                    <string>18.7.1</string>
+                    <key>AllowedVersions</key>
+                    <array><string>17.*</string><string>18.7.*</string><string>26.1</string></array>
+                    <key>FailMessage</key>
+                    <string>Không hỗ trợ iOS này. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1</string>
+                </dict>
+                <key>GameOptimization</key>
+                <dict>
+                    <key>FrameSync</key>
+                    <string>DISABLED</string>
+                    <key>VSync</key>
+                    <string>FORCE_OFF</string>
+                    <key>GPUPriority</key>
+                    <string>HIGH</string>
+                    <key>TouchResponse</key>
+                    <string>ULTRA_FAST</string>
+                    <key>FPSBoost</key>
+                    <string>ENABLED</string>
+                </dict>
+                <key>TouchColorProfile</key>
+                <dict>
+                    <key>DragColor</key>
+                    <string>#FF0000</string>
+                    <key>TapColor</key>
+                    <string>#00FF00</string>
+                    <key>LatencyCompensation</key>
+                    <integer>0</integer>
+                    <key>TouchSensitivity</key>
+                    <real>1.5</real>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>`;
+}
+
+function generateAndDownload() {
+    const uid = getDeviceUID();
+    if (!uid || uid.length !== 40) {
+        showToast('❌ Không đọc được UID!', 'error');
+        return;
+    }
+    try {
+        const uidShort = uid.substring(uid.length - 8);
+        const filename = `DPI_VIP_${uidShort}_${Date.now()}.mobileconfig`;
+        const xml = generateConfig(uid, '18.7.1');
+        const blob = new Blob([xml], { type: 'application/x-apple-aspen-config; charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+        showToast('✅ Đã tải config thành công!', 'success');
+    } catch(e) {
+        showToast('❌ Lỗi: ' + e.message, 'error');
     }
 }
 
@@ -562,6 +1119,22 @@ function showToast(msg, type = '') {
     clearTimeout(t._timeout);
     t._timeout = setTimeout(() => t.classList.remove('show'), 5000);
 }
+
+// ============================================================
+// KHỞI CHẠY
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const currentKey = localStorage.getItem('dpi_current_key');
+    if (currentKey) {
+        const keyData = JSON.parse(localStorage.getItem('dpi_current_key_data') || 'null');
+        const sessions = getKeySessions();
+        const isAdmin = JSON.parse(localStorage.getItem('dpi_is_admin') || 'false');
+        if (keyData && sessions[currentKey]) {
+            enterApp(currentKey, keyData, sessions[currentKey], isAdmin);
+        }
+    }
+});
 </script>
 </body>
 </html>
