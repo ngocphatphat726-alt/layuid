@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DPI VIP - Bot Chat</title>
+    <title>DPI VIP - Bot Chất</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
@@ -14,7 +14,6 @@
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
         .logo .badge { display: inline-block; background: #ff6b6b22; color: #ff6b6b; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #ff6b6b44; margin-top: 6px; }
         
-        /* ===== LOGIN ===== */
         .key-box { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin: 12px 0; }
         .key-box label { color: #8888aa; font-size: 12px; display: block; margin-bottom: 4px; }
         .key-box input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 15px; font-family: 'Courier New', monospace; outline: none; }
@@ -26,7 +25,7 @@
         .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 8px; }
         .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
         .btn:active { transform: scale(0.97); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
         .btn-danger { background: linear-gradient(135deg, #ff4466, #cc1133); }
         .btn-warning { background: linear-gradient(135deg, #ff9500, #ff6b00); }
@@ -34,7 +33,7 @@
         .btn-shop { background: linear-gradient(135deg, #af52de, #7c3aed); }
         .hidden { display: none !important; }
         
-        /* ===== SHOP MENU ===== */
+        /* SHOP */
         .shop-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
         .shop-item { background: #0d0d1a; border-radius: 12px; padding: 14px 12px; border: 1px solid #2a2a4a; text-align: center; cursor: pointer; transition: 0.3s; }
         .shop-item:hover { border-color: #00d4ff; transform: scale(1.02); }
@@ -44,7 +43,17 @@
         .shop-item .duration { color: #8888aa; font-size: 11px; }
         .shop-item .tag { display: inline-block; background: #00d4ff22; color: #00d4ff; padding: 2px 10px; border-radius: 10px; font-size: 10px; margin-top: 4px; border: 1px solid #00d4ff44; }
         
-        /* ===== USER INFO ===== */
+        /* PAYMENT - QR CHUẨN */
+        .payment-box { background: #0d0d1a; border-radius: 12px; padding: 20px 16px; border: 1px solid #2a2a4a; margin-top: 12px; display: none; }
+        .payment-box .bank-info { text-align: center; }
+        .payment-box .bank-info .name { color: #e8e8f0; font-size: 20px; font-weight: 700; }
+        .payment-box .bank-info .bank { color: #00d4ff; font-size: 14px; }
+        .payment-box .bank-info .amount { color: #ff6b6b; font-size: 24px; font-weight: 700; margin: 6px 0; }
+        .payment-box .bank-info .qr-placeholder { background: #0a0a12; border-radius: 12px; padding: 20px; margin: 10px 0; border: 2px dashed #333355; }
+        .payment-box .bank-info .qr-placeholder img { max-width: 220px; border-radius: 8px; }
+        .payment-box .bank-info .note { color: #8888aa; font-size: 12px; margin-top: 6px; }
+        .payment-box .bank-info .note strong { color: #ff6b6b; }
+        
         .info-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
         .info-box .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
         .info-box .row:last-child { border-bottom: none; }
@@ -71,7 +80,7 @@
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
         
-        /* ===== BOT CHAT ===== */
+        /* BOT CHAT */
         .bot-chat { position: fixed; bottom: 20px; left: 20px; z-index: 999; }
         .bot-chat .bot-btn { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #af52de, #7c3aed); border: none; color: white; font-size: 28px; cursor: pointer; box-shadow: 0 4px 20px rgba(175,82,222,0.5); transition: 0.3s; display: flex; align-items: center; justify-content: center; position: relative; }
         .bot-chat .bot-btn:hover { transform: scale(1.1); }
@@ -79,7 +88,7 @@
         .bot-chat .bot-btn .dot { width: 12px; height: 12px; border-radius: 50%; background: #34c759; position: absolute; top: 4px; right: 4px; border: 2px solid #1a1a2e; animation: blink 1.5s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         
-        .bot-chat .chat-window { position: absolute; bottom: 70px; left: 0; width: 320px; max-height: 450px; background: #1a1a2e; border-radius: 16px; border: 1px solid #2a2a4a; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: none; flex-direction: column; overflow: hidden; }
+        .bot-chat .chat-window { position: absolute; bottom: 70px; left: 0; width: 330px; max-height: 450px; background: #1a1a2e; border-radius: 16px; border: 1px solid #2a2a4a; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: none; flex-direction: column; overflow: hidden; }
         .bot-chat .chat-window .chat-header { background: linear-gradient(135deg, #af52de, #7c3aed); padding: 12px 16px; color: white; font-weight: 600; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
         .bot-chat .chat-window .chat-header .close { background: none; border: none; color: white; font-size: 18px; cursor: pointer; }
         .bot-chat .chat-window .chat-body { padding: 12px 16px; max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; }
@@ -87,6 +96,7 @@
         .bot-chat .chat-window .chat-body .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
         .bot-chat .chat-window .chat-body .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; margin-left: auto; }
         .bot-chat .chat-window .chat-body .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 2px; }
+        .bot-chat .chat-window .chat-body .msg .voice { color: #ff9500; font-weight: bold; }
         .bot-chat .chat-window .chat-input { display: flex; padding: 8px 12px; border-top: 1px solid #2a2a4a; background: #0d0d1a; }
         .bot-chat .chat-window .chat-input input { flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 13px; outline: none; }
         .bot-chat .chat-window .chat-input input:focus { border-color: #00d4ff; }
@@ -99,7 +109,7 @@
 
 <div id="toast" class="toast">✅ Thành công!</div>
 
-<!-- ===== BOT CHAT ===== -->
+<!-- BOT CHAT -->
 <div class="bot-chat">
     <button class="bot-btn" onclick="toggleChat()">
         🤖
@@ -112,13 +122,13 @@
         </div>
         <div class="chat-body" id="chatBody">
             <div class="msg bot">
-                👋 Chào bạn! Tôi là bot hỗ trợ DPI VIP.<br>
-                📌 Hỏi tôi về:<br>
+                👋 Mày hỏi gì?<br>
+                📌 Tao chỉ trả lời mấy cái này thôi:<br>
                 • Cách mua key<br>
                 • Cách chuyển tiền<br>
                 • Cách cài đặt<br>
                 • Giá các gói<br>
-                • Liên hệ Admin
+                • Liên hệ Admin<br>
                 <span class="time">Vừa xong</span>
             </div>
         </div>
@@ -136,102 +146,98 @@
         <div class="badge">⚡ 100% tác dụng với game</div>
     </div>
 
-    <!-- ===== PHẦN ĐĂNG NHẬP KEY ===== -->
+    <!-- LOGIN -->
     <div id="loginSection">
         <div class="key-box">
             <label>🔑 NHẬP KEY ĐỂ VÀO APP</label>
-            <input type="password" id="keyInput" placeholder="Nhập key của bạn..." onkeydown="if(event.key==='Enter') loginKey()">
+            <input type="password" id="keyInput" placeholder="Nhập key của mày..." onkeydown="if(event.key==='Enter') loginKey()">
             <div class="status" id="loginStatus">💡 Nhập key để đăng nhập</div>
         </div>
         <button class="btn" id="loginBtn" onclick="loginKey()">🔓 ĐĂNG NHẬP</button>
-        
-        <!-- ===== NÚT MUA KEY ===== -->
-        <button class="btn btn-shop" onclick="openShop()" style="margin-top:8px;">
-            🛒 MUA KEY
-        </button>
+        <button class="btn btn-shop" onclick="openShop()" style="margin-top:8px;">🛒 MUA KEY</button>
     </div>
 
-    <!-- ===== PHẦN SHOP ===== -->
+    <!-- SHOP -->
     <div id="shopSection" class="hidden" style="margin-top:16px;border-top:1px solid #1a1a2e;padding-top:16px;">
         <div style="color:#8888aa;font-size:13px;font-weight:600;margin-bottom:8px;">📋 CHỌN GÓI KEY</div>
-        
         <div class="shop-menu">
-            <div class="shop-item" onclick="buyKey('Vĩnh viễn', 400000)">
+            <div class="shop-item" onclick="showPayment('Vĩnh viễn', 400000)">
                 <div class="name">♾️ Vĩnh viễn</div>
                 <div class="price">400.000₫</div>
                 <div class="duration">Không giới hạn</div>
                 <div class="tag">HOT</div>
             </div>
-            <div class="shop-item" onclick="buyKey('3 tháng', 250000)">
+            <div class="shop-item" onclick="showPayment('3 tháng', 250000)">
                 <div class="name">📅 3 tháng</div>
                 <div class="price">250.000₫</div>
                 <div class="duration">90 ngày</div>
             </div>
-            <div class="shop-item" onclick="buyKey('2 tháng', 200000)">
+            <div class="shop-item" onclick="showPayment('2 tháng', 200000)">
                 <div class="name">📅 2 tháng</div>
                 <div class="price">200.000₫</div>
                 <div class="duration">60 ngày</div>
             </div>
-            <div class="shop-item" onclick="buyKey('1 tháng', 100000)">
+            <div class="shop-item" onclick="showPayment('1 tháng', 100000)">
                 <div class="name">📅 1 tháng</div>
                 <div class="price">100.000₫</div>
                 <div class="duration">30 ngày</div>
             </div>
-            <div class="shop-item" onclick="buyKey('1 tuần', 50000)">
+            <div class="shop-item" onclick="showPayment('1 tuần', 50000)">
                 <div class="name">📅 1 tuần</div>
                 <div class="price">50.000₫</div>
                 <div class="duration">7 ngày</div>
             </div>
-            <div class="shop-item" onclick="buyKey('1 ngày', 10000)">
+            <div class="shop-item" onclick="showPayment('1 ngày', 10000)">
                 <div class="name">📅 1 ngày</div>
                 <div class="price">10.000₫</div>
                 <div class="duration">24 giờ</div>
             </div>
         </div>
+
+        <!-- PAYMENT - QR CHUẨN -->
+        <div class="payment-box" id="paymentBox">
+            <div class="bank-info">
+                <div class="name">🏦 LY NGOC DAI</div>
+                <div class="bank">Zalo pay · BIDV · MBBank</div>
+                <div class="amount" id="paymentAmount">400.000₫</div>
+                <div style="color:#8888aa;font-size:13px;">Gói: <strong id="paymentPackage" style="color:#00d4ff;">Vĩnh viễn</strong></div>
+                <div class="qr-placeholder">
+                    <img id="qrImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='260' viewBox='0 0 220 260'%3E%3Crect width='220' height='260' fill='%23ffffff'/%3E%3Crect x='10' y='10' width='200' height='200' fill='%23000000' rx='10'/%3E%3Crect x='20' y='20' width='180' height='180' fill='%23ffffff' rx='5'/%3E%3Ctext x='50' y='80' font-family='Arial' font-size='16' fill='%23333' font-weight='bold'%3ELY NGOC DAI%3C/text%3E%3Ctext x='40' y='110' font-family='Arial' font-size='13' fill='%23666'%3EQR nh%E1%BA%ADn ti%E1%BB%81n%3C/text%3E%3Ctext x='30' y='135' font-family='Arial' font-size='12' fill='%23999'%3EZalo pay - BIDV - MB%3C/text%3E%3Ctext x='30' y='160' font-family='Arial' font-size='18' fill='%23ff6b6b' font-weight='bold'%3E50%2B%3C/text%3E%3Ctext x='30' y='190' font-family='Arial' font-size='11' fill='%23aaa'%3Em%E1%BB%8Di %E1%BB%A9ng d%E1%BB%A5ng chuy%E1%BB%83n ti%E1%BB%81n%3C/text%3E%3C/svg%3E" alt="QR Payment" style="max-width:220px;border-radius:8px;">
+                    <div style="color:#666688;font-size:11px;margin-top:4px;">⬆️ QR nhận tiền từ mọi ứng dụng chuyển tiền</div>
+                </div>
+                <div class="note">📌 Nội dung: <strong id="transferNote">DPI_VIP_XXXX</strong></div>
+                <div class="note">💰 Số tiền: <strong id="transferAmount">400.000₫</strong></div>
+                <div class="note">🏦 Ngân hàng: <strong>BIDV - LY NGOC DAI</strong></div>
+                <div class="note">📞 Admin: <strong>0976457016</strong></div>
+            </div>
+            <button class="btn btn-danger" onclick="closePayment()" style="margin-top:8px;">❌ ĐÓNG</button>
+        </div>
     </div>
 
-    <!-- ===== PHẦN APP ===== -->
+    <!-- APP -->
     <div id="appSection" class="hidden">
         <div class="key-box">
-            <label>📱 UID thiết bị của bạn</label>
+            <label>📱 UID thiết bị của mày</label>
             <div style="color:#00d4ff;font-size:15px;font-weight:600;word-break:break-all;font-family:'Courier New',monospace;" id="uidDisplay">⏳ Đang đọc...</div>
             <div class="status success" id="statusDisplay">✅ Đã nhận diện thiết bị</div>
         </div>
-
         <div class="info-box">
             <div class="row"><span class="label">🔑 Key đang dùng</span><span class="value blue" id="currentKey">---</span></div>
             <div class="row"><span class="label">📋 Loại key</span><span class="value" id="keyType">---</span></div>
             <div class="row"><span class="label">⏳ Thời hạn</span><span class="value green" id="keyExpiry">---</span></div>
             <div class="row"><span class="label">⏱️ Còn lại</span><span class="value orange" id="keyRemain">---</span></div>
         </div>
-
-        <button class="btn btn-success" id="downloadBtn" onclick="generateAndDownload()">
-            ⬇️ Tải Config Thật
-        </button>
-
-        <button class="btn btn-warning hidden" id="adminBtn" onclick="toggleKeyList()">
-            👑 QUẢN LÝ KEY (ADMIN)
-        </button>
-
-        <div class="key-list hidden" id="keyListContainer">
-            <div class="title">📋 DANH SÁCH TẤT CẢ KEY</div>
-            <div id="keyListContent"></div>
-        </div>
-
-        <div class="key-list hidden" id="voucherListContainer" style="margin-top:8px;">
-            <div class="title">🎫 DANH SÁCH PHIẾU GIẢM GIÁ</div>
-            <div id="voucherListContent"></div>
-        </div>
-
-        <button class="btn btn-gray" onclick="logout()" style="margin-top:8px;">
-            🚪 ĐĂNG XUẤT
-        </button>
+        <button class="btn btn-success" id="downloadBtn" onclick="generateAndDownload()">⬇️ Tải Config Thật</button>
+        <button class="btn btn-warning hidden" id="adminBtn" onclick="toggleKeyList()">👑 QUẢN LÝ KEY (ADMIN)</button>
+        <div class="key-list hidden" id="keyListContainer"><div class="title">📋 DANH SÁCH TẤT CẢ KEY</div><div id="keyListContent"></div></div>
+        <div class="key-list hidden" id="voucherListContainer" style="margin-top:8px;"><div class="title">🎫 DANH SÁCH PHIẾU GIẢM GIÁ</div><div id="voucherListContent"></div></div>
+        <button class="btn btn-gray" onclick="logout()" style="margin-top:8px;">🚪 ĐĂNG XUẤT</button>
     </div>
 
     <div class="footer">
         <div class="warning">
             ⚠️ <strong>KHÔNG</strong> chia sẻ key cho người khác<br>
-            📌 Key chỉ có hiệu lực trên thiết bị bạn đăng nhập<br>
+            📌 Key chỉ có hiệu lực trên thiết bị mày đăng nhập<br>
             📞 Liên hệ Admin: <strong>0976457016</strong>
         </div>
     </div>
@@ -239,78 +245,11 @@
 
 <script>
 // ============================================================
-// DỮ LIỆU KEY & VOUCHER (ẨN TRONG CODE)
+// DỮ LIỆU
 // ============================================================
 
 const ADMIN_KEY = 'NPDPIVIPAIMLOCKLIVE';
 const ADMIN_PHONE = '0976457016';
-const SHOP_LINK = 'https://zalo.me/g/r2pzpwib8ukxxuri6';
-
-// Tạo danh sách key (ẩn)
-function generateKeyDB() {
-    const keys = {};
-    // Key Admin
-    keys[ADMIN_KEY] = { type: 'Admin', duration: -1, hash: generateKeyHash(ADMIN_KEY), isAdmin: true };
-    
-    // Tạo key Vĩnh viễn (20)
-    for (let i = 0; i < 20; i++) {
-        const k = generateRandomKey('VIP_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: 'Vĩnh viễn', duration: -1, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 3 tháng (30)
-    for (let i = 0; i < 30; i++) {
-        const k = generateRandomKey('3M_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '3 tháng', duration: 90, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 2 tháng (30)
-    for (let i = 0; i < 30; i++) {
-        const k = generateRandomKey('2M_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '2 tháng', duration: 60, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 1 tháng (30)
-    for (let i = 0; i < 30; i++) {
-        const k = generateRandomKey('1M_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '1 tháng', duration: 30, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 1 tuần (30)
-    for (let i = 0; i < 30; i++) {
-        const k = generateRandomKey('1W_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '1 tuần', duration: 7, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 1 ngày (40)
-    for (let i = 0; i < 40; i++) {
-        const k = generateRandomKey('1D_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '1 ngày', duration: 1, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 11 giờ (40)
-    for (let i = 0; i < 40; i++) {
-        const k = generateRandomKey('11H_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '11 giờ', duration: 0.458, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 5 giờ (40)
-    for (let i = 0; i < 40; i++) {
-        const k = generateRandomKey('5H_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '5 giờ', duration: 0.208, hash: generateKeyHash(k), isAdmin: false };
-    }
-    // Tạo key 2 giờ (40)
-    for (let i = 0; i < 40; i++) {
-        const k = generateRandomKey('2H_', 12) + String(i).padStart(3, '0');
-        keys[k] = { type: '2 giờ', duration: 0.083, hash: generateKeyHash(k), isAdmin: false };
-    }
-    return keys;
-}
-
-// Tạo danh sách phiếu giảm giá (100 phiếu) - Ẩn
-function generateVouchers() {
-    const vouchers = [];
-    const types = ['10%', '20%', '30%', '50%', '100k', '200k', '50k', '25%', '15%', '5%'];
-    for (let i = 0; i < 100; i++) {
-        const type = types[Math.floor(Math.random() * types.length)];
-        const code = 'VOUCHER_' + String(i + 1).padStart(3, '0') + '_' + generateRandomKey('', 6);
-        vouchers.push({ code: code, type: type, used: false });
-    }
-    return vouchers;
-}
 
 function generateKeyHash(key) {
     let hash = 0;
@@ -330,13 +269,33 @@ function generateRandomKey(prefix, length) {
     return result;
 }
 
-// Khởi tạo database
+function generateKeyDB() {
+    const keys = {};
+    keys[ADMIN_KEY] = { type: 'Admin', duration: -1, hash: generateKeyHash(ADMIN_KEY), isAdmin: true };
+    for (let i = 0; i < 20; i++) { const k = generateRandomKey('VIP_', 12) + String(i).padStart(3, '0'); keys[k] = { type: 'Vĩnh viễn', duration: -1, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 30; i++) { const k = generateRandomKey('3M_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '3 tháng', duration: 90, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 30; i++) { const k = generateRandomKey('2M_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '2 tháng', duration: 60, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 30; i++) { const k = generateRandomKey('1M_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '1 tháng', duration: 30, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 30; i++) { const k = generateRandomKey('1W_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '1 tuần', duration: 7, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 40; i++) { const k = generateRandomKey('1D_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '1 ngày', duration: 1, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 40; i++) { const k = generateRandomKey('11H_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '11 giờ', duration: 0.458, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 40; i++) { const k = generateRandomKey('5H_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '5 giờ', duration: 0.208, hash: generateKeyHash(k), isAdmin: false }; }
+    for (let i = 0; i < 40; i++) { const k = generateRandomKey('2H_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '2 giờ', duration: 0.083, hash: generateKeyHash(k), isAdmin: false }; }
+    return keys;
+}
+
+function generateVouchers() {
+    const v = [];
+    const types = ['10%', '20%', '30%', '50%', '100k', '200k', '50k', '25%', '15%', '5%'];
+    for (let i = 0; i < 100; i++) {
+        const type = types[Math.floor(Math.random() * types.length)];
+        v.push({ code: 'VOUCHER_' + String(i+1).padStart(3,'0') + '_' + generateRandomKey('',6), type: type, used: false });
+    }
+    return v;
+}
+
 const KEY_DB = generateKeyDB();
 const VOUCHERS = generateVouchers();
-
-// ============================================================
-// QUẢN LÝ DATABASE
-// ============================================================
 
 function getKeySessions() { try { return JSON.parse(localStorage.getItem('dpi_key_sessions') || '{}'); } catch(e) { return {}; } }
 function setKeySessions(s) { try { localStorage.setItem('dpi_key_sessions', JSON.stringify(s)); } catch(e) {} }
@@ -375,14 +334,8 @@ function getDeviceUID() {
 function loginKey() {
     const input = document.getElementById('keyInput').value.trim().toUpperCase();
     const status = document.getElementById('loginStatus');
-    if (!input) { status.textContent = '⚠️ Vui lòng nhập key!'; status.className = 'status error'; return; }
-    
-    if (!KEY_DB[input]) {
-        status.textContent = '❌ Key không hợp lệ!';
-        status.className = 'status error';
-        showToast('❌ Key không hợp lệ!', 'error');
-        return;
-    }
+    if (!input) { status.textContent = '⚠️ Nhập key vào đi!'; status.className = 'status error'; return; }
+    if (!KEY_DB[input]) { status.textContent = '❌ Key sai rồi!'; status.className = 'status error'; showToast('❌ Key sai!', 'error'); return; }
     
     const keyData = KEY_DB[input];
     const isAdmin = input === ADMIN_KEY;
@@ -391,10 +344,7 @@ function loginKey() {
     const deviceUID = getDeviceUID();
     
     if (!isAdmin && usedKeys[input] && usedKeys[input].device !== deviceUID) {
-        status.textContent = '❌ Key đã được sử dụng trên thiết bị khác!';
-        status.className = 'status error';
-        showToast('❌ Key đã được sử dụng!', 'error');
-        return;
+        status.textContent = '❌ Key đã dùng trên máy khác!'; status.className = 'status error'; showToast('❌ Key đã dùng!', 'error'); return;
     }
     
     const now = Date.now();
@@ -403,27 +353,21 @@ function loginKey() {
         const firstLogin = now;
         let expiry = keyData.duration === -1 ? -1 : now + (keyData.duration * 24 * 60 * 60 * 1000);
         session = { firstLogin: firstLogin, expiry: expiry, device: isAdmin ? 'ADMIN_UNLIMITED' : deviceUID };
-        sessions[input] = session;
-        setKeySessions(sessions);
+        sessions[input] = session; setKeySessions(sessions);
         if (!isAdmin) { usedKeys[input] = { device: deviceUID, time: now }; setUsedKeys(usedKeys); }
     }
     
     if (!isAdmin && keyData.duration !== -1 && session.expiry < now) {
         const gracePeriod = 5 * 24 * 60 * 60 * 1000;
         if (now > session.expiry + gracePeriod) {
-            status.textContent = '❌ Key đã hết hạn!';
-            status.className = 'status error';
-            showToast('❌ Key đã hết hạn!', 'error');
-            return;
+            status.textContent = '❌ Key hết hạn rồi!'; status.className = 'status error'; showToast('❌ Key hết hạn!', 'error'); return;
         } else {
             session.expiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
-            sessions[input] = session;
-            setKeySessions(sessions);
+            sessions[input] = session; setKeySessions(sessions);
         }
     }
     
-    status.textContent = '✅ Đăng nhập thành công!';
-    status.className = 'status success';
+    status.textContent = '✅ Đăng nhập thành công!'; status.className = 'status success';
     showToast('✅ Đăng nhập thành công!', 'success');
     
     localStorage.setItem('dpi_current_key', input);
@@ -435,7 +379,7 @@ function loginKey() {
     
     const uid = getDeviceUID();
     document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
-    document.getElementById('currentKey').textContent = input.substring(0, 6) + '...' + input.substring(input.length - 4);
+    document.getElementById('currentKey').textContent = input.substring(0,6) + '...' + input.substring(input.length-4);
     document.getElementById('keyType').textContent = isAdmin ? '👑 Admin' : keyData.type;
     document.getElementById('keyType').className = 'value ' + (isAdmin ? 'blue' : 'green');
     
@@ -467,7 +411,7 @@ function loginKey() {
 }
 
 function logout() {
-    if (!confirm('Bạn có chắc muốn đăng xuất?')) return;
+    if (!confirm('Thoát à?')) return;
     localStorage.removeItem('dpi_current_key');
     localStorage.removeItem('dpi_current_key_data');
     localStorage.removeItem('dpi_is_admin');
@@ -476,90 +420,73 @@ function logout() {
     document.getElementById('keyListContainer').classList.add('hidden');
     document.getElementById('voucherListContainer').classList.add('hidden');
     document.getElementById('keyInput').value = '';
-    document.getElementById('loginStatus').textContent = '💡 Nhập key để đăng nhập';
+    document.getElementById('loginStatus').textContent = '💡 Nhập key đi';
     document.getElementById('loginStatus').className = 'status';
-    showToast('🚪 Đã đăng xuất', 'success');
+    showToast('🚪 Đã thoát', 'success');
 }
 
 // ============================================================
-// SHOP - MUA KEY// ============================================================
+// SHOP - MUA KEY
+// ============================================================
 
 function openShop() {
     const shop = document.getElementById('shopSection');
     if (shop.classList.contains('hidden')) {
         shop.classList.remove('hidden');
-        showToast('🛒 Đã mở cửa hàng', 'success');
+        showToast('🛒 Mở shop rồi', 'success');
     } else {
         shop.classList.add('hidden');
-        showToast('🚪 Đã đóng cửa hàng', '');
+        document.getElementById('paymentBox').style.display = 'none';
+        showToast('🚪 Đóng shop', '');
     }
 }
 
-function buyKey(name, price) {
-    const msg = `🛒 Bạn đang mua gói ${name} - ${price.toLocaleString('vi-VN')}₫\n📌 Vui lòng chuyển khoản và liên hệ Admin để nhận key.\n📞 Admin: 0976457016\n🔗 Link mua: ${SHOP_LINK}`;
-    showToast(`✅ Đã chọn gói ${name}`, 'success');
-    
-    // Mở link Zalo
-    window.open(SHOP_LINK, '_blank');
-    
-    // Gửi tin nhắn vào chat bot
-    const body = document.getElementById('chatBody');
-    const time = new Date().toLocaleTimeString('vi-VN');
-    body.innerHTML += `<div class="msg user">Tôi muốn mua gói ${name} - ${price.toLocaleString('vi-VN')}₫<span class="time">${time}</span></div>`;
-    body.scrollTop = body.scrollHeight;
-    
-    setTimeout(() => {
-        body.innerHTML += `<div class="msg bot">✅ Đã nhận yêu cầu mua gói ${name}!
-📌 Vui lòng chuyển khoản theo thông tin:
-• Tên: LY NGOC DAI
-• Ngân hàng: BIDV
-• Số tiền: ${price.toLocaleString('vi-VN')}₫
-• Nội dung: DPI_VIP_${Date.now().toString(36).toUpperCase()}
+function showPayment(name, price) {
+    document.getElementById('paymentBox').style.display = 'block';
+    document.getElementById('paymentAmount').textContent = price.toLocaleString('vi-VN') + '₫';
+    document.getElementById('paymentPackage').textContent = name;
+    const note = 'DPI_VIP_' + Date.now().toString(36).toUpperCase();
+    document.getElementById('transferNote').textContent = note;
+    document.getElementById('transferAmount').textContent = price.toLocaleString('vi-VN') + '₫';
+    showToast(`✅ Chọn gói ${name}`, 'success');
+}
 
-📞 Sau khi chuyển, liên hệ Admin: 0976457016 để nhận key.
-🔗 Hoặc mua qua link: ${SHOP_LINK}
-<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
-        body.scrollTop = body.scrollHeight;
-    }, 500);
+function closePayment() {
+    document.getElementById('paymentBox').style.display = 'none';
 }
 
 // ============================================================
-// ADMIN - KEY & VOUCHER LIST
+// ADMIN - KEY & VOUCHER
 // ============================================================
 
 function toggleKeyList() {
     const container = document.getElementById('keyListContainer');
     if (container.classList.contains('hidden')) {
         container.classList.remove('hidden');
-        renderKeyList();
+        const content = document.getElementById('keyListContent');
+        const usedKeys = getUsedKeys();
+        let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng: ' + Object.keys(KEY_DB).length + ' key</div>';
+        Object.keys(KEY_DB).sort().forEach(k => {
+            const data = KEY_DB[k];
+            const isAdmin = k === ADMIN_KEY;
+            const isUsed = !!usedKeys[k];
+            const status = isAdmin ? '👑 Admin' : (isUsed ? '✅ Đã dùng' : '⬜ Chưa dùng');
+            html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
+                <span style="color:#8888aa;font-family:monospace;">${k.substring(0,6)}...${k.substring(k.length-4)}</span>
+                <span style="color:${isAdmin ? '#00d4ff' : '#e8e8f0'};">${data.type}</span>
+                <span style="color:${isAdmin ? '#00d4ff' : (isUsed ? '#34c759' : '#666688')};">${status}</span>
+            </div>`;
+        });
+        content.innerHTML = html;
     } else {
         container.classList.add('hidden');
     }
 }
 
-function renderKeyList() {
-    const content = document.getElementById('keyListContent');
-    const sessions = getKeySessions();
-    const usedKeys = getUsedKeys();
-    let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng: ' + Object.keys(KEY_DB).length + ' key</div>';
-    Object.keys(KEY_DB).sort().forEach(k => {
-        const data = KEY_DB[k];
-        const isAdmin = k === ADMIN_KEY;
-        const isUsed = !!usedKeys[k];
-        const status = isAdmin ? '👑 Admin' : (isUsed ? '✅ Đã dùng' : '⬜ Chưa dùng');
-        html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
-            <span style="color:#8888aa;font-family:monospace;">${k.substring(0,6)}...${k.substring(k.length-4)}</span>
-            <span style="color:${isAdmin ? '#00d4ff' : '#e8e8f0'};">${data.type}</span>
-            <span style="color:${isAdmin ? '#00d4ff' : (isUsed ? '#34c759' : '#666688')};">${status}</span>
-        </div>`;
-    });
-    content.innerHTML = html;
-}
-
 function renderVoucherList() {
     const content = document.getElementById('voucherListContent');
     let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">🎫 Tổng: ' + VOUCHERS.length + ' phiếu giảm giá</div>';
-    VOUCHERS.forEach((v, i) => {
+    VOUCHERS.forEach((v) => {
         const status = v.used ? '❌ Đã dùng' : '✅ Còn hiệu lực';
         html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
             <span style="color:#00d4ff;font-family:monospace;">${v.code}</span>
@@ -571,21 +498,43 @@ function renderVoucherList() {
 }
 
 // ============================================================
-// BOT CHAT - THÔNG MINH - BIẾT CHỬI
+// BOT CHAT - CHẤT - CHỬI - VOICE
 // ============================================================
 
 let chatCount = 0;
+let questionCount = {};
 let isAngry = false;
 
+const angryReplies = [
+    'tịnh tâm',
+    'đcmm',
+    'thằng bố mày',
+    'war tý luôn',
+    'tao là bot mày làm gì được tao',
+    'lêu lêu',
+    'chửi cái cc',
+    'bình tĩnh',
+    'im lặng nào cô anh thích nói nhiều đâu'
+];
+
+const voiceReplies = [
+    '🎤 MÀY HỎI ÍT THÔI',
+    '🎤 HỎI NHIỀU VL',
+    '🎤 ĐÃ BẢO RỒI MÀ',
+    '🎤 MÀY ĐIẾC À',
+    '🎤 IM ĐI'
+];
+
+const insultReplies = [
+    'mày bị ngu à',
+    'ngu',
+    'tao đéo hiểu',
+    'mày bị tật não à'
+];
+
 function toggleChat() {
-    const window = document.getElementById('chatWindow');
-    if (window.style.display === 'flex') {
-        window.style.display = 'none';
-    } else {
-        window.style.display = 'flex';
-        chatCount = 0;
-        isAngry = false;
-    }
+    const w = document.getElementById('chatWindow');
+    if (w.style.display === 'flex') { w.style.display = 'none'; } else { w.style.display = 'flex'; chatCount = 0; isAngry = false; }
 }
 
 function sendChat() {
@@ -595,42 +544,33 @@ function sendChat() {
     
     const body = document.getElementById('chatBody');
     const time = new Date().toLocaleTimeString('vi-VN');
-    
-    // Hiển thị tin nhắn user
     body.innerHTML += `<div class="msg user">${msg}<span class="time">${time}</span></div>`;
     input.value = '';
     body.scrollTop = body.scrollHeight;
-    
     chatCount++;
     
-    // Bot trả lời
+    // Đếm câu hỏi lặp lại
+    const lower = msg.toLowerCase();
+    questionCount[lower] = (questionCount[lower] || 0) + 1;
+    
     setTimeout(() => {
         let reply = '';
-        const lower = msg.toLowerCase();
-        const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt)/i.test(msg);
-        const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testting|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot|gà|chó|mèo|heo|bò|vịt|gà|thỏ)/i.test(msg) && msg.length < 5;
-        const isTooLong = msg.length > 100;
-        const isSpam = chatCount > 5;
+        const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt|đụ|địt|đái)/i.test(msg);
+        const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot|gà|chó|mèo|heo|bò|vịt|gà|thỏ|ăn|cứt|đái|ị|ỉa|chịch|đụ)/i.test(msg) && msg.length < 6;
         
-        // Nếu người dùng chửi bot
-        if (isVulgar && /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|fuck|shit)/i.test(msg)) {
-            const angryReplies = [
-                'tịnh tâm',
-                'đcmm',
-                'thằng bố mày',
-                'war tý luôn',
-                'tao là bot mày làm gì được tao',
-                'lêu lêu',
-                'chửi cái cc',
-                'bình tĩnh',
-                'im lặng nào cô anh thích nói nhiều đâu'
-            ];
+        // Chửi lại nếu người dùng chửi bot
+        if (isVulgar) {
             reply = angryReplies[Math.floor(Math.random() * angryReplies.length)];
             isAngry = true;
         }
-        // Nếu hỏi nhiều quá -> cáu
+        // Voice nếu hỏi quá 3 lần
+        else if (questionCount[lower] >= 3) {
+            reply = voiceReplies[Math.floor(Math.random() * voiceReplies.length)];
+            questionCount[lower] = 0;
+        }
+        // Hỏi nhiều quá
         else if (chatCount > 8) {
-            const angryReplies = [
+            const angry = [
                 'mày hỏi nhiều vậy mày có bị ngu không?',
                 'đm mày hỏi lắm thế!',
                 'tao là bot chứ có phải thằng hầu của mày đâu',
@@ -640,89 +580,70 @@ function sendChat() {
                 'tịnh tâm đi má',
                 'chửi cái cc, im đi'
             ];
-            reply = angryReplies[Math.floor(Math.random() * angryReplies.length)];
+            reply = angry[Math.floor(Math.random() * angry.length)];
             isAngry = true;
         }
-        // Nếu câu hỏi ngớ ngẩn hoặc không hiểu
-        else if (isNonsense || isTooLong || /(asdf|qwerty|zxcv|test|testing|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot)/i.test(msg)) {
-            const nonsenseReplies = [
-                'mày bị ngu à',
-                'ngu',
-                'tao đéo hiểu',
-                'mày bị tật não à'
-            ];
-            reply = nonsenseReplies[Math.floor(Math.random() * nonsenseReplies.length)];
+        // Câu ngớ ngẩn
+        else if (isNonsense) {
+            reply = insultReplies[Math.floor(Math.random() * insultReplies.length)];
         }
-        // Câu hỏi hợp lệ
+        // Hợp lệ
         else if (lower.includes('cách mua') || lower.includes('mua key') || lower.includes('giá')) {
-            reply = `📋 BẢNG GIÁ KEY DPI VIP:
+            reply = `📋 BẢNG GIÁ:
 • Vĩnh viễn: 400.000₫
 • 3 tháng: 250.000₫
 • 2 tháng: 200.000₫
 • 1 tháng: 100.000₫
 • 1 tuần: 50.000₫
 • 1 ngày: 10.000₫
-
-🔑 Cách mua: Chọn gói trong cửa hàng → Chuyển khoản → Liên hệ Admin nhận key.`;
+Mua thì vào shop mà chọn.`;
         }
         else if (lower.includes('cách chuyển') || lower.includes('chuyển tiền') || lower.includes('thanh toán')) {
-            reply = `🏦 THÔNG TIN CHUYỂN KHOẢN:
+            reply = `🏦 CHUYỂN KHOẢN:
 • Tên: LY NGOC DAI
 • Ngân hàng: BIDV
-• QR: Nhận tiền từ mọi ứng dụng
+• QR: Xem ở shop
 • Nội dung: DPI_VIP_XXXX
-• Số tiền: Theo gói đã chọn
-
-📌 Sau khi chuyển, liên hệ Admin: 0976457016 để nhận key.`;
+• Số tiền: Theo gói
+Xong liên hệ Admin: 0976457016.`;
         }
         else if (lower.includes('cách cài') || lower.includes('cài đặt') || lower.includes('cài config') || lower.includes('hướng dẫn')) {
-            reply = `📲 HƯỚNG DẪN CÀI ĐẶT:
-1️⃣ Đăng nhập key vào app
-2️⃣ Nhấn "Tải Config Thật"
-3️⃣ Mở file .mobileconfig vừa tải
-4️⃣ Vào Cài đặt → Chung → VPN & Quản lý thiết bị
-5️⃣ Chọn hồ sơ "DPI VIP" → Cài đặt
-6️⃣ Khởi động lại iPhone
-
-✅ Hoàn tất! Config có hiệu lực ngay.`;
+            reply = `📲 CÀI ĐẶT:
+1. Đăng nhập key
+2. Nhấn "Tải Config Thật"
+3. Mở file .mobileconfig
+4. Vào Cài đặt → Chung → VPN & Quản lý thiết bị
+5. Chọn "DPI VIP" → Cài đặt
+6. Khởi động lại iPhone
+Xong.`;
         }
         else if (lower.includes('liên hệ') || lower.includes('admin') || lower.includes('số điện thoại') || lower.includes('hotline') || lower.includes('0976457016')) {
-            reply = `📞 LIÊN HỆ ADMIN:
-• Số điện thoại: 0976457016
-• Zalo: 0976457016
-• Telegram: @DPI_VIP_Admin
-
-💬 Nếu gặp vấn đề, hãy liên hệ Admin để được hỗ trợ nhanh nhất.`;
+            reply = `📞 ADMIN: 0976457016
+Zalo: 0976457016
+Telegram: @DPI_VIP_Admin
+Cần gì thì liên hệ.`;
         }
         else if (lower.includes('bot') || lower.includes('bạn là ai')) {
-            reply = `🤖 Xin chào! Tôi là DPI VIP Bot.
-Tôi được tạo ra để:
-• Hỗ trợ mua key
-• Hướng dẫn cài đặt
-• Tư vấn các gói key
-• Kết nối với Admin khi cần
-
-Tôi có thể giúp gì cho bạn?`;
+            reply = `🤖 Tao là DPI VIP Bot.
+Tao giúp mày mua key, cài đặt, tư vấn.
+Có gì hỏi nhanh đừng dài dòng.`;
         }
         else if (lower.includes('cảm ơn') || lower.includes('thanks') || lower.includes('thank')) {
-            reply = `🙏 Cảm ơn bạn! 
-Nếu cần hỗ trợ thêm, đừng ngần ngại hỏi tôi nhé!
-Chúc bạn có trải nghiệm tốt với DPI VIP! 🎮`;
+            reply = `🙏 Ừ cảm ơn. Hỏi gì nữa không?`;
         }
         else {
-            reply = `📌 Tôi không hiểu câu hỏi của bạn.
-Tôi có thể giúp bạn về:
+            reply = `📌 Tao đéo hiểu mày hỏi gì.
+Hỏi về:
 • Cách mua key
 • Cách chuyển tiền
 • Cách cài đặt
 • Liên hệ Admin (0976457016)
-
-Bạn có thể hỏi cụ thể hơn để tôi hỗ trợ tốt nhất! 🤖`;
+Hỏi đàng hoàng đi.`;
         }
         
         body.innerHTML += `<div class="msg bot">${reply}<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
         body.scrollTop = body.scrollHeight;
-    }, 500);
+    }, 400);
 }
 
 // ============================================================
@@ -743,15 +664,14 @@ function generateConfig(uid, iosVersion) {
     let allowedXml = '';
     allowedVersions.forEach(v => { allowedXml += `\n                        <string>${v}</string>`; });
     
-    const descLeft = `🔷 DPI VIP LÀ GÌ? - DPI VIP LÀ CẤU HÌNH TỐI ƯU GAME CHUYÊN SÂU
-CÔNG DỤNG: ✅ BÁM ĐẦU MƯỢT ✅ NHE TÂM ✅ FIX LỐ ✅ FIX RUNG ✅ KÉO LÀ ĐỎ ✅ TĂNG NHẢY ✅ GHIM VAI
-⚠️ LƯU Ý KHÔNG BÁN HOẶC CHỈNH SỬA - KHÔNG CÀI FILE KHÁC - CHỈ HỖ TRỢ iOS
-HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
-⚠️ THAY ĐỔI THIẾT BỊ: ĐÃ CỐ ĐỊNH THEO UID: ${uidShort}
-⚠️ DNS: DPI VIP_${uidShort} (chứa UID)
-❓ 3 DỮ LIỆU KHÔNG XÁC ĐỊNH: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8`;
+    const descLeft = `🔷 DPI VIP - TỐI ƯU GAME
+✅ BÁM ĐẦU MƯỢT ✅ NHE TÂM ✅ FIX LỐ ✅ FIX RUNG ✅ KÉO LÀ ĐỎ
+⚠️ KHÔNG BÁN - KHÔNG CHỈNH SỬA - CHỈ HỖ TRỢ iOS
+HỖ TRỢ: 17.x, 18.7.1→18.7.9, 26.1
+UID: ${uidShort} | DNS: DPI VIP_${uidShort}
+❓ 3 DỮ LIỆU: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8`;
     
-    const descRight = `DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ, KHÔNG cài file khác.`;
+    const descRight = `DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ.`;
     
     return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -760,7 +680,7 @@ HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
     <key>PayloadDescription</key>
     <string>${descRight}</string>
     <key>PayloadDisplayName</key>
-    <string>DPI VIP - Bám đầu mượt</string>
+    <string>DPI VIP</string>
     <key>PayloadIdentifier</key>
     <string>com.dpivip.profile.${uidShort}</string>
     <key>PayloadType</key>
@@ -788,27 +708,17 @@ HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
             <integer>1</integer>
             <key>PayloadContent</key>
             <dict>
-                <key>DeviceUID</key>
-                <string>${uid}</string>
-                <key>DeviceUID_Short</key>
-                <string>${uidShort}</string>
-                <key>DeviceName</key>
-                <string>iPhone</string>
-                <key>CreatedAt</key>
-                <string>${new Date().toISOString()}</string>
-                <key>AllowediOSVersions</key>
-                <array>${allowedXml}
-                </array>
+                <key>DeviceUID</key><string>${uid}</string>
+                <key>DeviceUID_Short</key><string>${uidShort}</string>
+                <key>DeviceName</key><string>iPhone</string>
+                <key>CreatedAt</key><string>${new Date().toISOString()}</string>
+                <key>AllowediOSVersions</key><array>${allowedXml}</array>
                 <key>DNSConfig</key>
                 <dict>
-                    <key>DNSServerName</key>
-                    <string>DPI VIP_${uidShort}</string>
-                    <key>DNSIPv4</key>
-                    <array><string>8.8.8.8</string><string>1.1.1.1</string></array>
-                    <key>DNSIPv6</key>
-                    <array><string>2001:4860:4860::8888</string><string>2606:4700:4700::1111</string></array>
-                    <key>DeviceUID</key>
-                    <string>${uid}</string>
+                    <key>DNSServerName</key><string>DPI VIP_${uidShort}</string>
+                    <key>DNSIPv4</key><array><string>8.8.8.8</string><string>1.1.1.1</string></array>
+                    <key>DNSIPv6</key><array><string>2001:4860:4860::8888</string><string>2606:4700:4700::1111</string></array>
+                    <key>DeviceUID</key><string>${uid}</string>
                 </dict>
                 <key>UnknownData1</key><string>0x7F3A2B1C</string>
                 <key>UnknownData2</key><string>0x9E4D8F6A</string>
@@ -840,10 +750,8 @@ HỖ TRỢ iOS: 17.x, 18.7.1 → 18.7.9, 26.1
                 <key>ConditionalInstall</key>
                 <dict>
                     <key>DeviceVersion</key><string>18.7.1</string>
-                    <key>AllowedVersions</key>
-                    <array><string>17.*</string><string>18.7.*</string><string>26.1</string></array>
-                    <key>FailMessage</key>
-                    <string>Không hỗ trợ iOS này. Chỉ dùng cho iOS 17, 18.7.1-18.7.9, 26.1</string>
+                    <key>AllowedVersions</key><array><string>17.*</string><string>18.7.*</string><string>26.1</string></array>
+                    <key>FailMessage</key><string>Không hỗ trợ iOS này.</string>
                 </dict>
                 <key>GameOptimization</key>
                 <dict>
@@ -877,19 +785,12 @@ function generateAndDownload() {
         const blob = new Blob([xml], { type: 'application/x-apple-aspen-config; charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        a.href = url; a.download = filename;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
         setTimeout(() => URL.revokeObjectURL(url), 5000);
-        showToast('✅ Đã tải config thành công!', 'success');
+        showToast('✅ Đã tải config!', 'success');
     } catch(e) { showToast('❌ Lỗi: ' + e.message, 'error'); }
 }
-
-// ============================================================
-// TOAST
-// ============================================================
 
 function showToast(msg, type = '') {
     const t = document.getElementById('toast');
@@ -897,13 +798,10 @@ function showToast(msg, type = '') {
     t.className = 'toast ' + type;
     t.classList.add('show');
     clearTimeout(t._timeout);
-    t._timeout = setTimeout(() => t.classList.remove('show'), 5000);
+    t._timeout = setTimeout(() => t.classList.remove('show'), 4000);
 }
 
-// ============================================================
 // KHỞI CHẠY
-// ============================================================
-
 document.addEventListener('DOMContentLoaded', function() {
     const currentKey = localStorage.getItem('dpi_current_key');
     if (currentKey) {
@@ -915,7 +813,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('appSection').classList.remove('hidden');
             const uid = getDeviceUID();
             document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
-            document.getElementById('currentKey').textContent = currentKey.substring(0, 6) + '...' + currentKey.substring(currentKey.length - 4);
+            document.getElementById('currentKey').textContent = currentKey.substring(0,6) + '...' + currentKey.substring(currentKey.length-4);
             document.getElementById('keyType').textContent = isAdmin ? '👑 Admin' : keyData.type;
             document.getElementById('keyType').className = 'value ' + (isAdmin ? 'blue' : 'green');
             if (isAdmin || keyData.duration === -1) {
