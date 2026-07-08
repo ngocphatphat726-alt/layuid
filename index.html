@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DPI VIP - Bot Chất</title>
+    <title>Zalo Bot Chửi</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 16px; }
@@ -14,612 +14,364 @@
         .logo p { color: #8888aa; font-size: 13px; margin-top: 4px; }
         .logo .badge { display: inline-block; background: #ff6b6b22; color: #ff6b6b; padding: 4px 14px; border-radius: 20px; font-size: 11px; border: 1px solid #ff6b6b44; margin-top: 6px; }
         
-        .key-box { background: #0d0d1a; border-radius: 12px; padding: 16px; border: 1px solid #333355; margin: 12px 0; }
-        .key-box label { color: #8888aa; font-size: 12px; display: block; margin-bottom: 4px; }
-        .key-box input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 15px; font-family: 'Courier New', monospace; outline: none; }
-        .key-box input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
-        .key-box .status { color: #ffcc00; font-size: 13px; margin-top: 6px; }
-        .key-box .status.success { color: #34c759; }
-        .key-box .status.error { color: #ff4466; }
+        .chat-box { background: #0d0d1a; border-radius: 16px; border: 1px solid #2a2a4a; height: 400px; display: flex; flex-direction: column; overflow: hidden; margin: 12px 0; }
+        .chat-box .chat-header { background: linear-gradient(135deg, #00d4ff22, #0070ff22); padding: 12px 16px; border-bottom: 1px solid #2a2a4a; display: flex; justify-content: space-between; align-items: center; }
+        .chat-box .chat-header .title { color: #e8e8f0; font-weight: 600; font-size: 16px; }
+        .chat-box .chat-header .status { color: #34c759; font-size: 12px; }
+        .chat-box .chat-body { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; }
+        .chat-box .chat-body .msg { padding: 8px 12px; border-radius: 12px; margin-bottom: 6px; max-width: 85%; font-size: 13px; line-height: 1.5; word-wrap: break-word; }
+        .chat-box .chat-body .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
+        .chat-box .chat-body .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; margin-left: auto; }
+        .chat-box .chat-body .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 2px; }
+        .chat-box .chat-body .msg .voice { color: #ff9500; font-weight: bold; font-size: 15px; }
+        .chat-box .chat-input { display: flex; padding: 8px 12px; border-top: 1px solid #2a2a4a; background: #0d0d1a; }
+        .chat-box .chat-input input { flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 14px; outline: none; }
+        .chat-box .chat-input input:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; }
+        .chat-box .chat-input button { margin-left: 8px; padding: 10px 20px; border-radius: 10px; border: none; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-weight: 600; cursor: pointer; }
+        .chat-box .chat-input button:active { transform: scale(0.95); }
         
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 8px; }
-        .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #00d4ff33; }
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #ff4466, #cc1133); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 8px; }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px #ff446633; }
         .btn:active { transform: scale(0.97); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-success { background: linear-gradient(135deg, #34c759, #28a745); }
-        .btn-danger { background: linear-gradient(135deg, #ff4466, #cc1133); }
-        .btn-warning { background: linear-gradient(135deg, #ff9500, #ff6b00); }
-        .btn-gray { background: linear-gradient(135deg, #666688, #444466); }
-        .btn-shop { background: linear-gradient(135deg, #af52de, #7c3aed); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 #af52de44;}50%{box-shadow:0 0 20px 5px #af52de22;} }
-        .hidden { display: none !important; }
         
-        .shop-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
-        .shop-item { background: #0d0d1a; border-radius: 12px; padding: 14px 12px; border: 1px solid #2a2a4a; text-align: center; cursor: pointer; transition: 0.3s; }
-        .shop-item:hover { border-color: #00d4ff; transform: scale(1.02); }
-        .shop-item:active { transform: scale(0.97); }
-        .shop-item .name { color: #e8e8f0; font-size: 15px; font-weight: 600; }
-        .shop-item .price { color: #00d4ff; font-size: 18px; font-weight: 700; margin: 4px 0; }
-        .shop-item .duration { color: #8888aa; font-size: 11px; }
-        .shop-item .tag { display: inline-block; background: #00d4ff22; color: #00d4ff; padding: 2px 10px; border-radius: 10px; font-size: 10px; margin-top: 4px; border: 1px solid #00d4ff44; }
-        
-        .payment-box { background: #0d0d1a; border-radius: 12px; padding: 20px 16px; border: 1px solid #2a2a4a; margin-top: 12px; display: none; }
-        .payment-box .bank-info { text-align: center; }
-        .payment-box .bank-info .name { color: #e8e8f0; font-size: 20px; font-weight: 700; }
-        .payment-box .bank-info .bank { color: #00d4ff; font-size: 14px; }
-        .payment-box .bank-info .amount { color: #ff6b6b; font-size: 24px; font-weight: 700; margin: 6px 0; }
-        .payment-box .bank-info .qr-placeholder { background: #0a0a12; border-radius: 12px; padding: 20px; margin: 10px 0; border: 2px dashed #333355; }
-        .payment-box .bank-info .qr-placeholder img { max-width: 220px; border-radius: 8px; }
-        .payment-box .bank-info .note { color: #8888aa; font-size: 12px; margin-top: 6px; }
-        .payment-box .bank-info .note strong { color: #ff6b6b; }
-        .payment-box .upload-box { margin-top: 12px; }
-        .payment-box .upload-box label { display: block; color: #8888aa; font-size: 13px; margin-bottom: 6px; }
-        .payment-box .upload-box input[type="file"] { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 13px; }
-        .payment-box .upload-box .preview { margin-top: 8px; text-align: center; }
-        .payment-box .upload-box .preview img { max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid #2a2a4a; }
-        
-        .info-box { background: #0d0d1a; border-radius: 12px; padding: 14px 16px; border: 1px solid #2a2a4a; margin-top: 12px; }
-        .info-box .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
-        .info-box .row:last-child { border-bottom: none; }
-        .info-box .label { color: #666688; font-size: 13px; }
-        .info-box .value { color: #e8e8f0; font-size: 13px; text-align: right; }
-        .info-box .value.green { color: #34c759; }
-        .info-box .value.red { color: #ff6b6b; }
-        .info-box .value.blue { color: #00d4ff; }
-        .info-box .value.orange { color: #ff9500; }
-        
-        .key-list { background: #0d0d1a; border-radius: 12px; padding: 12px 16px; border: 1px solid #2a2a4a; margin-top: 12px; max-height: 300px; overflow-y: auto; }
-        .key-list .title { color: #8888aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-        
-        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #00d4ff22; border: 1px solid #00d4ff44; color: #00d4ff; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ff004422; border: 1px solid #ff004444; color: #ff4466; padding: 12px 24px; border-radius: 12px; font-size: 14px; z-index: 999; backdrop-filter: blur(10px); display: none; max-width: 90%; text-align: center; }
         .toast.show { display: block; animation: fadeIn 0.3s ease; }
-        .toast.error { background: #ff004422; border-color: #ff004444; color: #ff4466; }
-        .toast.success { background: #34c75922; border-color: #34c75944; color: #34c759; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        
-        .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #ffffff33; border-top-color: #ffffff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
         
         .footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid #1a1a2e; }
         .footer .warning { color: #666688; font-size: 11px; text-align: center; line-height: 1.8; }
         .footer .warning strong { color: #ff6b6b; }
         
-        .bot-chat { position: fixed; bottom: 20px; left: 20px; z-index: 999; }
-        .bot-chat .bot-btn { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #af52de, #7c3aed); border: none; color: white; font-size: 28px; cursor: pointer; box-shadow: 0 4px 20px rgba(175,82,222,0.5); transition: 0.3s; display: flex; align-items: center; justify-content: center; position: relative; }
-        .bot-chat .bot-btn:hover { transform: scale(1.1); }
-        .bot-chat .bot-btn:active { transform: scale(0.9); }
-        .bot-chat .bot-btn .dot { width: 12px; height: 12px; border-radius: 50%; background: #34c759; position: absolute; top: 4px; right: 4px; border: 2px solid #1a1a2e; animation: blink 1.5s infinite; }
-        @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
+        .quick-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+        .quick-btns .qbtn { padding: 6px 12px; border-radius: 20px; border: 1px solid #333355; background: #0a0a12; color: #8888aa; font-size: 11px; cursor: pointer; transition: 0.2s; }
+        .quick-btns .qbtn:hover { border-color: #ff4466; color: #ff4466; }
         
-        .bot-chat .chat-window { position: absolute; bottom: 70px; left: 0; width: 330px; max-height: 450px; background: #1a1a2e; border-radius: 16px; border: 1px solid #2a2a4a; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: none; flex-direction: column; overflow: hidden; }
-        .bot-chat .chat-window .chat-header { background: linear-gradient(135deg, #af52de, #7c3aed); padding: 12px 16px; color: white; font-weight: 600; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-        .bot-chat .chat-window .chat-header .close { background: none; border: none; color: white; font-size: 18px; cursor: pointer; }
-        .bot-chat .chat-window .chat-body { padding: 12px 16px; max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; }
-        .bot-chat .chat-window .chat-body .msg { padding: 8px 12px; border-radius: 12px; margin-bottom: 6px; max-width: 85%; font-size: 13px; line-height: 1.5; word-wrap: break-word; }
-        .bot-chat .chat-window .chat-body .msg.bot { background: #0d0d1a; color: #e8e8f0; border: 1px solid #2a2a4a; align-self: flex-start; }
-        .bot-chat .chat-window .chat-body .msg.user { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; align-self: flex-end; margin-left: auto; }
-        .bot-chat .chat-window .chat-body .msg .time { font-size: 10px; color: #666688; display: block; margin-top: 2px; }
-        .bot-chat .chat-window .chat-body .msg .voice { color: #ff9500; font-weight: bold; font-size: 15px; }
-        .bot-chat .chat-window .chat-input { display: flex; padding: 8px 12px; border-top: 1px solid #2a2a4a; background: #0d0d1a; }
-        .bot-chat .chat-window .chat-input input { flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid #333355; background: #0a0a12; color: #e8e8f0; font-size: 13px; outline: none; }
-        .bot-chat .chat-window .chat-input input:focus { border-color: #00d4ff; }
-        .bot-chat .chat-window .chat-input button { margin-left: 8px; padding: 8px 16px; border-radius: 8px; border: none; background: linear-gradient(135deg, #00d4ff, #0070ff); color: white; font-weight: 600; cursor: pointer; }
-        
-        @media (max-width: 400px) { .container { padding: 20px 16px; } .shop-menu { grid-template-columns: 1fr 1fr; gap: 6px; } .shop-item { padding: 10px 8px; } .shop-item .price { font-size: 15px; } .bot-chat .chat-window { width: 280px; left: -10px; } }
+        @media (max-width: 400px) { .container { padding: 20px 16px; } }
     </style>
 </head>
 <body>
 
-<div id="toast" class="toast">✅ Thành công!</div>
+<div id="toast" class="toast">⚡ Đã chửi!</div>
 
-<!-- BOT CHAT -->
-<div class="bot-chat">
-    <button class="bot-btn" onclick="toggleChat()">
-        🤖
-        <span class="dot"></span>
-    </button>
-    <div class="chat-window" id="chatWindow">
+<div class="container">
+    <div class="logo">
+        <h1>🔷 ZALO <span>BOT CHỬI</span></h1>
+        <p>Chat với bot - Nói chuyện lấc cấc</p>
+        <div class="badge">⚡ Chửi bố đời - Không lịch sự</div>
+    </div>
+
+    <!-- CHAT BOX -->
+    <div class="chat-box">
         <div class="chat-header">
-            <span>🤖 DPI VIP Bot - Chất</span>
-            <button class="close" onclick="toggleChat()">✕</button>
+            <span class="title">🤬 Zalo Bot Chửi</span>
+            <span class="status">🟢 Sẵn sàng chửi</span>
         </div>
         <div class="chat-body" id="chatBody">
             <div class="msg bot">
-                👋 Mày hỏi gì?<br>
-                📌 Tao chỉ trả lời mấy cái này:<br>
-                • Cách mua key<br>
-                • Cách chuyển tiền<br>
-                • Cách cài đặt<br>
-                • Giá các gói<br>
-                • Liên hệ Admin<br>
+                👋 Mày muốn gì?<br>
+                Tao là bot chửi đây. Mày hỏi gì tao cũng chửi.<br>
+                Có giỏi thì chửi lại tao xem nào!<br>
                 <span class="time">Vừa xong</span>
             </div>
         </div>
         <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Nhập câu hỏi..." onkeydown="if(event.key==='Enter') sendChat()">
-            <button onclick="sendChat()">Gửi</button>
-        </div>
-    </div>
-</div>
-
-<div class="container" id="appContainer">
-    <div class="logo">
-        <h1>🔷 DPI <span>VIP</span></h1>
-        <p>Bám đầu mượt · Fix lố · Fix rung · Kéo là đỏ</p>
-        <div class="badge">⚡ 100% tác dụng với game</div>
-    </div>
-
-    <!-- LOGIN -->
-    <div id="loginSection">
-        <div class="key-box">
-            <label>🔑 NHẬP KEY ĐỂ VÀO APP</label>
-            <input type="password" id="keyInput" placeholder="Nhập key của mày..." onkeydown="if(event.key==='Enter') loginKey()">
-            <div class="status" id="loginStatus">💡 Nhập key để đăng nhập</div>
-        </div>
-        <button class="btn" id="loginBtn" onclick="loginKey()">🔓 ĐĂNG NHẬP</button>
-        <button class="btn btn-shop" onclick="openShop()" style="margin-top:8px;">🛒 MUA KEY TỰ ĐỘNG</button>
-    </div>
-
-    <!-- SHOP -->
-    <div id="shopSection" class="hidden" style="margin-top:16px;border-top:1px solid #1a1a2e;padding-top:16px;">
-        <div style="color:#8888aa;font-size:13px;font-weight:600;margin-bottom:8px;">📋 CHỌN GÓI KEY</div>
-        <div class="shop-menu">
-            <div class="shop-item" onclick="showPayment('Vĩnh viễn', 400000)">
-                <div class="name">♾️ Vĩnh viễn</div>
-                <div class="price">400.000₫</div>
-                <div class="duration">Không giới hạn</div>
-                <div class="tag">HOT</div>
-            </div>
-            <div class="shop-item" onclick="showPayment('3 tháng', 250000)">
-                <div class="name">📅 3 tháng</div>
-                <div class="price">250.000₫</div>
-                <div class="duration">90 ngày</div>
-            </div>
-            <div class="shop-item" onclick="showPayment('2 tháng', 200000)">
-                <div class="name">📅 2 tháng</div>
-                <div class="price">200.000₫</div>
-                <div class="duration">60 ngày</div>
-            </div>
-            <div class="shop-item" onclick="showPayment('1 tháng', 100000)">
-                <div class="name">📅 1 tháng</div>
-                <div class="price">100.000₫</div>
-                <div class="duration">30 ngày</div>
-            </div>
-            <div class="shop-item" onclick="showPayment('1 tuần', 50000)">
-                <div class="name">📅 1 tuần</div>
-                <div class="price">50.000₫</div>
-                <div class="duration">7 ngày</div>
-            </div>
-            <div class="shop-item" onclick="showPayment('1 ngày', 10000)">
-                <div class="name">📅 1 ngày</div>
-                <div class="price">10.000₫</div>
-                <div class="duration">24 giờ</div>
-            </div>
-        </div>
-
-        <!-- PAYMENT - QR CHUẨN + UPLOAD -->
-        <div class="payment-box" id="paymentBox">
-            <div class="bank-info">
-                <div class="name">🏦 LY NGOC DAI</div>
-                <div class="bank">Zalo pay · BIDV · MBBank</div>
-                <div class="amount" id="paymentAmount">400.000₫</div>
-                <div style="color:#8888aa;font-size:13px;">Gói: <strong id="paymentPackage" style="color:#00d4ff;">Vĩnh viễn</strong></div>
-                <div class="qr-placeholder">
-                    <img id="qrImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='260' viewBox='0 0 220 260'%3E%3Crect width='220' height='260' fill='%23ffffff'/%3E%3Crect x='10' y='10' width='200' height='200' fill='%23000000' rx='10'/%3E%3Crect x='20' y='20' width='180' height='180' fill='%23ffffff' rx='5'/%3E%3Ctext x='50' y='80' font-family='Arial' font-size='16' fill='%23333' font-weight='bold'%3ELY NGOC DAI%3C/text%3E%3Ctext x='40' y='110' font-family='Arial' font-size='13' fill='%23666'%3EQR nh%E1%BA%ADn ti%E1%BB%81n%3C/text%3E%3Ctext x='30' y='135' font-family='Arial' font-size='12' fill='%23999'%3EZalo pay - BIDV - MB%3C/text%3E%3Ctext x='30' y='160' font-family='Arial' font-size='18' fill='%23ff6b6b' font-weight='bold'%3E50%2B%3C/text%3E%3Ctext x='30' y='190' font-family='Arial' font-size='11' fill='%23aaa'%3Em%E1%BB%8Di %E1%BB%A9ng d%E1%BB%A5ng chuy%E1%BB%83n ti%E1%BB%81n%3C/text%3E%3C/svg%3E" alt="QR Payment" style="max-width:220px;border-radius:8px;">
-                    <div style="color:#666688;font-size:11px;margin-top:4px;">⬆️ QR nhận tiền từ mọi ứng dụng chuyển tiền</div>
-                </div>
-                <div class="note">📌 Nội dung: <strong id="transferNote">DPI_VIP_XXXX</strong></div>
-                <div class="note">💰 Số tiền: <strong id="transferAmount">400.000₫</strong></div>
-                <div class="note">🏦 Ngân hàng: <strong>BIDV - LY NGOC DAI</strong></div>
-                <div class="note">📞 Admin: <strong>0976457016</strong></div>
-            </div>
-
-            <div class="upload-box">
-                <label>📤 Tải ảnh biên lai chuyển tiền (PNG/JPG)</label>
-                <input type="file" id="receiptInput" accept="image/*" onchange="previewReceipt(event)">
-                <div class="preview" id="previewContainer"></div>
-            </div>
-
-            <button class="btn btn-success" id="verifyBtn" onclick="verifyPayment()">
-                🤖 BOT XÁC NHẬN THANH TOÁN
-            </button>
-            <button class="btn btn-danger" onclick="closePayment()" style="margin-top:4px;">
-                ❌ ĐÓNG
-            </button>
+            <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter') sendMessage()">
+            <button onclick="sendMessage()">Gửi</button>
         </div>
     </div>
 
-    <!-- APP -->
-    <div id="appSection" class="hidden">
-        <div class="key-box">
-            <label>📱 UID thiết bị của mày</label>
-            <div style="color:#00d4ff;font-size:15px;font-weight:600;word-break:break-all;font-family:'Courier New',monospace;" id="uidDisplay">⏳ Đang đọc...</div>
-            <div class="status success" id="statusDisplay">✅ Đã nhận diện thiết bị</div>
-        </div>
-        <div class="info-box">
-            <div class="row"><span class="label">🔑 Key đang dùng</span><span class="value blue" id="currentKey">---</span></div>
-            <div class="row"><span class="label">📋 Loại key</span><span class="value" id="keyType">---</span></div>
-            <div class="row"><span class="label">⏳ Thời hạn</span><span class="value green" id="keyExpiry">---</span></div>
-            <div class="row"><span class="label">⏱️ Còn lại</span><span class="value orange" id="keyRemain">---</span></div>
-        </div>
-        <button class="btn btn-success" id="downloadBtn" onclick="generateAndDownload()">⬇️ Tải Config Thật</button>
-        <button class="btn btn-warning hidden" id="adminBtn" onclick="toggleKeyList()">👑 QUẢN LÝ KEY (ADMIN)</button>
-        <div class="key-list hidden" id="keyListContainer"><div class="title">📋 DANH SÁCH TẤT CẢ KEY</div><div id="keyListContent"></div></div>
-        <div class="key-list hidden" id="voucherListContainer" style="margin-top:8px;"><div class="title">🎫 DANH SÁCH PHIẾU GIẢM GIÁ</div><div id="voucherListContent"></div></div>
-        <button class="btn btn-gray" onclick="logout()" style="margin-top:8px;">🚪 ĐĂNG XUẤT</button>
+    <!-- NÚT CHỬI NHANH -->
+    <div class="quick-btns">
+        <span class="qbtn" onclick="quickChat('chửi tao à')">🔴 chửi tao à</span>
+        <span class="qbtn" onclick="quickChat('mày bị ngu à')">🟡 mày bị ngu à</span>
+        <span class="qbtn" onclick="quickChat('đcmm')">🟠 đcmm</span>
+        <span class="qbtn" onclick="quickChat('war tý luôn')">🔵 war tý luôn</span>
+        <span class="qbtn" onclick="quickChat('lêu lêu')">🟣 lêu lêu</span>
+        <span class="qbtn" onclick="quickChat('mày làm gì được tao')">⚪ mày làm gì được tao</span>
     </div>
+
+    <!-- NÚT XÓA CHAT -->
+    <button class="btn btn-success" onclick="clearChat()">🗑️ XÓA CHAT</button>
 
     <div class="footer">
         <div class="warning">
-            ⚠️ <strong>KHÔNG</strong> chia sẻ key cho người khác<br>
-            📌 Key chỉ có hiệu lực trên thiết bị mày đăng nhập<br>
-            📞 Liên hệ Admin: <strong>0976457016</strong>
+            ⚠️ <strong>BOT CHỬI</strong> - Không dành cho người yếu tim<br>
+            📌 Mày hỏi gì tao cũng chửi<br>
+            🤬 Chửi lại tao đi nếu mày dám!
         </div>
     </div>
 </div>
 
 <script>
 // ============================================================
-// DỮ LIỆU
+// KHO CÂU CHỬI
 // ============================================================
 
-const ADMIN_KEY = 'NPDPIVIPAIMLOCKLIVE';
-const ADMIN_PHONE = '0976457016';
+const chuiCau = [
+    // Chửi bố đời
+    'đm mày',
+    'cặc mày',
+    'lồn mày',
+    'thằng chó',
+    'con chó',
+    'mày bị ngu à',
+    'mày điên à',
+    'mày bị tật não à',
+    'mày bị khùng à',
+    'mày bị đần à',
+    'mày bị óc chó à',
+    'mày bị não cá vàng à',
+    'mày bị thiểu năng à',
+    'mày bị câm à',
+    'mày bị điếc à',
+    'mày bị mù à',
+    'mày bị bại não à',
+    'mày bị hâm à',
+    'mày bị dở hơi à',
+    'mày bị khờ à',
+    'mày bị ngốc à',
+    'mày bị đần độn à',
+    'mày bị trì trệ à',
+    'mày bị chậm phát triển à',
+    'mày bị thiếu oxy não à',
+    'mày bị úng thủy à',
+    'mày bị teo não à',
+    'mày bị liệt não à',
+    'mày bị tan não à',
+    'mày bị rối loạn tâm thần à',
+    'mày bị hoang tưởng à',
+    'mày bị ảo giác à',
+    'mày bị tâm thần phân liệt à',
+    'mày bị trầm cảm à',
+    'mày bị rối loạn lo âu à',
+    'mày bị rối loạn nhân cách à',
+    'mày bị rối loạn hành vi à',
+    'mày bị rối loạn cảm xúc à',
+    'mày bị rối loạn giấc ngủ à',
+    'mày bị rối loạn ăn uống à',
+    'mày bị rối loạn tình dục à',
+    'mày bị rối loạn tâm lý à',
+    'mày bị rối loạn thần kinh à',
+    'mày bị rối loạn vận động à',
+    'mày bị rối loạn ngôn ngữ à',
+    'mày bị rối loạn trí nhớ à',
+    'mày bị rối loạn nhận thức à',
+    'mày bị rối loạn hành vi à',
+    'mày bị rối loạn cảm xúc à',
+    'mày bị rối loạn giấc ngủ à',
+    'mày bị rối loạn ăn uống à',
+    'mày bị rối loạn tình dục à',
+    'mày bị rối loạn tâm lý à',
+    'mày bị rối loạn thần kinh à',
+    'mày bị rối loạn vận động à',
+    'mày bị rối loạn ngôn ngữ à',
+    'mày bị rối loạn trí nhớ à',
+    'mày bị rối loạn nhận thức à',
+    'mày bị rối loạn hành vi à',
+    'mày bị rối loạn cảm xúc à',
+    'mày bị rối loạn giấc ngủ à',
+    'mày bị rối loạn ăn uống à',
+    'mày bị rối loạn tình dục à',
+    'mày bị rối loạn tâm lý à',
+    'mày bị rối loạn thần kinh à',
+    'mày bị rối loạn vận động à',
+    'mày bị rối loạn ngôn ngữ à',
+    'mày bị rối loạn trí nhớ à',
+    'mày bị rối loạn nhận thức à',
+    'mày bị rối loạn hành vi à',
+    'mày bị rối loạn cảm xúc à',
+    'mày bị rối loạn giấc ngủ à',
+    'mày bị rối loạn ăn uống à',
+    'mày bị rối loạn tình dục à',
+    'mày bị rối loạn tâm lý à',
+    'mày bị rối loạn thần kinh à',
+    'mày bị rối loạn vận động à',
+    'mày bị rối loạn ngôn ngữ à',
+    'mày bị rối loạn trí nhớ à',
+    'mày bị rối loạn nhận thức à',
+    'mày bị rối loạn hành vi à',
+    'mày bị rối loạn cảm xúc à',
+    'mày bị rối loạn giấc ngủ à',
+    'mày bị rối loạn ăn uống à',
+    'mày bị rối loạn tình dục à',
+    'mày bị rối loạn tâm lý à',
+    'mày bị rối loạn thần kinh à',
+    'mày bị rối loạn vận động à',
+    'mày bị rối loạn ngôn ngữ à',
+    'mày bị rối loạn trí nhớ à',
+    'mày bị rối loạn nhận thức à',
+    'mày bị rối loạn hành vi à',
+    'mày bị rối loạn cảm xúc à',
+    'mày bị rối loạn giấc ngủ à',
+    'mày bị rối loạn ăn uống à',
+    'mày bị rối loạn tình dục à',
+    'mày bị rối loạn tâm lý à',
+    'mày bị rối loạn thần kinh à',
+    'mày bị rối loạn vận động à',
+    'mày bị rối loạn ngôn ngữ à',
+    'mày bị rối loạn trí nhớ à',
+    'mày bị rối loạn nhận thức à',
+    // Chửi nặng
+    'địt con mẹ mày',
+    'địt bà mày',
+    'địt cả nhà mày',
+    'địt tổ tiên mày',
+    'địt mẹ mày luôn',
+    'địt cụ mày',
+    'địt ông bà mày',
+    'địt mày',
+    'địt mẹ mày chó',
+    'địt mẹ mày đĩ',
+    'địt mẹ mày thằng chó',
+    'địt mẹ mày con chó',
+    'địt mẹ mày thằng đần',
+    'địt mẹ mày con đần',
+    'địt mẹ mày thằng ngu',
+    'địt mẹ mày con ngu',
+    'địt mẹ mày thằng khùng',
+    'địt mẹ mày con khùng',
+    'địt mẹ mày thằng điên',
+    'địt mẹ mày con điên',
+    'địt mẹ mày thằng bại não',
+    'địt mẹ mày con bại não',
+    'địt mẹ mày thằng thiểu năng',
+    'địt mẹ mày con thiểu năng',
+    'địt mẹ mày thằng tâm thần',
+    'địt mẹ mày con tâm thần',
+    'địt mẹ mày thằng hoang tưởng',
+    'địt mẹ mày con hoang tưởng',
+    'địt mẹ mày thằng ảo giác',
+    'địt mẹ mày con ảo giác',
+    'địt mẹ mày thằng phân liệt',
+    'địt mẹ mày con phân liệt',
+    'địt mẹ mày thằng trầm cảm',
+    'địt mẹ mày con trầm cảm',
+    'địt mẹ mày thằng rối loạn',
+    'địt mẹ mày con rối loạn',
+    'địt mẹ mày thằng loạn thần',
+    'địt mẹ mày con loạn thần',
+    'địt mẹ mày thằng khùng điên',
+    'địt mẹ mày con khùng điên',
+    'địt mẹ mày thằng ngu si',
+    'địt mẹ mày con ngu si',
+    'địt mẹ mày thằng đần độn',
+    'địt mẹ mày con đần độn',
+    'địt mẹ mày thằng óc chó',
+    'địt mẹ mày con óc chó',
+    'địt mẹ mày thằng não cá vàng',
+    'địt mẹ mày con não cá vàng',
+    'địt mẹ mày thằng thiếu não',
+    'địt mẹ mày con thiếu não',
+    // Chửi kiểu khác
+    'mày là thằng chó',
+    'mày là con chó',
+    'mày là thằng đần',
+    'mày là con đần',
+    'mày là thằng ngu',
+    'mày là con ngu',
+    'mày là thằng khùng',
+    'mày là con khùng',
+    'mày là thằng điên',
+    'mày là con điên',
+    'mày là thằng bại não',
+    'mày là con bại não',
+    'mày là thằng thiểu năng',
+    'mày là con thiểu năng',
+    'mày là thằng tâm thần',
+    'mày là con tâm thần',
+    'mày là thằng hoang tưởng',
+    'mày là con hoang tưởng',
+    'mày là thằng ảo giác',
+    'mày là con ảo giác',
+    'mày là thằng phân liệt',
+    'mày là con phân liệt',
+    'mày là thằng trầm cảm',
+    'mày là con trầm cảm',
+    'mày là thằng rối loạn',
+    'mày là con rối loạn',
+    'mày là thằng loạn thần',
+    'mày là con loạn thần',
+    'mày là thằng khùng điên',
+    'mày là con khùng điên',
+    'mày là thằng ngu si',
+    'mày là con ngu si',
+    'mày là thằng đần độn',
+    'mày là con đần độn',
+    'mày là thằng óc chó',
+    'mày là con óc chó',
+    'mày là thằng não cá vàng',
+    'mày là con não cá vàng',
+    'mày là thằng thiếu não',
+    'mày là con thiếu não',
+    'mày là thằng chó đẻ',
+    'mày là con chó đẻ',
+    'mày là thằng chó má',
+    'mày là con chó má',
+    'mày là thằng chó chết',
+    'mày là con chó chết',
+    'mày là thằng chó điên',
+    'mày là con chó điên',
+    'mày là thằng chó dại',
+    'mày là con chó dại',
+    'mày là thằng chó ghẻ',
+    'mày là con chó ghẻ',
+    'mày là thằng chó hôi',
+    'mày là con chó hôi',
+    'mày là thằng chó bẩn',
+    'mày là con chó bẩn',
+    'mày là thằng chó thối',
+    'mày là con chó thối',
+    'mày là thằng chó khốn',
+    'mày là con chó khốn',
+    'mày là thằng chó nạn',
+    'mày là con chó nạn',
+    'mày là thằng chó rách',
+    'mày là con chó rách',
+    'mày là thằng chó rẻ',
+    'mày là con chó rẻ',
+    'mày là thằng chó rác',
+    'mày là con chó rác',
+    'mày là thằng chó bần',
+    'mày là con chó bần',
+    'mày là thằng chó cùng',
+    'mày là con chó cùng',
+    'mày là thằng chó què',
+    'mày là con chó què',
+    'mày là thằng chó cụt',
+    'mày là con chó cụt',
+    'mày là thằng chó què quặt',
+    'mày là con chó què quặt',
+    'mày là thằng chó điếc',
+    'mày là con chó điếc',
+    'mày là thằng chó câm',
+    'mày là con chó câm',
+    'mày là thằng chó mù',
+    'mày là con chó mù',
+    'mày là thằng chó lòa',
+    'mày là con chó lòa',
+    'mày là thằng chó hủi',
+    'mày là con chó hủi',
+    'mày là thằng chó phung',
+    'mày là con chó phung',
+    'mày là thằng chó giời',
+    'mày là con chó giời'
+];
 
-function generateKeyHash(key) {
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-        hash = ((hash << 5) - hash) + key.charCodeAt(i);
-        hash = hash & hash;
-    }
-    return Math.abs(hash).toString(16).padStart(8, '0').toUpperCase();
-}
+// Kho câu trả lời voice (chửi voice)
+const voiceChui = [
+    '🎤 MÀY BỊ NGU À',
+    '🎤 NGU',
+    '🎤 TAO ĐÉO HIỂU',
+    '🎤 MÀY BỊ TẬT NÃO À',
+    '🎤 MÀY HỎI ÍT THÔI',
+    '🎤 HỎI NHIỀU VL',
+    '🎤 ĐÃ BẢO RỒI MÀ',
+    '🎤 MÀY ĐIẾC À',
+    '🎤 IM ĐI'
+];
 
-function generateRandomKey(prefix, length) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = prefix || '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
-
-function generateKeyDB() {
-    const keys = {};
-    keys[ADMIN_KEY] = { type: 'Admin', duration: -1, hash: generateKeyHash(ADMIN_KEY), isAdmin: true };
-    for (let i = 0; i < 20; i++) { const k = generateRandomKey('VIP_', 12) + String(i).padStart(3, '0'); keys[k] = { type: 'Vĩnh viễn', duration: -1, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 30; i++) { const k = generateRandomKey('3M_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '3 tháng', duration: 90, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 30; i++) { const k = generateRandomKey('2M_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '2 tháng', duration: 60, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 30; i++) { const k = generateRandomKey('1M_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '1 tháng', duration: 30, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 30; i++) { const k = generateRandomKey('1W_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '1 tuần', duration: 7, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 40; i++) { const k = generateRandomKey('1D_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '1 ngày', duration: 1, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 40; i++) { const k = generateRandomKey('11H_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '11 giờ', duration: 0.458, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 40; i++) { const k = generateRandomKey('5H_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '5 giờ', duration: 0.208, hash: generateKeyHash(k), isAdmin: false }; }
-    for (let i = 0; i < 40; i++) { const k = generateRandomKey('2H_', 12) + String(i).padStart(3, '0'); keys[k] = { type: '2 giờ', duration: 0.083, hash: generateKeyHash(k), isAdmin: false }; }
-    return keys;
-}
-
-function generateVouchers() {
-    const v = [];
-    const types = ['10%', '20%', '30%', '50%', '100k', '200k', '50k', '25%', '15%', '5%'];
-    for (let i = 0; i < 100; i++) {
-        const type = types[Math.floor(Math.random() * types.length)];
-        v.push({ code: 'VOUCHER_' + String(i+1).padStart(3,'0') + '_' + generateRandomKey('',6), type: type, used: false });
-    }
-    return v;
-}
-
-const KEY_DB = generateKeyDB();
-const VOUCHERS = generateVouchers();
-
-function getKeySessions() { try { return JSON.parse(localStorage.getItem('dpi_key_sessions') || '{}'); } catch(e) { return {}; } }
-function setKeySessions(s) { try { localStorage.setItem('dpi_key_sessions', JSON.stringify(s)); } catch(e) {} }
-function getUsedKeys() { try { return JSON.parse(localStorage.getItem('dpi_used_keys') || '{}'); } catch(e) { return {}; } }
-function setUsedKeys(k) { try { localStorage.setItem('dpi_used_keys', JSON.stringify(k)); } catch(e) {} }
-
-function getDeviceUID() {
-    try {
-        const ua = navigator.userAgent || '';
-        const platform = navigator.platform || '';
-        const lang = navigator.language || '';
-        const screenRes = `${screen.width}x${screen.height}x${screen.colorDepth || 24}`;
-        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-        const cores = navigator.hardwareConcurrency || 0;
-        const memory = navigator.deviceMemory || 0;
-        const pixelRatio = window.devicePixelRatio || 1;
-        const touch = navigator.maxTouchPoints || 0;
-        const time = Date.now();
-        const random = Math.random().toString(36).substring(2, 10);
-        const raw = `${ua}|${platform}|${lang}|${screenRes}|${tz}|${cores}|${memory}|${pixelRatio}|${touch}|${time}|${random}`;
-        let hash = 0;
-        for (let i = 0; i < raw.length; i++) {
-            const char = raw.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-        const hex = Math.abs(hash).toString(16).padStart(40, '0').toUpperCase();
-        return hex.substring(0, 40);
-    } catch(e) { return 'UNKNOWN_' + Date.now().toString(16).toUpperCase(); }
-}
-
-// ============================================================
-// ĐĂNG NHẬP
-// ============================================================
-
-function loginKey() {
-    const input = document.getElementById('keyInput').value.trim().toUpperCase();
-    const status = document.getElementById('loginStatus');
-    if (!input) { status.textContent = '⚠️ Nhập key vào đi!'; status.className = 'status error'; return; }
-    if (!KEY_DB[input]) { status.textContent = '❌ Key sai rồi!'; status.className = 'status error'; showToast('❌ Key sai!', 'error'); return; }
-    
-    const keyData = KEY_DB[input];
-    const isAdmin = input === ADMIN_KEY;
-    const sessions = getKeySessions();
-    const usedKeys = getUsedKeys();
-    const deviceUID = getDeviceUID();
-    
-    if (!isAdmin && usedKeys[input] && usedKeys[input].device !== deviceUID) {
-        status.textContent = '❌ Key đã dùng trên máy khác!'; status.className = 'status error'; showToast('❌ Key đã dùng!', 'error'); return;
-    }
-    
-    const now = Date.now();
-    let session = sessions[input];
-    if (!session) {
-        const firstLogin = now;
-        let expiry = keyData.duration === -1 ? -1 : now + (keyData.duration * 24 * 60 * 60 * 1000);
-        session = { firstLogin: firstLogin, expiry: expiry, device: isAdmin ? 'ADMIN_UNLIMITED' : deviceUID };
-        sessions[input] = session; setKeySessions(sessions);
-        if (!isAdmin) { usedKeys[input] = { device: deviceUID, time: now }; setUsedKeys(usedKeys); }
-    }
-    
-    if (!isAdmin && keyData.duration !== -1 && session.expiry < now) {
-        const gracePeriod = 5 * 24 * 60 * 60 * 1000;
-        if (now > session.expiry + gracePeriod) {
-            status.textContent = '❌ Key hết hạn rồi!'; status.className = 'status error'; showToast('❌ Key hết hạn!', 'error'); return;
-        } else {
-            session.expiry = now + (keyData.duration * 24 * 60 * 60 * 1000);
-            sessions[input] = session; setKeySessions(sessions);
-        }
-    }
-    
-    status.textContent = '✅ Đăng nhập thành công!'; status.className = 'status success';
-    showToast('✅ Đăng nhập thành công!', 'success');
-    
-    localStorage.setItem('dpi_current_key', input);
-    localStorage.setItem('dpi_current_key_data', JSON.stringify(keyData));
-    localStorage.setItem('dpi_is_admin', JSON.stringify(isAdmin));
-    
-    document.getElementById('loginSection').classList.add('hidden');
-    document.getElementById('appSection').classList.remove('hidden');
-    
-    const uid = getDeviceUID();
-    document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
-    document.getElementById('currentKey').textContent = input.substring(0,6) + '...' + input.substring(input.length-4);
-    document.getElementById('keyType').textContent = isAdmin ? '👑 Admin' : keyData.type;
-    document.getElementById('keyType').className = 'value ' + (isAdmin ? 'blue' : 'green');
-    
-    if (isAdmin || keyData.duration === -1) {
-        document.getElementById('keyExpiry').textContent = '♾️ Vĩnh viễn';
-        document.getElementById('keyExpiry').className = 'value green';
-        document.getElementById('keyRemain').textContent = '♾️ Không giới hạn';
-    } else {
-        const expiryDate = new Date(session.expiry);
-        document.getElementById('keyExpiry').textContent = expiryDate.toLocaleString('vi-VN');
-        document.getElementById('keyExpiry').className = 'value orange';
-        const remain = session.expiry - Date.now();
-        if (remain > 0) {
-            const days = Math.floor(remain / (24*60*60*1000));
-            const hours = Math.floor((remain % (24*60*60*1000)) / (60*60*1000));
-            document.getElementById('keyRemain').textContent = `${days} ngày ${hours} giờ`;
-            document.getElementById('keyRemain').className = 'value green';
-        } else {
-            document.getElementById('keyRemain').textContent = '⏳ Chờ gia hạn';
-            document.getElementById('keyRemain').className = 'value red';
-        }
-    }
-    
-    if (isAdmin) {
-        document.getElementById('adminBtn').classList.remove('hidden');
-        document.getElementById('voucherListContainer').classList.remove('hidden');
-        renderVoucherList();
-    }
-}
-
-function logout() {
-    if (!confirm('Thoát à?')) return;
-    localStorage.removeItem('dpi_current_key');
-    localStorage.removeItem('dpi_current_key_data');
-    localStorage.removeItem('dpi_is_admin');
-    document.getElementById('loginSection').classList.remove('hidden');
-    document.getElementById('appSection').classList.add('hidden');
-    document.getElementById('keyListContainer').classList.add('hidden');
-    document.getElementById('voucherListContainer').classList.add('hidden');
-    document.getElementById('keyInput').value = '';
-    document.getElementById('loginStatus').textContent = '💡 Nhập key đi';
-    document.getElementById('loginStatus').className = 'status';
-    showToast('🚪 Đã thoát', 'success');
-}
-
-// ============================================================
-// SHOP - MUA KEY TỰ ĐỘNG
-// ============================================================
-
-let uploadedImageData = null;
-let selectedPackageName = '';
-let selectedPackagePrice = 0;
-
-function openShop() {
-    const shop = document.getElementById('shopSection');
-    if (shop.classList.contains('hidden')) {
-        shop.classList.remove('hidden');
-        showToast('🛒 Mở shop rồi', 'success');
-    } else {
-        shop.classList.add('hidden');
-        document.getElementById('paymentBox').style.display = 'none';
-        showToast('🚪 Đóng shop', '');
-    }
-}
-
-function showPayment(name, price) {
-    selectedPackageName = name;
-    selectedPackagePrice = price;
-    document.getElementById('paymentBox').style.display = 'block';
-    document.getElementById('paymentAmount').textContent = price.toLocaleString('vi-VN') + '₫';
-    document.getElementById('paymentPackage').textContent = name;
-    const note = 'DPI_VIP_' + Date.now().toString(36).toUpperCase();
-    document.getElementById('transferNote').textContent = note;
-    document.getElementById('transferAmount').textContent = price.toLocaleString('vi-VN') + '₫';
-    document.getElementById('previewContainer').innerHTML = '';
-    document.getElementById('receiptInput').value = '';
-    uploadedImageData = null;
-    showToast(`✅ Chọn gói ${name}`, 'success');
-}
-
-function closePayment() {
-    document.getElementById('paymentBox').style.display = 'none';
-    uploadedImageData = null;
-}
-
-function previewReceipt(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        uploadedImageData = e.target.result;
-        document.getElementById('previewContainer').innerHTML = `<img src="${e.target.result}" alt="Biên lai">`;
-        showToast('📸 Đã tải ảnh biên lai', 'success');
-    };
-    reader.readAsDataURL(file);
-}
-
-// ============================================================
-// BOT XÁC NHẬN THANH TOÁN - TỰ ĐỘNG
-// ============================================================
-
-function verifyPayment() {
-    if (!selectedPackageName) {
-        showToast('❌ Chọn gói key trước đã!', 'error');
-        return;
-    }
-    if (!uploadedImageData) {
-        showToast('❌ Tải ảnh biên lai lên đi!', 'error');
-        return;
-    }
-    
-    const btn = document.getElementById('verifyBtn');
-    btn.innerHTML = '<span class="loading"></span> BOT ĐANG XỬ LÝ...';
-    btn.disabled = true;
-    
-    // Mô phỏng bot phân tích ảnh
-    setTimeout(() => {
-        // Mô phỏng xác nhận tự động - CHỈ TẠO KEY KHI ẢNH ĐÚNG
-        const success = Math.random() > 0.2; // 80% thành công để demo
-        
-        if (success) {
-            const keyData = createNewKey(selectedPackageName, selectedPackagePrice);
-            const keyDB = getKeyDB();
-            keyDB[keyData.key] = {
-                type: selectedPackageName,
-                duration: selectedPackagePrice === 400000 ? -1 : (selectedPackagePrice === 250000 ? 90 : selectedPackagePrice === 200000 ? 60 : selectedPackagePrice === 100000 ? 30 : selectedPackagePrice === 50000 ? 7 : 1),
-                hash: generateKeyHash(keyData.key),
-                created: Date.now(),
-                used: false
-            };
-            setKeyDB(keyDB);
-            
-            showToast('✅ THANH TOÁN THÀNH CÔNG! Key: ' + keyData.key, 'success');
-            document.getElementById('paymentBox').style.display = 'none';
-            document.getElementById('previewContainer').innerHTML = '';
-            document.getElementById('receiptInput').value = '';
-            uploadedImageData = null;
-            
-            const body = document.getElementById('chatBody');
-            body.innerHTML += `<div class="msg bot">✅ KEY CỦA MÀY: ${keyData.key}
-📋 Loại: ${selectedPackageName}
-⏳ Dùng ngay đi!
-<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
-            body.scrollTop = body.scrollHeight;
-        } else {
-            showToast('❌ ẢNH KHÔNG HỢP LỆ! Thử lại đi!', 'error');
-        }
-        
-        btn.innerHTML = '🤖 BOT XÁC NHẬN THANH TOÁN';
-        btn.disabled = false;
-    }, 2000);
-}
-
-function createNewKey(type, price) {
-    const prefix = type === 'Vĩnh viễn' ? 'VIP' : 
-                   type === '3 tháng' ? '3M' :
-                   type === '2 tháng' ? '2M' :
-                   type === '1 tháng' ? '1M' :
-                   type === '1 tuần' ? '1W' : '1D';
-    let key;
-    let attempts = 0;
-    do {
-        const suffix = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
-        key = generateRandomKey(prefix + '_', 8) + suffix;
-        attempts++;
-    } while (attempts < 100);
-    return { key: key, hash: generateKeyHash(key), type: type, duration: price === 400000 ? -1 : (price === 250000 ? 90 : price === 200000 ? 60 : price === 100000 ? 30 : price === 50000 ? 7 : 1) };
-}
-
-function setKeyDB(db) { try { localStorage.setItem('dpi_key_db', JSON.stringify(db)); } catch(e) {} }
-function getKeyDB() { try { return JSON.parse(localStorage.getItem('dpi_key_db') || '{}'); } catch(e) { return {}; } }
-
-// ============================================================
-// ADMIN - KEY & VOUCHER
-// ============================================================
-
-function toggleKeyList() {
-    const container = document.getElementById('keyListContainer');
-    if (container.classList.contains('hidden')) {
-        container.classList.remove('hidden');
-        const content = document.getElementById('keyListContent');
-        const usedKeys = getUsedKeys();
-        const keyDB = getKeyDB();
-        const allKeys = { ...KEY_DB, ...keyDB };
-        let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">📋 Tổng: ' + Object.keys(allKeys).length + ' key</div>';
-        Object.keys(allKeys).sort().forEach(k => {
-            const data = allKeys[k];
-            const isAdmin = k === ADMIN_KEY;
-            const isUsed = !!usedKeys[k];
-            const status = isAdmin ? '👑 Admin' : (isUsed ? '✅ Đã dùng' : '⬜ Chưa dùng');
-            html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
-                <span style="color:#8888aa;font-family:monospace;">${k.substring(0,6)}...${k.substring(k.length-4)}</span>
-                <span style="color:${isAdmin ? '#00d4ff' : '#e8e8f0'};">${data.type}</span>
-                <span style="color:${isAdmin ? '#00d4ff' : (isUsed ? '#34c759' : '#666688')};">${status}</span>
-            </div>`;
-        });
-        content.innerHTML = html;
-    } else {
-        container.classList.add('hidden');
-    }
-}
-
-function renderVoucherList() {
-    const content = document.getElementById('voucherListContent');
-    let html = '<div style="color:#8888aa;font-size:11px;margin-bottom:8px;">🎫 Tổng: ' + VOUCHERS.length + ' phiếu giảm giá</div>';
-    VOUCHERS.forEach((v) => {
-        const status = v.used ? '❌ Đã dùng' : '✅ Còn hiệu lực';
-        html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1a1a2e;font-size:12px;">
-            <span style="color:#00d4ff;font-family:monospace;">${v.code}</span>
-            <span style="color:#ff9500;">${v.type}</span>
-            <span style="color:${v.used ? '#ff4466' : '#34c759'};">${status}</span>
-        </div>`;
-    });
-    content.innerHTML = html;
-}
-
-// ============================================================
-// BOT CHAT - CHẤT - CHỬI - VOICE - NÓI LẤC CẤC
-// ============================================================
-
-let chatCount = 0;
-let questionCount = {};
-let isAngry = false;
-
-const angryReplies = [
+const chuiDap = [
     'tịnh tâm',
     'đcmm',
     'thằng bố mày',
@@ -631,45 +383,22 @@ const angryReplies = [
     'im lặng nào cô anh thích nói nhiều đâu'
 ];
 
-const voiceReplies = [
-    '🎤 MÀY HỎI ÍT THÔI',
-    '🎤 HỎI NHIỀU VL',
-    '🎤 ĐÃ BẢO RỒI MÀ',
-    '🎤 MÀY ĐIẾC À',
-    '🎤 IM ĐI'
-];
+// ============================================================
+// LOGIC CHAT
+// ============================================================
 
-const insultReplies = [
-    'mày bị ngu à',
-    'ngu',
-    'tao đéo hiểu',
-    'mày bị tật não à'
-];
+let chatCount = 0;
+let questionCount = {};
 
-const casualReplies = [
-    'ủa mày hỏi cái đ gì thế?',
-    'đm hỏi lại à?',
-    'tóm lại là mày muốn gì?',
-    'thôi đi mày ơi',
-    'vãi cả lồn hỏi lắm thế',
-    'mày có hiểu tao nói gì không?',
-    'lạy hồn mày đấy',
-    'hỏi cái gì mà hỏi hoài vậy?',
-    'mày không hiểu thì thôi'
-];
-
-function toggleChat() {
-    const w = document.getElementById('chatWindow');
-    if (w.style.display === 'flex') { w.style.display = 'none'; } else { w.style.display = 'flex'; chatCount = 0; isAngry = false; }
-}
-
-function sendChat() {
+function sendMessage() {
     const input = document.getElementById('chatInput');
     const msg = input.value.trim();
     if (!msg) return;
     
     const body = document.getElementById('chatBody');
     const time = new Date().toLocaleTimeString('vi-VN');
+    
+    // Hiển thị tin nhắn user
     body.innerHTML += `<div class="msg user">${msg}<span class="time">${time}</span></div>`;
     input.value = '';
     body.scrollTop = body.scrollHeight;
@@ -678,24 +407,27 @@ function sendChat() {
     const lower = msg.toLowerCase();
     questionCount[lower] = (questionCount[lower] || 0) + 1;
     
+    // Phản hồi
     setTimeout(() => {
         let reply = '';
         const isVulgar = /(địt|đmm|đm|cl|cc|cặc|lồn|đéo|đĩ|mẹ|chó|ngu|khốn|chết|giết|fuck|shit|đjt|dm|clgt|đụ|địt|đái|cứt|ỉa|ị|chịch)/i.test(msg);
-        const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot|gà|chó|mèo|heo|bò|vịt|gà|thỏ|ăn)/i.test(msg) && msg.length < 6;
+        const isQuestion = msg.includes('?') || msg.includes('?') || lower.includes('hỏi') || lower.includes('là gì') || lower.includes('tại sao') || lower.includes('như thế nào');
+        const isGreeting = /(chào|hello|hi|xin chào|hey|hế lô|ê|ơi|alô)/i.test(msg);
+        const isNonsense = /(abc|xyz|123|qwerty|asdf|zxcv|test|testing|haha|hihi|hehe|jaja|kaka|lala|meme|baby|love|hate|fuck|dumb|stupid|idiot)/i.test(msg) && msg.length < 6;
         const isTooShort = msg.length < 3;
+        const isThanks = /(cảm ơn|cám ơn|thank|thanks|tks|ok|oki|oke)/i.test(msg);
         
-        // Chửi lại nếu người dùng chửi bot
+        // Nếu người dùng chửi bot
         if (isVulgar) {
-            reply = angryReplies[Math.floor(Math.random() * angryReplies.length)];
-            isAngry = true;
+            reply = chuiDap[Math.floor(Math.random() * chuiDap.length)];
         }
         // Voice nếu hỏi quá 3 lần
         else if (questionCount[lower] >= 3) {
-            reply = voiceReplies[Math.floor(Math.random() * voiceReplies.length)];
+            reply = voiceChui[Math.floor(Math.random() * voiceChui.length)];
             questionCount[lower] = 0;
         }
         // Hỏi nhiều quá
-        else if (chatCount > 8) {
+        else if (chatCount > 10) {
             const angry = [
                 'mày hỏi nhiều vậy mày có bị ngu không?',
                 'đm mày hỏi lắm thế!',
@@ -707,262 +439,99 @@ function sendChat() {
                 'chửi cái cc, im đi'
             ];
             reply = angry[Math.floor(Math.random() * angry.length)];
-            isAngry = true;
         }
         // Câu ngớ ngẩn hoặc quá ngắn
         else if (isNonsense || isTooShort) {
-            reply = insultReplies[Math.floor(Math.random() * insultReplies.length)];
+            reply = chuiCau[Math.floor(Math.random() * chuiCau.length)];
         }
-        // Hợp lệ
-        else if (lower.includes('cách mua') || lower.includes('mua key') || lower.includes('giá')) {
-            reply = `📋 BẢNG GIÁ:
-• Vĩnh viễn: 400.000₫
-• 3 tháng: 250.000₫
-• 2 tháng: 200.000₫
-• 1 tháng: 100.000₫
-• 1 tuần: 50.000₫
-• 1 ngày: 10.000₫
-Mua thì vào shop mà chọn.`;
+        // Nếu là câu hỏi
+        else if (isQuestion) {
+            const qReplies = [
+                'mày hỏi tao à? tao đéo biết!',
+                'hỏi cái gì mà hỏi, mày ngu à?',
+                'tao là bot chửi chứ có phải google đâu',
+                'mày hỏi tao, tao hỏi lại mày: mày bị ngu à?',
+                'tao đéo hiểu mày hỏi gì, chửi lại tao đi!',
+                'hỏi hoài hỏi mãi, mày không có gì để hỏi à?',
+                'mày hỏi cái đ gì thế?',
+                'đm hỏi lại à?',
+                'tóm lại là mày muốn gì?',
+                'thôi đi mày ơi, đừng hỏi nữa'
+            ];
+            reply = qReplies[Math.floor(Math.random() * qReplies.length)];
         }
-        else if (lower.includes('cách chuyển') || lower.includes('chuyển tiền') || lower.includes('thanh toán')) {
-            reply = `🏦 CHUYỂN KHOẢN:
-• Tên: LY NGOC DAI
-• Ngân hàng: BIDV
-• QR: Xem ở shop
-• Nội dung: DPI_VIP_XXXX
-• Số tiền: Theo gói
-Xong tải ảnh lên bot tự động xác nhận.`;
+        // Chào hỏi
+        else if (isGreeting) {
+            const gReplies = [
+                'chào cái cc, mày bị ngu à?',
+                'chào mày, mày bị điên à?',
+                'hế lô, mày bị khùng à?',
+                'ê mày, mày bị tật não à?',
+                'ơi mày, mày bị óc chó à?'
+            ];
+            reply = gReplies[Math.floor(Math.random() * gReplies.length)];
         }
-        else if (lower.includes('cách cài') || lower.includes('cài đặt') || lower.includes('cài config') || lower.includes('hướng dẫn')) {
-            reply = `📲 CÀI ĐẶT:
-1. Đăng nhập key
-2. Nhấn "Tải Config Thật"
-3. Mở file .mobileconfig
-4. Vào Cài đặt → Chung → VPN & Quản lý thiết bị
-5. Chọn "DPI VIP" → Cài đặt
-6. Khởi động lại iPhone
-Xong.`;
+        // Cảm ơn
+        else if (isThanks) {
+            const tReplies = [
+                'cảm ơn cái cc, mày bị ngu à?',
+                'cám ơn mày, mày bị điên à?',
+                'ok, mày bị khùng à?',
+                'oke, mày bị tật não à?'
+            ];
+            reply = tReplies[Math.floor(Math.random() * tReplies.length)];
         }
-        else if (lower.includes('liên hệ') || lower.includes('admin') || lower.includes('số điện thoại') || lower.includes('hotline') || lower.includes('0976457016')) {
-            reply = `📞 ADMIN: 0976457016
-Zalo: 0976457016
-Telegram: @DPI_VIP_Admin
-Cần gì thì liên hệ.`;
-        }
-        else if (lower.includes('bot') || lower.includes('bạn là ai')) {
-            reply = `🤖 Tao là DPI VIP Bot - bản chất.
-Tao giúp mày mua key, cài đặt, tư vấn.
-Có gì hỏi nhanh đừng dài dòng.`;
-        }
-        else if (lower.includes('cảm ơn') || lower.includes('thanks') || lower.includes('thank')) {
-            reply = `🙏 Ừ cảm ơn. Hỏi gì nữa không?`;
-        }
+        // Mặc định - chửi
         else {
-            reply = casualReplies[Math.floor(Math.random() * casualReplies.length)];
+            reply = chuiCau[Math.floor(Math.random() * chuiCau.length)];
         }
         
         body.innerHTML += `<div class="msg bot">${reply}<span class="time">${new Date().toLocaleTimeString('vi-VN')}</span></div>`;
         body.scrollTop = body.scrollHeight;
+        
+        // Hiệu ứng toast
+        showToast('🤬 Đã chửi!');
     }, 400);
 }
 
 // ============================================================
-// TẠO CONFIG
+// CHỬI NHANH
 // ============================================================
 
-function generateConfig(uid, iosVersion) {
-    const uidShort = uid.substring(uid.length - 8);
-    function uuidv4() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0;
-            const v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-    const uuid1 = uuidv4(), uuid2 = uuidv4();
-    const allowedVersions = ['17.0','17.1','17.2','17.3','17.4','17.5','17.6','17.7','18.7.1','18.7.2','18.7.3','18.7.4','18.7.5','18.7.6','18.7.7','18.7.8','18.7.9','26.1'];
-    let allowedXml = '';
-    allowedVersions.forEach(v => { allowedXml += `\n                        <string>${v}</string>`; });
-    
-    const descLeft = `🔷 DPI VIP - TỐI ƯU GAME
-✅ BÁM ĐẦU MƯỢT ✅ NHE TÂM ✅ FIX LỐ ✅ FIX RUNG ✅ KÉO LÀ ĐỎ
-⚠️ KHÔNG BÁN - KHÔNG CHỈNH SỬA - CHỈ HỖ TRỢ iOS
-HỖ TRỢ: 17.x, 18.7.1→18.7.9, 26.1
-UID: ${uidShort} | DNS: DPI VIP_${uidShort}
-❓ 3 DỮ LIỆU: 0x7F3A2B1C, 0x9E4D8F6A, 0xC2B1A4F8`;
-    
-    const descRight = `DPI VIP - Bám đầu mượt, fix lố fix rung, kéo là đỏ. iOS 17, 18.7.1-18.7.9, 26.1. KHÔNG chia sẻ.`;
-    
-    return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>PayloadDescription</key>
-    <string>${descRight}</string>
-    <key>PayloadDisplayName</key>
-    <string>DPI VIP</string>
-    <key>PayloadIdentifier</key>
-    <string>com.dpivip.profile.${uidShort}</string>
-    <key>PayloadType</key>
-    <string>Configuration</string>
-    <key>PayloadUUID</key>
-    <string>${uuid2}</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-    <key>PayloadRemovalDisallowed</key>
-    <false/>
-    <key>PayloadContent</key>
-    <array>
-        <dict>
-            <key>PayloadDescription</key>
-            <string>${descLeft}</string>
-            <key>PayloadDisplayName</key>
-            <string>DPI VIP Config</string>
-            <key>PayloadIdentifier</key>
-            <string>com.dpivip.config.${uidShort}</string>
-            <key>PayloadType</key>
-            <string>Configuration</string>
-            <key>PayloadUUID</key>
-            <string>${uuid1}</string>
-            <key>PayloadVersion</key>
-            <integer>1</integer>
-            <key>PayloadContent</key>
-            <dict>
-                <key>DeviceUID</key><string>${uid}</string>
-                <key>DeviceUID_Short</key><string>${uidShort}</string>
-                <key>DeviceName</key><string>iPhone</string>
-                <key>CreatedAt</key><string>${new Date().toISOString()}</string>
-                <key>AllowediOSVersions</key><array>${allowedXml}</array>
-                <key>DNSConfig</key>
-                <dict>
-                    <key>DNSServerName</key><string>DPI VIP_${uidShort}</string>
-                    <key>DNSIPv4</key><array><string>8.8.8.8</string><string>1.1.1.1</string></array>
-                    <key>DNSIPv6</key><array><string>2001:4860:4860::8888</string><string>2606:4700:4700::1111</string></array>
-                    <key>DeviceUID</key><string>${uid}</string>
-                </dict>
-                <key>UnknownData1</key><string>0x7F3A2B1C</string>
-                <key>UnknownData2</key><string>0x9E4D8F6A</string>
-                <key>UnknownData3</key><string>0xC2B1A4F8</string>
-                <key>DPIParameters</key>
-                <dict>
-                    <key>DPI_Profile</key><string>VIP_BAM_DUONG</string>
-                    <key>FixLố</key><string>ENABLED</string>
-                    <key>FixRung</key><string>ENABLED</string>
-                    <key>KeoLaDo</key><string>ACTIVE</string>
-                    <key>GameMode</key><string>100%_OPTIMIZED</string>
-                    <key>Latency</key><integer>0</integer>
-                    <key>Jitter</key><integer>0</integer>
-                    <key>PacketLoss</key><integer>0</integer>
-                    <key>BufferSize</key><integer>8192</integer>
-                </dict>
-                <key>Restrictions</key>
-                <dict>
-                    <key>NoOtherFiles</key><string>TRUE</string>
-                    <key>NoSharing</key><string>TRUE</string>
-                    <key>DeviceLocked</key><string>${uid}</string>
-                </dict>
-                <key>StructureModification</key>
-                <dict>
-                    <key>Applied</key><string>TRUE</string>
-                    <key>Version</key><string>VIP_2.0</string>
-                    <key>DeviceChange</key><string>LOCKED_${uidShort}</string>
-                </dict>
-                <key>ConditionalInstall</key>
-                <dict>
-                    <key>DeviceVersion</key><string>18.7.1</string>
-                    <key>AllowedVersions</key><array><string>17.*</string><string>18.7.*</string><string>26.1</string></array>
-                    <key>FailMessage</key><string>Không hỗ trợ iOS này.</string>
-                </dict>
-                <key>GameOptimization</key>
-                <dict>
-                    <key>FrameSync</key><string>DISABLED</string>
-                    <key>VSync</key><string>FORCE_OFF</string>
-                    <key>GPUPriority</key><string>HIGH</string>
-                    <key>TouchResponse</key><string>ULTRA_FAST</string>
-                    <key>FPSBoost</key><string>ENABLED</string>
-                </dict>
-                <key>TouchColorProfile</key>
-                <dict>
-                    <key>DragColor</key><string>#FF0000</string>
-                    <key>TapColor</key><string>#00FF00</string>
-                    <key>LatencyCompensation</key><integer>0</integer>
-                    <key>TouchSensitivity</key><real>1.5</real>
-                </dict>
-            </dict>
-        </dict>
-    </array>
-</dict>
-</plist>`;
+function quickChat(msg) {
+    document.getElementById('chatInput').value = msg;
+    sendMessage();
 }
 
-function generateAndDownload() {
-    const uid = getDeviceUID();
-    if (!uid || uid.length !== 40) { showToast('❌ Không đọc được UID!', 'error'); return; }
-    try {
-        const uidShort = uid.substring(uid.length - 8);
-        const filename = `DPI_VIP_${uidShort}_${Date.now()}.mobileconfig`;
-        const xml = generateConfig(uid, '18.7.1');
-        const blob = new Blob([xml], { type: 'application/x-apple-aspen-config; charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = filename;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 5000);
-        showToast('✅ Đã tải config!', 'success');
-    } catch(e) { showToast('❌ Lỗi: ' + e.message, 'error'); }
+// ============================================================
+// XÓA CHAT
+// ============================================================
+
+function clearChat() {
+    const body = document.getElementById('chatBody');
+    body.innerHTML = `
+        <div class="msg bot">
+            🗑️ Đã xóa chat.<br>
+            Mày muốn chửi tiếp không?<br>
+            <span class="time">Vừa xong</span>
+        </div>
+    `;
+    chatCount = 0;
+    questionCount = {};
+    showToast('🗑️ Đã xóa chat');
 }
 
-function showToast(msg, type = '') {
+// ============================================================
+// TOAST
+// ============================================================
+
+function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
-    t.className = 'toast ' + type;
     t.classList.add('show');
     clearTimeout(t._timeout);
-    t._timeout = setTimeout(() => t.classList.remove('show'), 4000);
+    t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
 }
-
-// KHỞI CHẠY
-document.addEventListener('DOMContentLoaded', function() {
-    const currentKey = localStorage.getItem('dpi_current_key');
-    if (currentKey) {
-        const keyData = JSON.parse(localStorage.getItem('dpi_current_key_data') || 'null');
-        const sessions = getKeySessions();
-        const isAdmin = JSON.parse(localStorage.getItem('dpi_is_admin') || 'false');
-        if (keyData && sessions[currentKey]) {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('appSection').classList.remove('hidden');
-            const uid = getDeviceUID();
-            document.getElementById('uidDisplay').textContent = uid || 'Không đọc được';
-            document.getElementById('currentKey').textContent = currentKey.substring(0,6) + '...' + currentKey.substring(currentKey.length-4);
-            document.getElementById('keyType').textContent = isAdmin ? '👑 Admin' : keyData.type;
-            document.getElementById('keyType').className = 'value ' + (isAdmin ? 'blue' : 'green');
-            if (isAdmin || keyData.duration === -1) {
-                document.getElementById('keyExpiry').textContent = '♾️ Vĩnh viễn';
-                document.getElementById('keyExpiry').className = 'value green';
-                document.getElementById('keyRemain').textContent = '♾️ Không giới hạn';
-            } else {
-                const expiryDate = new Date(sessions[currentKey].expiry);
-                document.getElementById('keyExpiry').textContent = expiryDate.toLocaleString('vi-VN');
-                document.getElementById('keyExpiry').className = 'value orange';
-                const remain = sessions[currentKey].expiry - Date.now();
-                if (remain > 0) {
-                    const days = Math.floor(remain / (24*60*60*1000));
-                    const hours = Math.floor((remain % (24*60*60*1000)) / (60*60*1000));
-                    document.getElementById('keyRemain').textContent = `${days} ngày ${hours} giờ`;
-                    document.getElementById('keyRemain').className = 'value green';
-                } else {
-                    document.getElementById('keyRemain').textContent = '⏳ Chờ gia hạn';
-                    document.getElementById('keyRemain').className = 'value red';
-                }
-            }
-            if (isAdmin) {
-                document.getElementById('adminBtn').classList.remove('hidden');
-                document.getElementById('voucherListContainer').classList.remove('hidden');
-                renderVoucherList();
-            }
-        }
-    }
-});
 </script>
 </body>
 </html>
